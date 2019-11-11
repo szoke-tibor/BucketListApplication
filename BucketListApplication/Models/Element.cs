@@ -13,6 +13,5 @@ namespace WebApplication1
 
         public Design Design { get; set; }
         public DbSet<Category> Categories { get; set; }
-
     }
 }
