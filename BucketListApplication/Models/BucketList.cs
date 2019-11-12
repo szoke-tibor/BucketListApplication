@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApplication1
+namespace BucketListApplication.Models
 {
     public class BucketList
     {
-        public int Id { get; set; }
+        public int BucketListID { get; set; }
+		public int UserID { get; set; }
         public string Name { get; set; }
 
-        public DbSet<Element> Elements { get; set; }
-
+		public BucketUser User { get; set; }
+        public ICollection<Element> Elements { get; set; }
     }
 }
