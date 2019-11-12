@@ -30,4 +30,10 @@ namespace BucketListApplication.Models
 
         public BorderType BorderType { get; set; }
     }
+
+	public enum BorderType
+	{
+		Regular,
+		Fancy
+	}
 }

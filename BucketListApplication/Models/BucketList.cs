@@ -9,7 +9,7 @@ namespace BucketListApplication.Models
     public class BucketList
     {
         public int BucketListID { get; set; }
-		public int UserID { get; set; }
+		public int UserId { get; set; }
         public string Name { get; set; }
 
 		public BucketUser User { get; set; }
