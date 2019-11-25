@@ -30,7 +30,7 @@ namespace BucketListApplication.Pages.Elements
                 return NotFound();
             }
 
-            Element = await _context.Elements.FirstOrDefaultAsync(m => m.ID == id);
+            Element = await _context.Elements.FindAsync(id);
 
             if (Element == null)
             {
@@ -39,35 +39,29 @@ namespace BucketListApplication.Pages.Elements
             return Page();
         }
 
+		// DONE
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+			var elementToUpdate = await _context.Elements.FindAsync(id);
 
-            _context.Attach(Element).State = EntityState.Modified;
+			if (elementToUpdate == null)
+			{
+				return NotFound();
+			}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ElementExists(Element.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			if (await TryUpdateModelAsync<Element>(
+				elementToUpdate,
+				"element",
+				e => e.Name))
+			{
+				await _context.SaveChangesAsync();
+				return RedirectToPage("./Index");
+			}
 
-            return RedirectToPage("./Index");
-        }
+			return Page();
+		}
 
         private bool ElementExists(int id)
         {

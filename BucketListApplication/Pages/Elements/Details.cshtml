@@ -17,6 +17,25 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Element.Name)
         </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Element.ElementCategories)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Categories</th>
+                </tr>
+                @foreach (var item in Model.Element.ElementCategories)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.Name)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
     </dl>
 </div>
 <div>

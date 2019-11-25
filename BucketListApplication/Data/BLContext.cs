@@ -21,6 +21,7 @@ namespace BucketListApplication.Data
 
 		// Elements + BuckeListElements
 		public DbSet<BucketListApplication.Models.Element> Elements { get; set; }
+		//public DbSet<BucketListApplication.Models.BucketListElement> BLElements { get; set; }
 		//public DbSet<IdentityUser> BLUsers { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,7 +33,8 @@ namespace BucketListApplication.Data
 			modelBuilder.Entity<Design>().ToTable("Design");
 			modelBuilder.Entity<ElementCategory>().ToTable("ElementCategory");
 			modelBuilder.Entity<Element>().ToTable("Element");
-			modelBuilder.Entity<IdentityUser>().ToTable("IdentityUser");
+			//modelBuilder.Entity<BucketListElement>().ToTable("BucketListElement");
+			//modelBuilder.Entity<IdentityUser>().ToTable("IdentityUser");
 		}
 	}
 }

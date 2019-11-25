@@ -21,21 +21,30 @@ namespace BucketListApplication.Pages.Elements
 
         [BindProperty]
         public Element Element { get; set; }
+		public string ErrorMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Element = await _context.Elements.FirstOrDefaultAsync(m => m.ID == id);
+            Element = await _context.Elements
+				.AsNoTracking()
+				.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Element == null)
             {
                 return NotFound();
             }
-            return Page();
+
+			if (saveChangesError.GetValueOrDefault())
+			{
+				ErrorMessage = "Delete failed. Try again";
+			}
+
+			return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
@@ -45,15 +54,25 @@ namespace BucketListApplication.Pages.Elements
                 return NotFound();
             }
 
-            Element = await _context.Elements.FindAsync(id);
+			var element = await _context.Elements.FindAsync(id);
 
-            if (Element != null)
-            {
-                _context.Elements.Remove(Element);
-                await _context.SaveChangesAsync();
-            }
+			if (element == null)
+			{
+				return NotFound();
+			}
 
-            return RedirectToPage("./Index");
+			try
+			{
+				_context.Elements.Remove(element);
+				await _context.SaveChangesAsync();
+				return RedirectToPage("./Index");
+			}
+			catch (DbUpdateException /* ex */)
+			{
+				//Log the error (uncomment ex variable name and write a log.)
+				return RedirectToAction("./Delete",
+									 new { id, saveChangesError = true });
+			}
         }
     }
 }

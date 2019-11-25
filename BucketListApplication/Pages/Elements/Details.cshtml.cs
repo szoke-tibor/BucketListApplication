@@ -28,9 +28,15 @@ namespace BucketListApplication.Pages.Elements
                 return NotFound();
             }
 
-            Element = await _context.Elements.FirstOrDefaultAsync(m => m.ID == id);
+            //Element = await _context.Elements.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Element == null)
+			Element = await _context.Elements
+				.Include(e => e.ElementCategories)
+				.ThenInclude(ec => ec.Category)
+				.AsNoTracking()
+				.FirstOrDefaultAsync(m => m.ID == id);
+
+			if (Element == null)
             {
                 return NotFound();
             }
