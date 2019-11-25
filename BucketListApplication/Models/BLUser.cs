@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BucketListApplication.Models
 {
-    public class BucketUser : IdentityUser
+    public class BLUser : IdentityUser
     {
         public string ProfileImageURL { get; set; }
         public string About { get; set; }

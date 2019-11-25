@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-BucketListApplication-94E303F8-80A3-432B-BF61-3697E83B01F1</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\BLContextModelSnapshot.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
@@ -18,6 +22,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Data\Migrations\" />
     <Folder Include="Pages\BLElements\" />
   </ItemGroup>
 

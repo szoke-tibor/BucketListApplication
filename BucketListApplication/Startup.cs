@@ -12,6 +12,7 @@ using BucketListApplication.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BucketListApplication.Models;
 
 namespace BucketListApplication
 {
@@ -30,7 +31,7 @@ namespace BucketListApplication
 			services.AddDbContext<BLContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+			services.AddDefaultIdentity<BLUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<BLContext>();
 			services.AddRazorPages();
 

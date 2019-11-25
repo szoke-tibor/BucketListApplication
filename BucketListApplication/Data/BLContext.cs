@@ -9,7 +9,7 @@ using BucketListApplication.Models;
 
 namespace BucketListApplication.Data
 {
-	public class BLContext : IdentityDbContext
+	public class BLContext : IdentityDbContext<BLUser>
 	{
 		public BLContext(DbContextOptions<BLContext> options) : base(options) { }
 
@@ -22,7 +22,6 @@ namespace BucketListApplication.Data
 		// Elements + BuckeListElements
 		public DbSet<BucketListApplication.Models.Element> Elements { get; set; }
 		//public DbSet<BucketListApplication.Models.BucketListElement> BLElements { get; set; }
-		//public DbSet<IdentityUser> BLUsers { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -34,7 +33,6 @@ namespace BucketListApplication.Data
 			modelBuilder.Entity<ElementCategory>().ToTable("ElementCategory");
 			modelBuilder.Entity<Element>().ToTable("Element");
 			//modelBuilder.Entity<BucketListElement>().ToTable("BucketListElement");
-			//modelBuilder.Entity<IdentityUser>().ToTable("IdentityUser");
 		}
 	}
 }

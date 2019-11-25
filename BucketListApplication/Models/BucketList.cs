@@ -12,7 +12,7 @@ namespace BucketListApplication.Models
 		public int UserId { get; set; }
         public string Name { get; set; }
 
-		public BucketUser User { get; set; }
+		public BLUser User { get; set; }
         public ICollection<Element> Elements { get; set; }
     }
 }
