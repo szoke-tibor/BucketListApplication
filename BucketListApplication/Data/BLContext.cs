@@ -21,7 +21,7 @@ namespace BucketListApplication.Data
 
 		// Elements + BuckeListElements
 		public DbSet<BucketListApplication.Models.Element> Elements { get; set; }
-		//public DbSet<BucketListApplication.Models.BucketListElement> BLElements { get; set; }
+		public DbSet<BucketListApplication.Models.BucketListElement> BLElements { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
