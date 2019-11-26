@@ -190,16 +190,15 @@ namespace BucketListApplication.Migrations
                 {
                     BucketListID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    UserId1 = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BucketList", x => x.BucketListID);
                     table.ForeignKey(
-                        name: "FK_BucketList_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_BucketList_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -213,7 +212,10 @@ namespace BucketListApplication.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     DesignID = table.Column<int>(nullable: true),
-                    BucketListID = table.Column<int>(nullable: true)
+                    Discriminator = table.Column<string>(nullable: false),
+                    BucketListID = table.Column<int>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Completed = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -223,7 +225,7 @@ namespace BucketListApplication.Migrations
                         column: x => x.BucketListID,
                         principalTable: "BucketList",
                         principalColumn: "BucketListID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Element_Design_DesignID",
                         column: x => x.DesignID,
@@ -298,9 +300,9 @@ namespace BucketListApplication.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BucketList_UserId1",
+                name: "IX_BucketList_UserId",
                 table: "BucketList",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Element_BucketListID",

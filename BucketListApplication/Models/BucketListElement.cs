@@ -3,14 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BucketListApplication.Models
 {
     public class BucketListElement : Element
     {
-		//ListID-t ki kell majd törölni, mert a navigation propertyn keresztül kerül majd a db-be.
-		public int ListID { get; set; }
+		//Ideiglenesen nullable, hogy ne dobjon kivételt, ha list nélkül szeretném létrehozni
+		public int? BucketListID { get; set; }
 		public string Description { get; set; }
         public bool Completed { get; set; }
-    }
+
+		public BucketList BucketList { get; set; }
+	}
 }

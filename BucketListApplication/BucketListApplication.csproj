@@ -7,6 +7,14 @@
 
   <ItemGroup>
     <Compile Remove="Data\Migrations\BLContextModelSnapshot.cs" />
+    <Compile Remove="Migrations\20191125225626_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191125225626_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191125231051_BucketListElementAdded.cs" />
+    <Compile Remove="Migrations\20191125231051_BucketListElementAdded.Designer.cs" />
+    <Compile Remove="Migrations\20191126171542_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191126171542_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191126195238_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191126195238_InitialCreate.Designer.cs" />
   </ItemGroup>
 
 

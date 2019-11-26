@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketListApplication.Migrations
 {
     [DbContext(typeof(BLContext))]
-    [Migration("20191125225626_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191126200746_nullable")]
+    partial class nullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,15 +105,12 @@ namespace BucketListApplication.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BucketListID");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("BucketList");
                 });
@@ -164,22 +161,23 @@ namespace BucketListApplication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BucketListID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("DesignID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BucketListID");
-
                     b.HasIndex("DesignID");
 
                     b.ToTable("Element");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Element");
                 });
 
             modelBuilder.Entity("BucketListApplication.Models.ElementCategory", b =>
@@ -339,19 +337,33 @@ namespace BucketListApplication.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BucketListApplication.Models.BucketListElement", b =>
+                {
+                    b.HasBaseType("BucketListApplication.Models.Element");
+
+                    b.Property<int?>("BucketListID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("BucketListID");
+
+                    b.HasDiscriminator().HasValue("BucketListElement");
+                });
+
             modelBuilder.Entity("BucketListApplication.Models.BucketList", b =>
                 {
                     b.HasOne("BucketListApplication.Models.BLUser", "User")
                         .WithMany("Lists")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("BucketListApplication.Models.Element", b =>
                 {
-                    b.HasOne("BucketListApplication.Models.BucketList", null)
-                        .WithMany("Elements")
-                        .HasForeignKey("BucketListID");
-
                     b.HasOne("BucketListApplication.Models.Design", "Design")
                         .WithMany()
                         .HasForeignKey("DesignID");
@@ -421,6 +433,13 @@ namespace BucketListApplication.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BucketListApplication.Models.BucketListElement", b =>
+                {
+                    b.HasOne("BucketListApplication.Models.BucketList", "BucketList")
+                        .WithMany("BLElements")
+                        .HasForeignKey("BucketListID");
                 });
 #pragma warning restore 612, 618
         }

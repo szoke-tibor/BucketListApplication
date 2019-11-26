@@ -103,15 +103,12 @@ namespace BucketListApplication.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BucketListID");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("BucketList");
                 });
@@ -162,9 +159,6 @@ namespace BucketListApplication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BucketListID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("DesignID")
                         .HasColumnType("int");
 
@@ -176,8 +170,6 @@ namespace BucketListApplication.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("BucketListID");
 
                     b.HasIndex("DesignID");
 
@@ -347,14 +339,16 @@ namespace BucketListApplication.Migrations
                 {
                     b.HasBaseType("BucketListApplication.Models.Element");
 
+                    b.Property<int?>("BucketListID")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ListID")
-                        .HasColumnType("int");
+                    b.HasIndex("BucketListID");
 
                     b.HasDiscriminator().HasValue("BucketListElement");
                 });
@@ -363,15 +357,11 @@ namespace BucketListApplication.Migrations
                 {
                     b.HasOne("BucketListApplication.Models.BLUser", "User")
                         .WithMany("Lists")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("BucketListApplication.Models.Element", b =>
                 {
-                    b.HasOne("BucketListApplication.Models.BucketList", null)
-                        .WithMany("Elements")
-                        .HasForeignKey("BucketListID");
-
                     b.HasOne("BucketListApplication.Models.Design", "Design")
                         .WithMany()
                         .HasForeignKey("DesignID");
@@ -441,6 +431,13 @@ namespace BucketListApplication.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BucketListApplication.Models.BucketListElement", b =>
+                {
+                    b.HasOne("BucketListApplication.Models.BucketList", "BucketList")
+                        .WithMany("BLElements")
+                        .HasForeignKey("BucketListID");
                 });
 #pragma warning restore 612, 618
         }
