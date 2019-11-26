@@ -15,6 +15,10 @@
     <Compile Remove="Migrations\20191126171542_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20191126195238_InitialCreate.cs" />
     <Compile Remove="Migrations\20191126195238_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191126195940_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191126195940_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191126200746_nullable.cs" />
+    <Compile Remove="Migrations\20191126200746_nullable.Designer.cs" />
   </ItemGroup>
 
 

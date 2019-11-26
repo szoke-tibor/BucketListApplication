@@ -8,7 +8,6 @@ namespace BucketListApplication.Models
 {
 	public class ElementCategory
 	{
-		public int ElementCategoryID { get; set; }
 		public int ElementID { get; set; }
 		public int CategoryID { get; set; }
 

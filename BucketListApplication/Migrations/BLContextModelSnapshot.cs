@@ -180,22 +180,15 @@ namespace BucketListApplication.Migrations
 
             modelBuilder.Entity("BucketListApplication.Models.ElementCategory", b =>
                 {
-                    b.Property<int>("ElementCategoryID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("ElementID")
+                        .HasColumnType("int");
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ElementID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ElementCategoryID");
+                    b.HasKey("ElementID", "CategoryID");
 
                     b.HasIndex("CategoryID");
-
-                    b.HasIndex("ElementID");
 
                     b.ToTable("ElementCategory");
                 });

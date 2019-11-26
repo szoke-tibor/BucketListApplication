@@ -225,7 +225,7 @@ namespace BucketListApplication.Migrations
                         column: x => x.BucketListID,
                         principalTable: "BucketList",
                         principalColumn: "BucketListID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Element_Design_DesignID",
                         column: x => x.DesignID,
@@ -238,14 +238,12 @@ namespace BucketListApplication.Migrations
                 name: "ElementCategory",
                 columns: table => new
                 {
-                    ElementCategoryID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     ElementID = table.Column<int>(nullable: false),
                     CategoryID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ElementCategory", x => x.ElementCategoryID);
+                    table.PrimaryKey("PK_ElementCategory", x => new { x.ElementID, x.CategoryID });
                     table.ForeignKey(
                         name: "FK_ElementCategory_Category_CategoryID",
                         column: x => x.CategoryID,
@@ -318,11 +316,6 @@ namespace BucketListApplication.Migrations
                 name: "IX_ElementCategory_CategoryID",
                 table: "ElementCategory",
                 column: "CategoryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ElementCategory_ElementID",
-                table: "ElementCategory",
-                column: "ElementID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -31,8 +31,12 @@ namespace BucketListApplication.Data
 			modelBuilder.Entity<Category>().ToTable("Category");
 			modelBuilder.Entity<Design>().ToTable("Design");
 			modelBuilder.Entity<ElementCategory>().ToTable("ElementCategory");
+			//Table per Hierarchy -> BucketListElement is included
 			modelBuilder.Entity<Element>().ToTable("Element");
-			//modelBuilder.Entity<BucketListElement>().ToTable("BucketListElement");
+
+			//Pure Join Table
+			modelBuilder.Entity<ElementCategory>()
+				.HasKey(ec => new { ec.ElementID, ec.CategoryID });
 		}
 	}
 }
