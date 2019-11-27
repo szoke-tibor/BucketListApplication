@@ -1,0 +1,27 @@
+<form asp-page-handler="add" method="post">
+	<fieldset>
+		<legend>Item options:</legend>
+		<div id="wrapper">
+			<label for="yes_no_radio">Is the item already completed?</label>
+			<p>
+				<input type="radio" name="yes_no" >Yes</input>
+			</p>
+			<p>
+				<input type="radio" name="yes_no" checked>No</input>
+			</p>
+		</div>
+		<p>Add the item to this list:</p>
+		<select id="listSelect" name="listSelect">
+			<optgroup label="My Bucketlists:">
+      @foreach (var list in Model.Lists)
+          {
+              <option value="@list.id">@list.name</option>
+          }
+			</optgroup>
+		</select>
+		<p></p>
+		<div>
+			<input type="submit" value="Add"></input>
+		</div>
+	</fieldset>
+</form>
