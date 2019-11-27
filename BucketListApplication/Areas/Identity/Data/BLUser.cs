@@ -9,9 +9,12 @@ namespace BucketListApplication.Models
 {
     public class BLUser : IdentityUser
     {
-        public string ProfileImageURL { get; set; }
-        public string About { get; set; }
-        public string FullName { get; set; }
+		[PersonalData]
+		public string ProfileImageURL { get; set; }
+		[PersonalData]
+		public string About { get; set; }
+		[PersonalData]
+		public string FullName { get; set; }
 
         public ICollection<BucketList> Lists { get; set; }
     }
