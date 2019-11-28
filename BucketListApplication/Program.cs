@@ -28,8 +28,9 @@ namespace BucketListApplication
 
 				try
 				{
+					//Ezzel még kezdeni kell valamit mert nem szép
 					var context = services.GetRequiredService<BLContext>();
-					context.Database.EnsureCreated();
+					//DbInitializer.Initialize(context);
 				}
 				catch (Exception ex)
 				{

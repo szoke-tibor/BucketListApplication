@@ -8,8 +8,9 @@ namespace BucketListApplication.Models
 {
     public class Element
     {
-        public int ID { get; set; }
+        public int ElementID { get; set; }
         public string Name { get; set; }
+		public int DesignID { get; set; }
 
         public Design Design { get; set; }
         public ICollection<ElementCategory> ElementCategories { get; set; }

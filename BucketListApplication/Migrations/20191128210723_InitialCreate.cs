@@ -68,6 +68,7 @@ namespace BucketListApplication.Migrations
                 {
                     DesignID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
                     PictureURL = table.Column<string>(nullable: true),
                     BorderColorARGB = table.Column<int>(nullable: false),
                     BackgroundColorARGB = table.Column<int>(nullable: false),
@@ -208,10 +209,10 @@ namespace BucketListApplication.Migrations
                 name: "Element",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    ElementID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    DesignID = table.Column<int>(nullable: true),
+                    DesignID = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     BucketListID = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
@@ -219,7 +220,7 @@ namespace BucketListApplication.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Element", x => x.ID);
+                    table.PrimaryKey("PK_Element", x => x.ElementID);
                     table.ForeignKey(
                         name: "FK_Element_BucketList_BucketListID",
                         column: x => x.BucketListID,
@@ -231,7 +232,7 @@ namespace BucketListApplication.Migrations
                         column: x => x.DesignID,
                         principalTable: "Design",
                         principalColumn: "DesignID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -254,7 +255,7 @@ namespace BucketListApplication.Migrations
                         name: "FK_ElementCategory_Element_ElementID",
                         column: x => x.ElementID,
                         principalTable: "Element",
-                        principalColumn: "ID",
+                        principalColumn: "ElementID",
                         onDelete: ReferentialAction.Cascade);
                 });
 

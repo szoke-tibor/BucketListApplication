@@ -32,7 +32,7 @@ namespace BucketListApplication.Pages.Elements
 
             Element = await _context.Elements
 				.AsNoTracking()
-				.FirstOrDefaultAsync(m => m.ID == id);
+				.FirstOrDefaultAsync(m => m.ElementID == id);
 
             if (Element == null)
             {

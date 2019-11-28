@@ -46,6 +46,13 @@ namespace BucketListApplication
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseDatabaseErrorPage();
+
+				using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+				{
+					var userManager = serviceScope.ServiceProvider.GetService<UserManager<BLUser>>();
+					var context = serviceScope.ServiceProvider.GetService<BLContext>();
+					DbInitializer.Initialize(context, userManager);
+				}
 			}
 			else
 			{

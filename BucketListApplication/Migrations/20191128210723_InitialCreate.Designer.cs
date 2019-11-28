@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketListApplication.Migrations
 {
     [DbContext(typeof(BLContext))]
-    [Migration("20191127204431_InitialCreate")]
+    [Migration("20191128210723_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,6 +146,9 @@ namespace BucketListApplication.Migrations
                     b.Property<int>("BorderType")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PictureURL")
                         .HasColumnType("nvarchar(max)");
 
@@ -156,12 +159,12 @@ namespace BucketListApplication.Migrations
 
             modelBuilder.Entity("BucketListApplication.Models.Element", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ElementID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DesignID")
+                    b.Property<int>("DesignID")
                         .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
@@ -171,7 +174,7 @@ namespace BucketListApplication.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("ElementID");
 
                     b.HasIndex("DesignID");
 
@@ -359,7 +362,9 @@ namespace BucketListApplication.Migrations
                 {
                     b.HasOne("BucketListApplication.Models.Design", "Design")
                         .WithMany()
-                        .HasForeignKey("DesignID");
+                        .HasForeignKey("DesignID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BucketListApplication.Models.ElementCategory", b =>

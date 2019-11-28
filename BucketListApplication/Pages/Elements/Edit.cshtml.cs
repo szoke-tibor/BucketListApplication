@@ -65,7 +65,7 @@ namespace BucketListApplication.Pages.Elements
 
         private bool ElementExists(int id)
         {
-            return _context.Elements.Any(e => e.ID == id);
+            return _context.Elements.Any(e => e.ElementID == id);
         }
     }
 }
