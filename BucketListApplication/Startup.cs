@@ -51,7 +51,7 @@ namespace BucketListApplication
 				{
 					var userManager = serviceScope.ServiceProvider.GetService<UserManager<BLUser>>();
 					var context = serviceScope.ServiceProvider.GetService<BLContext>();
-					DbInitializer.Initialize(context, userManager);
+					//DbInitializer.Initialize(context, userManager);
 				}
 			}
 			else
