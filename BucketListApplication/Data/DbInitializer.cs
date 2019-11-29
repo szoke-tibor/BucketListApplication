@@ -8,6 +8,7 @@ using BucketListApplication.Data;
 using BucketListApplication.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Drawing;
+using System.Security.Claims;
 
 namespace BucketListApplication.Data
 {
@@ -15,13 +16,18 @@ namespace BucketListApplication.Data
 	{
 		public static void Initialize(BLContext context, UserManager<BLUser> userManager)
 		{
-			//context.Database.EnsureCreated();
-
 			if (context.Elements.Any())
 			{
 				return;   // DB has been seeded already
 			}
-			/*
+
+			InitializeRoles(context);
+			InitializeUsers(userManager);
+			InitializeData(context, userManager);
+		}
+
+		static void InitializeRoles(BLContext context)
+		{
 			//ROLES
 			var roles = new string[] { "Admin", "User" };
 			foreach (string role in roles)
@@ -31,67 +37,52 @@ namespace BucketListApplication.Data
 					context.Roles.Add(new IdentityRole(role));
 				}
 			}
+		}
 
-			//USERS
-			if (!context.Users.Any(u => u.UserName == "1@gmail.com"))
+		static void InitializeUsers(UserManager<BLUser> userManager)
+		{
+			if (userManager.FindByNameAsync("1@gmail.com").Result == null)
 			{
-				var user = new BLUser
-				{
-					FullName = "1",
-					Email = "1@gmail.com",
-					UserName = "1@gmail.com",
-					PhoneNumber = "+36301112233",
-					EmailConfirmed = true,
-					PhoneNumberConfirmed = false,
-					SecurityStamp = Guid.NewGuid().ToString("D"),
-					LockoutEnabled = true,
-				};
-				user.PasswordHash = userManager.PasswordHasher.HashPassword(user, "Proba123'");
-				await userManager.CreateAsync(user);
-				await userManager.AddToRoleAsync(user, "Admin");
-				users[0] = user;
+				BLUser user = new BLUser();
+				user.UserName = "1";
+				user.Email = "1@gmail.com";
+				user.FullName = "1";
+
+				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
+
+				//if (result.Succeeded)
+					//userManager.AddToRoleAsync(user, "Admin").Wait();
 			}
 
-			if (!context.Users.Any(u => u.UserName == "2@gmail.com"))
+			if (userManager.FindByNameAsync("2@gmail.com").Result == null)
 			{
-				var user = new BLUser
-				{
-					FullName = "2",
-					Email = "2@gmail.com",
-					UserName = "2@gmail.com",
-					PhoneNumber = "+36302223344",
-					EmailConfirmed = true,
-					PhoneNumberConfirmed = false,
-					SecurityStamp = Guid.NewGuid().ToString("D"),
-					LockoutEnabled = true,
-				};
-				user.PasswordHash = userManager.PasswordHasher.HashPassword(user, "Proba123'");
-				await userManager.CreateAsync(user);
-				await userManager.AddToRoleAsync(user, "User");
-				users[1] = user;
+				BLUser user = new BLUser();
+				user.UserName = "2";
+				user.Email = "2@gmail.com";
+				user.FullName = "2";
+
+				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
+
+				//if (result.Succeeded)
+					//userManager.AddToRoleAsync(user, "User").Wait();
 			}
 
-			if (!context.Users.Any(u => u.UserName == "3@gmail.com"))
+			if (userManager.FindByNameAsync("3@gmail.com").Result == null)
 			{
-				var user = new BLUser
-				{
-					FullName = "3",
-					Email = "3@gmail.com",
-					UserName = "3@gmail.com",
-					PhoneNumber = "+36303334455",
-					EmailConfirmed = true,
-					PhoneNumberConfirmed = false,
-					SecurityStamp = Guid.NewGuid().ToString("D"),
-					LockoutEnabled = true,
+				BLUser user = new BLUser();
+				user.UserName = "3";
+				user.Email = "3@gmail.com";
+				user.FullName = "3";
 
-				};
-				await userManager.CreateAsync(user);
-				await userManager.AddToRoleAsync(user, "User");
-				users[2] = user;
+				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
+
+				//if (result.Succeeded)
+					//userManager.AddToRoleAsync(user, "User").Wait();
 			}
+		}
 
-			await context.SaveChangesAsync();
-			*/
+		static void InitializeData(BLContext context, UserManager<BLUser> userManager)
+		{
 			//CATEGORIES
 			var categories = new Category[]
 			{
@@ -112,16 +103,16 @@ namespace BucketListApplication.Data
 			var designs = new Design[]
 			//Itt majd még szöszölni kell ezzel
 			{
-				new Design { PictureURL = "url",	BorderColorARGB = Color.Black.ToArgb(),
-					BackgroundColorARGB = Color.White.ToArgb(),	BorderType = 0,
+				new Design { PictureURL = "url",    BorderColorARGB = Color.Black.ToArgb(),
+					BackgroundColorARGB = Color.White.ToArgb(), BorderType = 0,
 					Name = "Default"
 				},
 				new Design { PictureURL = "url",    BorderColorARGB = Color.Blue.ToArgb(),
-					BackgroundColorARGB = Color.Orange.ToArgb(),	BorderType = 0,
+					BackgroundColorARGB = Color.Orange.ToArgb(),    BorderType = 0,
 					Name = "Random1"
 				},
 				new Design { PictureURL = "url",    BorderColorARGB = Color.Green.ToArgb(),
-					BackgroundColorARGB = Color.Red.ToArgb(),	BorderType = 0,
+					BackgroundColorARGB = Color.Red.ToArgb(),   BorderType = 0,
 					Name = "Random2"
 				}
 			};
@@ -133,48 +124,25 @@ namespace BucketListApplication.Data
 			context.SaveChanges();
 
 			//BUCKETLISTS
-			/*
 			var bucketlists = new BucketList[]
 			{
 				new BucketList { Name = "MyEpicBucketList",
-					UserId = users.Single( u => u.FullName == "1").Id
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
 				},
 				new BucketList { Name = "MyNonEpicBucketList",
-					UserId = users.Single( u => u.FullName == "1").Id
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
 				},
 				new BucketList { Name = "FamilyList",
-					UserId = users.Single( u => u.FullName == "2").Id
+					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
 				},
 				new BucketList { Name = "SportList",
-					UserId = users.Single( u => u.FullName == "2").Id
+					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
 				},
 				new BucketList { Name = "LanguageList",
-					UserId = users.Single( u => u.FullName == "3").Id
+					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
 				},
 				new BucketList { Name = "TravelList",
-					UserId = users.Single( u => u.FullName == "3").Id
-				}
-			};*/
-
-			var bucketlists = new BucketList[]
-			{
-				new BucketList { Name = "MyEpicBucketList",
-					UserId = "4f8b1381-8ddb-47a2-8998-6f6207cfdb3e"
-				},
-				new BucketList { Name = "MyNonEpicBucketList",
-					UserId = "4f8b1381-8ddb-47a2-8998-6f6207cfdb3e"
-				},
-				new BucketList { Name = "FamilyList",
-					UserId = "6d901cb7-9da7-4f39-8615-9ca540ab550b"
-				},
-				new BucketList { Name = "SportList",
-					UserId = "6d901cb7-9da7-4f39-8615-9ca540ab550b"
-				},
-				new BucketList { Name = "LanguageList",
-					UserId = "e0e7ff20-36b5-4bf4-a4f3-57a8a4eabf06"
-				},
-				new BucketList { Name = "TravelList",
-					UserId = "e0e7ff20-36b5-4bf4-a4f3-57a8a4eabf06"
+					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
 				}
 			};
 

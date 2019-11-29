@@ -40,19 +40,14 @@ namespace BucketListApplication
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(	IApplicationBuilder app,
+								IWebHostEnvironment env,
+								UserManager<BLUser> userManager)
 		{
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseDatabaseErrorPage();
-
-				using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-				{
-					var userManager = serviceScope.ServiceProvider.GetService<UserManager<BLUser>>();
-					var context = serviceScope.ServiceProvider.GetService<BLContext>();
-					//DbInitializer.Initialize(context, userManager);
-				}
 			}
 			else
 			{
@@ -68,6 +63,12 @@ namespace BucketListApplication
 
 			app.UseAuthentication();
 			app.UseAuthorization();
+
+			using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+			{
+				var context = serviceScope.ServiceProvider.GetService<BLContext>();
+				DbInitializer.Initialize(context, userManager);
+			}
 
 			app.UseEndpoints(endpoints =>
 			{
