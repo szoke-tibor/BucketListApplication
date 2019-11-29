@@ -11,7 +11,7 @@ namespace BucketListApplication.Data
 {
 	public class BLContext : IdentityDbContext<BLUser>
 	{
-		public BLContext(DbContextOptions<BLContext> options) : base(options) { }
+		public BLContext(DbContextOptions<BLContext> options,) : base(options) { }
 
 
 		public DbSet<BucketListApplication.Models.BucketList> BucketLists { get; set; }

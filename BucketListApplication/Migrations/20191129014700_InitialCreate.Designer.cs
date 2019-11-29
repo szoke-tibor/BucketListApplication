@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketListApplication.Migrations
 {
     [DbContext(typeof(BLContext))]
-    [Migration("20191128210723_InitialCreate")]
+    [Migration("20191129014700_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

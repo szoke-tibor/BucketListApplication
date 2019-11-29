@@ -1,5 +1,5 @@
 ﻿@page
-@model BucketListApplication.Pages.Elements.IndexModel
+@model BucketListApplication.Pages.BLElements.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -8,19 +8,19 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New Element</a>
+    <a asp-page="Create">Create New BucketListElement</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Element[0].Name)
+                @Html.DisplayNameFor(model => model.BucketListElement[0].Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Element) {
+@foreach (var item in Model.BucketListElement) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

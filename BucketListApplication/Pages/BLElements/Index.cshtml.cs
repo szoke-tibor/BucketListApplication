@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
 
-namespace BucketListApplication.Pages.Elements
+namespace BucketListApplication.Pages.BLElements
 {
     public class IndexModel : PageModel
     {
@@ -19,14 +19,11 @@ namespace BucketListApplication.Pages.Elements
             _context = context;
         }
 
-        public IList<Element> Element { get;set; }
+        public IList<BucketListElement> BucketListElement { get;set; }
 
         public async Task OnGetAsync()
         {
-			IQueryable<Element> elementsIQ = from e in _context.Elements select e;
-			elementsIQ = elementsIQ.Where(e => e.Discriminator == "Element");
-
-			Element = await elementsIQ.AsNoTracking().ToListAsync();
-		}
+			BucketListElement = await _context.BLElements.ToListAsync();
+        }
     }
 }
