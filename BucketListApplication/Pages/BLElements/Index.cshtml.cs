@@ -25,19 +25,26 @@ namespace BucketListApplication.Pages.BLElements
 		public async Task OnGetAsync()
         {
 			//Logged user's userId
-			var userId = _context._httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-			//Logged user's BucketLists
-			IQueryable<BucketList> bucketlistsIQ = from bl in _context.BucketLists select bl;
-			bucketlistsIQ = bucketlistsIQ.Where(bl => bl.UserId == userId);
-			IList<BucketList> bucketlists = await bucketlistsIQ.AsNoTracking().ToListAsync();
-
-			foreach (BucketList bl in bucketlists)
+			var userId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if ( userId != null )
 			{
-				//BucketListElements on the actual BucketList
-				IQueryable<BucketListElement> bucketlistelementsIQ = from ble in _context.BLElements select ble;
-				bucketlistelementsIQ = bucketlistelementsIQ.Where(ble => ble.BucketListID == bl.BucketListID);
-				//Adding actual BucketList's BucketListElements to the results
-				BucketListElement.AddRange(await bucketlistelementsIQ.AsNoTracking().ToListAsync());
+				//Logged user's BucketLists
+				IQueryable<BucketList> bucketlistsIQ = from bl in _context.BucketLists select bl;
+				bucketlistsIQ = bucketlistsIQ.Where(bl => bl.UserId == userId);
+				IList<BucketList> bucketlists = await bucketlistsIQ.AsNoTracking().ToListAsync();
+
+				foreach (BucketList bl in bucketlists)
+				{
+					//BucketListElements on the actual BucketList
+					IQueryable<BucketListElement> bucketlistelementsIQ = from ble in _context.BLElements select ble;
+					bucketlistelementsIQ = bucketlistelementsIQ.Where(ble => ble.BucketListID == bl.BucketListID);
+					//Adding actual BucketList's BucketListElements to the results
+					BucketListElement.AddRange(await bucketlistelementsIQ.AsNoTracking().ToListAsync());
+				}
+			}
+			else
+			{
+				throw new Exception("Nincs bejelentkezett felhasználó.");
 			}
 		}
     }
