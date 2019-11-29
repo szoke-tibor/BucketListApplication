@@ -9,8 +9,7 @@ namespace BucketListApplication.Models
 {
     public class BucketListElement : Element
     {
-		//Ideiglenesen nullable, hogy ne dobjon kivételt, ha list nélkül szeretném létrehozni
-		public int? BucketListID { get; set; }
+		public int BucketListID { get; set; }
 		public string Description { get; set; }
         public bool Completed { get; set; }
 

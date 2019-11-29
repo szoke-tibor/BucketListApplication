@@ -6,12 +6,19 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using BucketListApplication.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BucketListApplication.Data
 {
 	public class BLContext : IdentityDbContext<BLUser>
 	{
-		public BLContext(DbContextOptions<BLContext> options,) : base(options) { }
+		//For getting logged user
+		public readonly IHttpContextAccessor _httpContextAccessor;
+
+		public BLContext(DbContextOptions<BLContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+		{
+			_httpContextAccessor = httpContextAccessor;
+		}
 
 
 		public DbSet<BucketListApplication.Models.BucketList> BucketLists { get; set; }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BucketListApplication.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BucketListApplication
 {
@@ -38,6 +39,8 @@ namespace BucketListApplication
 
 		    services.AddDbContext<BLContext>(options =>
 		            options.UseSqlServer(Configuration.GetConnectionString("BLContext")));
+			//For getting the logged user
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

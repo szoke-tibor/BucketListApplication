@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
 
+//Not yet implemented
 namespace BucketListApplication.Pages.BLElements
 {
     public class CreateModel : PageModel
