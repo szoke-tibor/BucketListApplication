@@ -108,18 +108,17 @@ namespace BucketListApplication.Data
 
 			//DESIGNS
 			var designs = new Design[]
-			//Itt majd még szöszölni kell ezzel
 			{
-				new Design { PictureURL = "url",    BorderColorARGB = Color.Black.ToArgb(),
-					BackgroundColorARGB = Color.White.ToArgb(), BorderType = 0,
+				new Design { PictureURL = "url",    BorderColor = Color.Black,
+					BackgroundColor = Color.White, BorderType = 0,
 					Name = "Default"
 				},
-				new Design { PictureURL = "url",    BorderColorARGB = Color.Blue.ToArgb(),
-					BackgroundColorARGB = Color.Orange.ToArgb(),    BorderType = 0,
+				new Design { PictureURL = "url",    BorderColor = Color.Blue,
+					BackgroundColor = Color.Orange,    BorderType = 0,
 					Name = "Random1"
 				},
-				new Design { PictureURL = "url",    BorderColorARGB = Color.Green.ToArgb(),
-					BackgroundColorARGB = Color.Red.ToArgb(),   BorderType = 0,
+				new Design { PictureURL = "url",    BorderColor = Color.Green,
+					BackgroundColor = Color.Red,   BorderType = 0,
 					Name = "Random2"
 				}
 			};
