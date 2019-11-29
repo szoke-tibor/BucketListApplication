@@ -15,6 +15,7 @@ namespace BucketListApplication.Models
         public string PictureURL { get; set; }
 		public Int32 BorderColorARGB { get; set; }
 		public Int32 BackgroundColorARGB { get; set; }
+		public BorderType BorderType { get; set; }
 
 		[NotMapped]
         public Color BorderColor
@@ -29,8 +30,6 @@ namespace BucketListApplication.Models
 			get { return Color.FromArgb(BackgroundColorARGB); }
 			set { BackgroundColorARGB = value.ToArgb(); }
 		}
-		
-		public BorderType BorderType { get; set; }
     }
 
 	public enum BorderType

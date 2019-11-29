@@ -110,15 +110,15 @@ namespace BucketListApplication.Data
 			var designs = new Design[]
 			{
 				new Design { PictureURL = "url",    BorderColor = Color.Black,
-					BackgroundColor = Color.White, BorderType = 0,
+					BackgroundColor = Color.White, BorderType = BorderType.Regular,
 					Name = "Default"
 				},
 				new Design { PictureURL = "url",    BorderColor = Color.Blue,
-					BackgroundColor = Color.Orange,    BorderType = 0,
+					BackgroundColor = Color.Orange,    BorderType = BorderType.Fancy,
 					Name = "Random1"
 				},
 				new Design { PictureURL = "url",    BorderColor = Color.Green,
-					BackgroundColor = Color.Red,   BorderType = 0,
+					BackgroundColor = Color.Red,   BorderType = BorderType.Fancy,
 					Name = "Random2"
 				}
 			};
@@ -182,37 +182,37 @@ namespace BucketListApplication.Data
 			var bucketlistelements = new BucketListElement[]
 			{
 				new BucketListElement { Name = "Learn 2 different languages",
-					Description = "Angol, Spanyol", Completed = true,
+					Description = "Angol, Spanyol", Completed = true, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "LanguageList").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
 				},
 				new BucketListElement { Name = "Learn 3 different languages",
-					Description = "Angol, Spanyol, Francia", Completed = false,
+					Description = "Angol, Spanyol, Francia", Completed = false, Visibility = Visibility.Private,
 					BucketListID = bucketlists.Single( bl => bl.Name == "LanguageList").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
 				},
 				new BucketListElement { Name = "Learn to play Curling",
-					Description = "It will be expensive", Completed = false,
+					Description = "It will be expensive", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "SportList").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
 				},
 				new BucketListElement { Name = "Try bungee jumping",
-					Description = "I will need some courage", Completed = false,
+					Description = "I will need some courage", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "SportList").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
 				},
 				new BucketListElement { Name = "Travel to Spain with my family",
-					Description = "", Completed = false,
+					Description = "", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "TravelList").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
 				},
 				new BucketListElement { Name = "Have 3 children",
-					Description = "", Completed = false,
+					Description = "", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "FamilyList").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
 				},
 				new BucketListElement { Name = "ASD",
-					Description = "", Completed = false,
+					Description = "", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "MyEpicBucketList").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Random1").DesignID
 				}

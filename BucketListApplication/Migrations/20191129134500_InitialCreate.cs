@@ -216,7 +216,8 @@ namespace BucketListApplication.Migrations
                     Discriminator = table.Column<string>(nullable: false),
                     BucketListID = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Completed = table.Column<bool>(nullable: true)
+                    Completed = table.Column<bool>(nullable: true),
+                    Visibility = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -226,7 +227,7 @@ namespace BucketListApplication.Migrations
                         column: x => x.BucketListID,
                         principalTable: "BucketList",
                         principalColumn: "BucketListID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Element_Design_DesignID",
                         column: x => x.DesignID,

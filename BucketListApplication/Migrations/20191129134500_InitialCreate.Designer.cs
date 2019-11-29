@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketListApplication.Migrations
 {
     [DbContext(typeof(BLContext))]
-    [Migration("20191129014700_InitialCreate")]
+    [Migration("20191129134500_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -337,7 +337,7 @@ namespace BucketListApplication.Migrations
                 {
                     b.HasBaseType("BucketListApplication.Models.Element");
 
-                    b.Property<int?>("BucketListID")
+                    b.Property<int>("BucketListID")
                         .HasColumnType("int");
 
                     b.Property<bool>("Completed")
@@ -345,6 +345,9 @@ namespace BucketListApplication.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Visibility")
+                        .HasColumnType("int");
 
                     b.HasIndex("BucketListID");
 
@@ -437,7 +440,9 @@ namespace BucketListApplication.Migrations
                 {
                     b.HasOne("BucketListApplication.Models.BucketList", "BucketList")
                         .WithMany("BLElements")
-                        .HasForeignKey("BucketListID");
+                        .HasForeignKey("BucketListID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
