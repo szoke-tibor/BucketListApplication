@@ -32,6 +32,7 @@ namespace BucketListApplication
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));
 			services.AddDefaultIdentity<BLUser>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddRoles<IdentityRole>()
 				.AddEntityFrameworkStores<BLContext>();
 			services.AddRazorPages();
 
@@ -42,7 +43,8 @@ namespace BucketListApplication
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(	IApplicationBuilder app,
 								IWebHostEnvironment env,
-								UserManager<BLUser> userManager)
+								UserManager<BLUser> userManager,
+								RoleManager<IdentityRole> roleManager)
 		{
 			if (env.IsDevelopment())
 			{
@@ -67,7 +69,7 @@ namespace BucketListApplication
 			using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
 			{
 				var context = serviceScope.ServiceProvider.GetService<BLContext>();
-				DbInitializer.Initialize(context, userManager);
+				DbInitializer.Initialize(context, userManager, roleManager);
 			}
 
 			app.UseEndpoints(endpoints =>

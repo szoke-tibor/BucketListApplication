@@ -14,28 +14,32 @@ namespace BucketListApplication.Data
 {
 	public static class DbInitializer
 	{
-		public static void Initialize(BLContext context, UserManager<BLUser> userManager)
+		public static void Initialize(BLContext context, UserManager<BLUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			if (context.Elements.Any())
 			{
 				return;   // DB has been seeded already
 			}
 
-			InitializeRoles(context);
+			InitializeRoles(roleManager);
 			InitializeUsers(userManager);
 			InitializeData(context, userManager);
 		}
 
-		static void InitializeRoles(BLContext context)
+		public static void InitializeRoles(RoleManager<IdentityRole> roleManager)
 		{
-			//ROLES
-			var roles = new string[] { "Admin", "User" };
-			foreach (string role in roles)
+			if (!roleManager.RoleExistsAsync("Admin").Result)
 			{
-				if (!context.Roles.Any(r => r.Name == role))
-				{
-					context.Roles.Add(new IdentityRole(role));
-				}
+				IdentityRole role = new IdentityRole();
+				role.Name = "Admin";
+				IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+			}
+
+			if (!roleManager.RoleExistsAsync("User").Result)
+			{
+				IdentityRole role = new IdentityRole();
+				role.Name = "User";
+				IdentityResult roleResult = roleManager.CreateAsync(role).Result;
 			}
 		}
 
@@ -50,8 +54,8 @@ namespace BucketListApplication.Data
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 
-				//if (result.Succeeded)
-					//userManager.AddToRoleAsync(user, "Admin").Wait();
+				if (result.Succeeded)
+					userManager.AddToRoleAsync(user, "Admin").Wait();
 			}
 
 			if (userManager.FindByNameAsync("2@gmail.com").Result == null)
@@ -63,8 +67,8 @@ namespace BucketListApplication.Data
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 
-				//if (result.Succeeded)
-					//userManager.AddToRoleAsync(user, "User").Wait();
+				if (result.Succeeded)
+					userManager.AddToRoleAsync(user, "User").Wait();
 			}
 
 			if (userManager.FindByNameAsync("3@gmail.com").Result == null)
@@ -76,8 +80,8 @@ namespace BucketListApplication.Data
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 
-				//if (result.Succeeded)
-					//userManager.AddToRoleAsync(user, "User").Wait();
+				if (result.Succeeded)
+					userManager.AddToRoleAsync(user, "User").Wait();
 			}
 		}
 
