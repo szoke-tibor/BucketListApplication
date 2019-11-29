@@ -48,8 +48,9 @@ namespace BucketListApplication.Data
 			if (userManager.FindByNameAsync("1@gmail.com").Result == null)
 			{
 				BLUser user = new BLUser();
-				user.UserName = "1";
+				user.UserName = "1@gmail.com";
 				user.Email = "1@gmail.com";
+				user.EmailConfirmed = true;
 				user.FullName = "1";
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
@@ -61,8 +62,9 @@ namespace BucketListApplication.Data
 			if (userManager.FindByNameAsync("2@gmail.com").Result == null)
 			{
 				BLUser user = new BLUser();
-				user.UserName = "2";
+				user.UserName = "2@gmail.com";
 				user.Email = "2@gmail.com";
+				user.EmailConfirmed = true;
 				user.FullName = "2";
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
@@ -74,8 +76,9 @@ namespace BucketListApplication.Data
 			if (userManager.FindByNameAsync("3@gmail.com").Result == null)
 			{
 				BLUser user = new BLUser();
-				user.UserName = "3";
+				user.UserName = "3@gmail.com";
 				user.Email = "3@gmail.com";
+				user.EmailConfirmed = true;
 				user.FullName = "3";
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
