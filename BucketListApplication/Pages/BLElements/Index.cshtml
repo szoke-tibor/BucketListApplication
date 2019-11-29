@@ -14,13 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BucketListElement[0].Name)
+                @Html.DisplayNameFor(model => model.BucketListElements[0].Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.BucketListElement) {
+@foreach (var item in Model.BucketListElements) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -34,3 +34,21 @@
 }
     </tbody>
 </table>
+
+<form method="post">
+    <div class="form-group">
+        <select id="ListSelect" name="ListSelect">
+            <optgroup label="My Bucketlists:">
+                @foreach (var list in Model.BucketLists)
+                {
+                    <option value="@list.Name">@list.Name</option>
+                }
+            </optgroup>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="List" class="btn btn-primary" />
+    </div>
+</form>
+
+    
