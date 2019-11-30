@@ -1,0 +1,41 @@
+﻿@page
+@model BucketListApplication.Pages.Social.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Check other's BucketLists!</h1>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find a user by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].FullName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Users) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                <a asp-page="./UserCheck" asp-route-id="@item.Id">Check</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -51,7 +51,7 @@ namespace BucketListApplication.Data
 				user.UserName = "1@gmail.com";
 				user.Email = "1@gmail.com";
 				user.EmailConfirmed = true;
-				user.FullName = "1";
+				user.FullName = "Sovány Áldáska";
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 
@@ -65,7 +65,7 @@ namespace BucketListApplication.Data
 				user.UserName = "2@gmail.com";
 				user.Email = "2@gmail.com";
 				user.EmailConfirmed = true;
-				user.FullName = "2";
+				user.FullName = "Kardos Pompónia";
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 
@@ -79,7 +79,7 @@ namespace BucketListApplication.Data
 				user.UserName = "3@gmail.com";
 				user.Email = "3@gmail.com";
 				user.EmailConfirmed = true;
-				user.FullName = "3";
+				user.FullName = "Lakatos Fortunátó";
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 

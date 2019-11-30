@@ -9,13 +9,13 @@ using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
 
-namespace BucketListApplication.Pages.BLElements
+namespace BucketListApplication.Pages.Social
 {
-    public class IndexModel : PageModel
+    public class UserCheckModel : PageModel
     {
         private readonly BucketListApplication.Data.BLContext _context;
 
-        public IndexModel(BucketListApplication.Data.BLContext context)
+        public UserCheckModel(BucketListApplication.Data.BLContext context)
         {
             _context = context;
         }
@@ -26,16 +26,18 @@ namespace BucketListApplication.Pages.BLElements
 		public List<BucketListElement> BucketListElements = new List<BucketListElement>();
 		public List<BucketList> BucketLists = new List<BucketList>();
 		public BucketList SelectedBL = new BucketList();
+		public string Title { get; set; }
 
-		public async Task OnGetAsync()
+		public async Task OnGetAsync(string Id)
         {
 			//Logged user's userId
 			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
-				//Logged user's BucketLists
+				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + "'s BucketLists";
+				//Checked user's BucketLists
 				IQueryable<BucketList> bucketlistsIQ = from bl in _context.BucketLists select bl;
-				bucketlistsIQ = bucketlistsIQ.Where(bl => bl.UserId == CurrentUserId);
+				bucketlistsIQ = bucketlistsIQ.Where(bl => bl.UserId == Id);
 				BucketLists = await bucketlistsIQ.AsNoTracking().ToListAsync();
 			}
 			else
@@ -43,21 +45,23 @@ namespace BucketListApplication.Pages.BLElements
 				throw new Exception("Nincs bejelentkezett felhasználó.");
 			}
 		}
-		public async Task<IActionResult> OnPostAsync()
+		public async Task<IActionResult> OnPostAsync(string Id)
 		{
 			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
-				//Logged user's BucketLists
+				//Checked user's BucketLists
 				IQueryable<BucketList> bucketlistsIQ = from bl in _context.BucketLists select bl;
-				bucketlistsIQ = bucketlistsIQ.Where(bl => bl.UserId == CurrentUserId);
+				bucketlistsIQ = bucketlistsIQ.Where(bl => bl.UserId == Id);
 				BucketLists = await bucketlistsIQ.AsNoTracking().ToListAsync();
 
 				SelectedBL = BucketLists.Find(bl => bl.Name == ListSelect);
+				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " - " + SelectedBL.Name;
 
 				//BucketListElements in selected BucketList
 				IQueryable<BucketListElement> bucketlistelementsIQ = from ble in _context.BLElements select ble;
-				bucketlistelementsIQ = bucketlistelementsIQ.Where(ble => ble.BucketListID == SelectedBL.BucketListID);
+				bucketlistelementsIQ = bucketlistelementsIQ.Where(ble =>	ble.BucketListID == SelectedBL.BucketListID && 
+																			ble.Visibility == Visibility.Public);
 				BucketListElements = await bucketlistelementsIQ.AsNoTracking().ToListAsync();
 			}
 			else
