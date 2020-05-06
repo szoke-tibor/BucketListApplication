@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
+using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BLElements
 {
@@ -19,14 +20,13 @@ namespace BucketListApplication.Pages.BLElements
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-        ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return Page();
-        }
-
         [BindProperty]
         public BucketList BucketList { get; set; }
+
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -36,6 +36,13 @@ namespace BucketListApplication.Pages.BLElements
             {
                 return Page();
             }
+
+            //Logged user's userId
+            var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (CurrentUserId != null)
+                BucketList.UserId = CurrentUserId;
+            else
+                throw new Exception("Nincs bejelentkezett felhasználó.");
 
             _context.BucketLists.Add(BucketList);
             await _context.SaveChangesAsync();
