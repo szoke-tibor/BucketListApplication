@@ -9,6 +9,7 @@ using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace BucketListApplication.Pages.BLElements
 {
@@ -24,7 +25,6 @@ namespace BucketListApplication.Pages.BLElements
 		[BindProperty]
 		public int SelectedBLID { get; set; }
 
-		IQueryable<BucketList> CurrentUsersBucketLists;
 		public List<BucketListElement> SelectedBLElements = new List<BucketListElement>();
 
 		public async Task OnGetAsync()
@@ -34,9 +34,9 @@ namespace BucketListApplication.Pages.BLElements
 			if ( CurrentUserId != null )
 			{
 				//Logged user's BucketLists
-				CurrentUsersBucketLists = from bl in _context.BucketLists
-										  where bl.UserId == CurrentUserId
-									      select bl;
+				var CurrentUsersBucketLists = from bl in _context.BucketLists
+											  where bl.UserId == CurrentUserId
+											  select bl;
 				ViewData["BucketList"] = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
 			}
 			else
@@ -57,6 +57,10 @@ namespace BucketListApplication.Pages.BLElements
 			else
 				throw new Exception("Nincs bejelentkezett felhasználó.");
 
+			var CurrentUsersBucketLists = from bl in _context.BucketLists
+										  where bl.UserId == CurrentUserId
+										  select bl;
+			ViewData["BucketList"] = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
 			return Page();
 		}
 	}
