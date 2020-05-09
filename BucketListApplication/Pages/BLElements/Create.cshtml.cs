@@ -58,7 +58,7 @@ namespace BucketListApplication.Pages.BLElements
 			{
 				_context.Elements.Add(emptyBucketListElement);
 				await _context.SaveChangesAsync();
-				return RedirectToPage("../Elements/Index");
+				return RedirectToPage("Index");
 			}
 			return Page();
 		}
