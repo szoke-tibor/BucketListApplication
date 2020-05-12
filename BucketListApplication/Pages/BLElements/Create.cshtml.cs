@@ -22,7 +22,7 @@ namespace BucketListApplication.Pages.BLElements
 		[BindProperty]
 		public int[] SelectedCategories { get; set; }
 		[BindProperty]
-		public BucketListElement BucketListElement { get; set; }
+		public BucketListElement BLElement { get; set; }
 
 		public CreateModel(BucketListApplication.Data.BLContext context)
         {
@@ -61,7 +61,7 @@ namespace BucketListApplication.Pages.BLElements
 			// Defense against overposting attacks. Returns true if the update was successful.
 			if (await TryUpdateModelAsync<BucketListElement>(
 				emptyBucketListElement,
-				"BucketListElement",   // Prefix for form value.
+				"blelement",   // Prefix for form value.
 				ble => ble.Name, ble => ble.DesignID,
                 ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
 			{
