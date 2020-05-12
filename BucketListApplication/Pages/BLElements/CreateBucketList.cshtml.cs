@@ -32,10 +32,7 @@ namespace BucketListApplication.Pages.BLElements
         // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            var emptyBucketList = new BucketList();
 
             //Logged user's userId
             var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -44,10 +41,16 @@ namespace BucketListApplication.Pages.BLElements
             else
                 throw new Exception("Nincs bejelentkezett felhasználó.");
 
-            _context.BucketLists.Add(BucketList);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            if (await TryUpdateModelAsync<BucketList>(
+                emptyBucketList,
+                "bucketList",   // Prefix for form value.
+                bl => bl.Name, bl => bl.UserId))
+            {
+                _context.BucketLists.Add(BucketList);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("Index");
+            }
+            return Page();
         }
     }
 }
