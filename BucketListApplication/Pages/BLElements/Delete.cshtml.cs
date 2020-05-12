@@ -21,7 +21,7 @@ namespace BucketListApplication.Pages.BLElements
         }
 
         [BindProperty]
-        public Element Element { get; set; }
+        public BucketListElement BLElement { get; set; }
 		public string ErrorMessage { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
@@ -31,11 +31,11 @@ namespace BucketListApplication.Pages.BLElements
                 return NotFound();
             }
 
-            Element = await _context.Elements
-				.AsNoTracking()
+            BLElement = await _context.BLElements
+                .AsNoTracking()
 				.FirstOrDefaultAsync(m => m.ElementID == id);
 
-            if (Element == null)
+            if (BLElement == null)
             {
                 return NotFound();
             }
@@ -55,16 +55,16 @@ namespace BucketListApplication.Pages.BLElements
                 return NotFound();
             }
 
-			var element = await _context.Elements.FindAsync(id);
+			var blelement = await _context.BLElements.FindAsync(id);
 
-			if (element == null)
+			if (blelement == null)
 			{
 				return NotFound();
 			}
 
 			try
 			{
-				_context.Elements.Remove(element);
+				_context.BLElements.Remove(blelement);
 				await _context.SaveChangesAsync();
 				return RedirectToPage("./Index");
 			}

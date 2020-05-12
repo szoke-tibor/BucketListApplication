@@ -13,11 +13,11 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Element.ElementID" />
+            <input type="hidden" asp-for="BLElement.ElementID" />
             <div class="form-group">
-                <label asp-for="Element.Name" class="control-label"></label>
-                <input asp-for="Element.Name" class="form-control" />
-                <span asp-validation-for="Element.Name" class="text-danger"></span>
+                <label asp-for="BLElement.Name" class="control-label"></label>
+                <input asp-for="BLElement.Name" class="form-control" />
+                <span asp-validation-for="BLElement.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

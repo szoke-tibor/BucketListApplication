@@ -20,7 +20,7 @@ namespace BucketListApplication.Pages.BLElements
             _context = context;
         }
 
-        public Element Element { get; set; }
+        public BucketListElement BLElement { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,13 +31,13 @@ namespace BucketListApplication.Pages.BLElements
 
             //Element = await _context.Elements.FirstOrDefaultAsync(m => m.ID == id);
 
-			Element = await _context.Elements
-				.Include(e => e.ElementCategories)
+            BLElement = await _context.BLElements
+                .Include(e => e.ElementCategories)
 				.ThenInclude(ec => ec.Category)
 				.AsNoTracking()
 				.FirstOrDefaultAsync(m => m.ElementID == id);
 
-			if (Element == null)
+			if (BLElement == null)
             {
                 return NotFound();
             }

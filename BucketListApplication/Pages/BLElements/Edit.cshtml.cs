@@ -22,7 +22,7 @@ namespace BucketListApplication.Pages.BLElements
         }
 
         [BindProperty]
-        public Element Element { get; set; }
+        public BucketListElement BLElement { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,9 +31,9 @@ namespace BucketListApplication.Pages.BLElements
                 return NotFound();
             }
 
-            Element = await _context.Elements.FindAsync(id);
+            BLElement = await _context.BLElements.FindAsync(id);
 
-            if (Element == null)
+            if (BLElement == null)
             {
                 return NotFound();
             }
@@ -45,17 +45,17 @@ namespace BucketListApplication.Pages.BLElements
         // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(int id)
         {
-			var elementToUpdate = await _context.Elements.FindAsync(id);
+			var elementToUpdate = await _context.BLElements.FindAsync(id);
 
 			if (elementToUpdate == null)
 			{
 				return NotFound();
 			}
 
-			if (await TryUpdateModelAsync<Element>(
+			if (await TryUpdateModelAsync<BucketListElement>(
 				elementToUpdate,
-				"element",
-				e => e.Name))
+				"blelement",
+				ble => ble.Name))
 			{
 				await _context.SaveChangesAsync();
 				return RedirectToPage("./Index");
@@ -64,9 +64,9 @@ namespace BucketListApplication.Pages.BLElements
 			return Page();
 		}
 
-        private bool ElementExists(int id)
+        private bool BLElementExists(int id)
         {
-            return _context.Elements.Any(e => e.ElementID == id);
+            return _context.BLElements.Any(e => e.ElementID == id);
         }
     }
 }

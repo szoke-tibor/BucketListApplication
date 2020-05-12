@@ -65,7 +65,7 @@ namespace BucketListApplication.Pages.BLElements
 				ble => ble.Name, ble => ble.DesignID,
                 ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
 			{
-				_context.Elements.Add(emptyBucketListElement);
+				_context.BLElements.Add(emptyBucketListElement);
 				await _context.SaveChangesAsync();
 
 				// Searching the added BLElement to get its ElementID
