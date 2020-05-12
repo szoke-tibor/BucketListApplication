@@ -24,7 +24,7 @@ namespace BucketListApplication.Pages.BLElements
 
 		[BindProperty]
 		public int SelectedBLID { get; set; }
-
+		public SelectList BLSelect { get; set; }
 		public List<BucketListElement> SelectedBLElements = new List<BucketListElement>();
 
 		public async Task OnGetAsync()
@@ -37,7 +37,7 @@ namespace BucketListApplication.Pages.BLElements
 				var CurrentUsersBucketLists = from bl in _context.BucketLists
 											  where bl.UserId == CurrentUserId
 											  select bl;
-				ViewData["BucketList"] = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
+				BLSelect = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
 			}
 			else
 				throw new Exception("Nincs bejelentkezett felhasználó.");
@@ -60,7 +60,7 @@ namespace BucketListApplication.Pages.BLElements
 			var CurrentUsersBucketLists = from bl in _context.BucketLists
 										  where bl.UserId == CurrentUserId
 										  select bl;
-			ViewData["BucketList"] = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
+			BLSelect = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
 			return Page();
 		}
 	}

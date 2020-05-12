@@ -17,6 +17,7 @@ namespace BucketListApplication.Pages.BLElements
         private readonly BucketListApplication.Data.BLContext _context;
 		public SelectList DesignSelect { get; set; }
 		public SelectList CategorySelect { get; set; }
+		public SelectList BLSelect { get; set; }
 
 		[BindProperty]
 		public int[] SelectedCategories { get; set; }
@@ -38,13 +39,13 @@ namespace BucketListApplication.Pages.BLElements
 				var CurrentUsersBucketLists = from bl in _context.BucketLists
 											  where bl.UserId == CurrentUserId
 											  select bl;
-				ViewData["BucketList"] = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
+				BLSelect = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
 			}
 			else
 				throw new Exception("Nincs bejelentkezett felhasználó.");
 
-			ViewData["Design"] = new SelectList(_context.Designs, nameof(Models.Design.DesignID), nameof(Models.Design.Name));
-			ViewData["Category"] = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
+			DesignSelect = new SelectList(_context.Designs, nameof(Models.Design.DesignID), nameof(Models.Design.Name));
+			CategorySelect = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
 			return Page();
         }
 
@@ -56,7 +57,6 @@ namespace BucketListApplication.Pages.BLElements
 			ElementCategory ec = new ElementCategory();
 
 			var emptyBucketListElement = new BucketListElement();
-			var emptyElementCategory = new ElementCategory();
 
 			// Defense against overposting attacks. Returns true if the update was successful.
 			if (await TryUpdateModelAsync<BucketListElement>(

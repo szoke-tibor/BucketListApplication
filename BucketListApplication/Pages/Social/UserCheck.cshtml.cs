@@ -25,7 +25,7 @@ namespace BucketListApplication.Pages.Social
 		public int SelectedBLID { get; set; }
 
 		public List<BucketListElement> SelectedBLElements = new List<BucketListElement>();
-
+		public SelectList BLSelect { get; set; }
 		public string Title { get; set; }
 
 		public async Task OnGetAsync(string Id)
@@ -39,7 +39,7 @@ namespace BucketListApplication.Pages.Social
 				var CheckedUsersBucketLists = from bl in _context.BucketLists
 											  where bl.UserId == Id
 											  select bl;
-				ViewData["BucketList"] = new SelectList(CheckedUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
+				BLSelect = new SelectList(CheckedUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
 			}
 			else
 				throw new Exception("Nincs bejelentkezett felhasználó.");
@@ -58,7 +58,7 @@ namespace BucketListApplication.Pages.Social
 				var CheckedUsersBucketLists = from bl in _context.BucketLists
 											  where bl.UserId == Id
 											  select bl;
-				ViewData["BucketList"] = new SelectList(CheckedUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
+				BLSelect = new SelectList(CheckedUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
 
 				//BucketListElements in selected BucketList
 				IQueryable<BucketListElement> bucketlistelementsIQ = from ble in _context.BLElements
