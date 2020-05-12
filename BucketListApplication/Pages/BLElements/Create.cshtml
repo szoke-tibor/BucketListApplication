@@ -33,9 +33,8 @@
                 <span asp-validation-for="BucketListElement.Visibility" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category.CategoryID" class="control-label">Category:</label>
-                <select asp-for="Category.CategoryID" asp-items="ViewBag.Category" class="form-control"></select>
-                <span asp-validation-for="Category.Name" class="text-danger"></span>
+                <label asp-for="SelectedCategories" class="control-label">Category:</label>
+                <select asp-for="SelectedCategories" asp-items="ViewBag.Category" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label asp-for="BucketListElement.DesignID" class="control-label">Design:</label>

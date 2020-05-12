@@ -15,8 +15,15 @@ namespace BucketListApplication.Pages.BLElements
     public class CreateModel : PageModel
     {
         private readonly BucketListApplication.Data.BLContext _context;
+		public SelectList DesignSelect { get; set; }
+		public SelectList CategorySelect { get; set; }
 
-        public CreateModel(BucketListApplication.Data.BLContext context)
+		[BindProperty]
+		public int[] SelectedCategories { get; set; }
+		[BindProperty]
+		public BucketListElement BucketListElement { get; set; }
+
+		public CreateModel(BucketListApplication.Data.BLContext context)
         {
             _context = context;
         }
@@ -40,11 +47,6 @@ namespace BucketListApplication.Pages.BLElements
 			ViewData["Category"] = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
 			return Page();
         }
-
-		[BindProperty]
-		public Category Category { get; set; }
-		[BindProperty]
-        public BucketListElement BucketListElement { get; set; }
 
 		// DONE
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -75,12 +77,16 @@ namespace BucketListApplication.Pages.BLElements
 																	  .Where(bl => bl.Visibility == emptyBucketListElement.Visibility)
 																	  .First();
 
-				Category selectedCategory = _context.Categories.Where(c => c.CategoryID == Category.CategoryID).First();
+				Category selectedCategory;
 
-				ec.ElementID = addedBLElement.ElementID;
-				ec.CategoryID = selectedCategory.CategoryID;
-				_context.ElementCategories.Add(ec);
-				await _context.SaveChangesAsync();
+				for (int i = 0; i < SelectedCategories.Length; i++ )
+				{
+					selectedCategory = _context.Categories.Where(c => c.CategoryID == SelectedCategories[i]).First();
+					ec.ElementID = addedBLElement.ElementID;
+					ec.CategoryID = selectedCategory.CategoryID;
+					_context.ElementCategories.Add(ec);
+					await _context.SaveChangesAsync();
+				}
 
 				return RedirectToPage("Index");
 			}
