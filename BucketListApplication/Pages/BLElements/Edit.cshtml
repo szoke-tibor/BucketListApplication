@@ -13,11 +13,37 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="BLElement.ElementID" />
             <div class="form-group">
-                <label asp-for="BLElement.Name" class="control-label"></label>
+                <label asp-for="BLElement.BucketListID" class="control-label">Bucket List:</label>
+                <select asp-for="BLElement.BucketListID" class="form-control" asp-items="Model.BLSelect"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BLElement.Name" class="control-label">Name:</label>
                 <input asp-for="BLElement.Name" class="form-control" />
                 <span asp-validation-for="BLElement.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BLElement.Description" class="control-label">Description:</label>
+                <input asp-for="BLElement.Description" class="form-control" />
+                <span asp-validation-for="BLElement.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BLElement.Visibility" class="control-label">Visibility:</label>
+                <select asp-for="BLElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
+                <span asp-validation-for="BLElement.Visibility" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedCategories" class="control-label">Category:</label>
+                <select asp-for="SelectedCategories" asp-items="Model.CategorySelect" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BLElement.DesignID" class="control-label">Design:</label>
+                <select asp-for="BLElement.DesignID" class="form-control" asp-items="Model.DesignSelect"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BLElement.Completed" /> @Html.DisplayNameFor(model => model.BLElement.Completed)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -27,7 +53,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
