@@ -12,8 +12,8 @@ using System.Security.Claims;
 //Not yet implemented
 namespace BucketListApplication.Pages.BLElements
 {
-    public class CreateModel : PageModel
-    {
+    public class CreateModel : BLElementCategoriesPageModel
+	{
         private readonly BucketListApplication.Data.BLContext _context;
 		public SelectList DesignSelect { get; set; }
 		public SelectList CategorySelect { get; set; }
@@ -22,7 +22,7 @@ namespace BucketListApplication.Pages.BLElements
 		[BindProperty]
 		public int[] SelectedCategories { get; set; }
 		[BindProperty]
-		public BucketListElement BLElement { get; set; }
+		public BucketListElement BucketListElement { get; set; }
 
 		public CreateModel(BucketListApplication.Data.BLContext context)
         {
@@ -40,57 +40,51 @@ namespace BucketListApplication.Pages.BLElements
 											  where bl.UserId == CurrentUserId
 											  select bl;
 				BLSelect = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
+
+				// Empty collection for the loop
+				// foreach (var category in Model.AssignedCategoryDataList)
+				// in the Create Razor page.
+				var emptyBLElement = new BucketListElement();
+				emptyBLElement.ElementCategories = new List<ElementCategory>();
+
+				DesignSelect = new SelectList(_context.Designs, nameof(Models.Design.DesignID), nameof(Models.Design.Name));
+				CategorySelect = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
+				PopulateAssignedCategoryData(_context, emptyBLElement);
+				return Page();
 			}
 			else
 				throw new Exception("Nincs bejelentkezett felhasználó.");
-
-			DesignSelect = new SelectList(_context.Designs, nameof(Models.Design.DesignID), nameof(Models.Design.Name));
-			CategorySelect = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
-			return Page();
         }
 
-		// DONE
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
-			ElementCategory ec = new ElementCategory();
+			var newBLElement = new BucketListElement();
 
-			var emptyBucketListElement = new BucketListElement();
+			if (selectedCategories != null)
+			{
+				newBLElement.ElementCategories = new List<ElementCategory>();
+				foreach (var category in selectedCategories)
+				{
+					var categoryToAdd = new ElementCategory
+					{
+						CategoryID = int.Parse(category)
+					};
+					newBLElement.ElementCategories.Add(categoryToAdd);
+				}
+			}
 
 			// Defense against overposting attacks. Returns true if the update was successful.
 			if (await TryUpdateModelAsync<BucketListElement>(
-				emptyBucketListElement,
-				"blelement",   // Prefix for form value.
+				newBLElement,
+				"BucketListElement",   // Prefix for form value.
 				ble => ble.Name, ble => ble.DesignID,
                 ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
 			{
-				_context.BLElements.Add(emptyBucketListElement);
+				_context.BLElements.Add(newBLElement);
 				await _context.SaveChangesAsync();
-
-				// Searching the added BLElement to get its ElementID
-				BucketListElement addedBLElement = _context.BLElements.Where(bl => bl.Name == emptyBucketListElement.Name)
-																	  .Where(bl => bl.DesignID == emptyBucketListElement.DesignID)
-																	  .Where(bl => bl.BucketListID == emptyBucketListElement.BucketListID)
-																	  .Where(bl => bl.Description == emptyBucketListElement.Description)
-																	  .Where(bl => bl.Completed == emptyBucketListElement.Completed)
-																	  .Where(bl => bl.Visibility == emptyBucketListElement.Visibility)
-																	  .First();
-
-				Category selectedCategory;
-
-				for (int i = 0; i < SelectedCategories.Length; i++ )
-				{
-					selectedCategory = _context.Categories.Where(c => c.CategoryID == SelectedCategories[i]).First();
-					ec.ElementID = addedBLElement.ElementID;
-					ec.CategoryID = selectedCategory.CategoryID;
-					_context.ElementCategories.Add(ec);
-					await _context.SaveChangesAsync();
-				}
-
 				return RedirectToPage("Index");
 			}
-
+			PopulateAssignedCategoryData(_context, newBLElement);
 			return Page();
 		}
     }

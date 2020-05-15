@@ -18,7 +18,8 @@ namespace BucketListApplication.Data
 		{
 			if (context.Elements.Any())
 			{
-				return;   // DB has been seeded already
+				// DB has been seeded already
+				return;
 			}
 
 			InitializeRoles(roleManager);
@@ -97,13 +98,15 @@ namespace BucketListApplication.Data
 				new Category { Name = "Family" },
 				new Category { Name = "Travel" },
 				new Category { Name = "Education" },
+				new Category { Name = "Skills" },
+				new Category { Name = "Music" },
+				new Category { Name = "Games" },
+				new Category { Name = "Job" },
+				new Category { Name = "Sexual experiences" },
 				new Category { Name = "Other" }
 			};
 
-			foreach (Category c in categories)
-			{
-				context.Categories.Add(c);
-			}
+			context.Categories.AddRange(categories);
 			context.SaveChanges();
 
 			//DESIGNS
@@ -123,10 +126,7 @@ namespace BucketListApplication.Data
 				}
 			};
 
-			foreach (Design d in designs)
-			{
-				context.Designs.Add(d);
-			}
+			context.Designs.AddRange(designs);
 			context.SaveChanges();
 
 			//BUCKETLISTS
@@ -152,10 +152,7 @@ namespace BucketListApplication.Data
 				}
 			};
 
-			foreach (BucketList bl in bucketlists)
-			{
-				context.BucketLists.Add(bl);
-			}
+			context.BucketLists.AddRange(bucketlists);
 			context.SaveChanges();
 
 			//ELEMENTS
@@ -172,10 +169,7 @@ namespace BucketListApplication.Data
 				},
 			};
 
-			foreach (Element e in elements)
-			{
-				context.Elements.Add(e);
-			}
+			context.Elements.AddRange(elements);
 			context.SaveChanges();
 
 			//BUCKETLISTELEMENTS
@@ -218,10 +212,7 @@ namespace BucketListApplication.Data
 				}
 			};
 
-			foreach (BucketListElement ble in bucketlistelements)
-			{
-				context.BLElements.Add(ble);
-			}
+			context.BLElements.AddRange(bucketlistelements);
 			context.SaveChanges();
 
 			var elementcategories = new ElementCategory[]
@@ -272,10 +263,7 @@ namespace BucketListApplication.Data
 				}
 			};
 
-			foreach (ElementCategory ec in elementcategories)
-			{
-				context.ElementCategories.Add(ec);
-			}
+			context.ElementCategories.AddRange(elementcategories);
 			context.SaveChanges();
 		}
 	}
