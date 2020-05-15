@@ -14,41 +14,63 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="BLElement.BucketListID" class="control-label">Bucket List:</label>
-                <select asp-for="BLElement.BucketListID" class="form-control" asp-items="Model.BLSelect"></select>
+                <label asp-for="BucketListElement.BucketListID" class="control-label">Bucket List:</label>
+                <select asp-for="BucketListElement.BucketListID" class="form-control" asp-items="Model.BLSelect"></select>
             </div>
             <div class="form-group">
-                <label asp-for="BLElement.Name" class="control-label">Name:</label>
-                <input asp-for="BLElement.Name" class="form-control" />
-                <span asp-validation-for="BLElement.Name" class="text-danger"></span>
+                <label asp-for="BucketListElement.Name" class="control-label">Name:</label>
+                <input asp-for="BucketListElement.Name" class="form-control" />
+                <span asp-validation-for="BucketListElement.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BLElement.Description" class="control-label">Description:</label>
-                <input asp-for="BLElement.Description" class="form-control" />
-                <span asp-validation-for="BLElement.Description" class="text-danger"></span>
+                <label asp-for="BucketListElement.Description" class="control-label">Description:</label>
+                <textarea asp-for="BucketListElement.Description" class="form-control"></textarea>
+                <span asp-validation-for="BucketListElement.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BLElement.Visibility" class="control-label">Visibility:</label>
-                <select asp-for="BLElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
-                <span asp-validation-for="BLElement.Visibility" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SelectedCategories" class="control-label">Category:</label>
-                <select asp-for="SelectedCategories" asp-items="Model.CategorySelect" class="form-control"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="BLElement.DesignID" class="control-label">Design:</label>
-                <select asp-for="BLElement.DesignID" class="form-control" asp-items="Model.DesignSelect"></select>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="BLElement.Completed" /> @Html.DisplayNameFor(model => model.BLElement.Completed)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+
+                                foreach (var category in Model.AssignedCategoryDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td align="center">
+                                        <input type="checkbox"
+                                               name="selectedCategories"
+                                               value="@category.CategoryID"
+                                               @(Html.Raw(category.Assigned ? "checked=\"checked\"" : "")) />
+                                        <br />@category.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BucketListElement.Visibility" class="control-label">Visibility:</label>
+                    <select asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
+                    <span asp-validation-for="BucketListElement.Visibility" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BucketListElement.DesignID" class="control-label">Design:</label>
+                    <select asp-for="BucketListElement.DesignID" class="form-control" asp-items="Model.DesignSelect"></select>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="BucketListElement.Completed" /> @Html.DisplayNameFor(model => model.BucketListElement.Completed)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
     </div>
 </div>
 

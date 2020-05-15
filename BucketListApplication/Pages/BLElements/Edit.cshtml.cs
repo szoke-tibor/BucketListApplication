@@ -10,10 +10,9 @@ using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
 
-//Not yet implemented
 namespace BucketListApplication.Pages.BLElements
 {
-    public class EditModel : PageModel
+    public class EditModel : BLElementCategoriesPageModel
     {
         private readonly BucketListApplication.Data.BLContext _context;
         public SelectList DesignSelect { get; set; }
@@ -21,9 +20,7 @@ namespace BucketListApplication.Pages.BLElements
         public SelectList BLSelect { get; set; }
 
         [BindProperty]
-        public int[] SelectedCategories { get; set; }
-        [BindProperty]
-        public BucketListElement BLElement { get; set; }
+        public BucketListElement BucketListElement { get; set; }
 
         public EditModel(BucketListApplication.Data.BLContext context)
         {
@@ -47,55 +44,55 @@ namespace BucketListApplication.Pages.BLElements
                 CategorySelect = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
 
                 //Searching for the BLElement
-                if (id == null) { return NotFound(); }
-                BLElement = await _context.BLElements.FindAsync(id);
-                if (BLElement == null) { return NotFound(); }
+                if (id == null)
+                    return NotFound();
 
-                //Setting the active Categories in the SelectList
-                int CategoryCount = _context.Categories.Count();
-                SelectedCategories = new int[CategoryCount];
-                var ElementCategories = _context.ElementCategories.Where(ec => ec.ElementID == BLElement.ElementID).ToList();
-                for (int i = 0; i < ElementCategories.Count(); i++)
-                    SelectedCategories[i] = ElementCategories.ElementAt(i).CategoryID;
+                BucketListElement = await _context.BLElements
+                    .Include(ble => ble.Design)
+                    .Include(ble => ble.ElementCategories)
+                        .ThenInclude(ec => ec.Category)
+                    .Include(ble => ble.BucketList)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(ble => ble.ElementID == id);
+
+                if (BucketListElement == null)
+                    return NotFound();
+
+                PopulateAssignedCategoryData(_context, BucketListElement);
+                return Page();
             }
             else
                 throw new Exception("Nincs bejelentkezett felhasználó.");
-
-            return Page();
         }
 
-		// DONE
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)
         {
-			var elementToUpdate = await _context.BLElements.FindAsync(id);
+            if (id == null)
+                return NotFound();
 
-			if (elementToUpdate == null)
-			{
-				return NotFound();
-			}
+            var elementToUpdate = await _context.BLElements
+                    .Include(ble => ble.Design)
+                    .Include(ble => ble.ElementCategories)
+                        .ThenInclude(ec => ec.Category)
+                    .Include(ble => ble.BucketList)
+                    .FirstOrDefaultAsync(ble => ble.ElementID == id);
+
+            if (elementToUpdate == null)
+                return NotFound();
 
 			if (await TryUpdateModelAsync<BucketListElement>(
 				elementToUpdate,
-				"blelement",
+				"BucketListElement",
                 ble => ble.Name, ble => ble.DesignID,
                 ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
 			{
+                UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
 				await _context.SaveChangesAsync();
 				return RedirectToPage("./Index");
 			}
-
-            //TODO
-            //managing ElementCategories
-            //Setting navigation properties
-
-			return Page();
+            UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
+            PopulateAssignedCategoryData(_context, elementToUpdate);
+            return Page();
 		}
-
-        private bool BLElementExists(int id)
-        {
-            return _context.BLElements.Any(e => e.ElementID == id);
-        }
     }
 }
