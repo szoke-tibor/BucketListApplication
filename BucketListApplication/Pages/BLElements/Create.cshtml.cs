@@ -9,15 +9,11 @@ using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
 
-//Not yet implemented
 namespace BucketListApplication.Pages.BLElements
 {
     public class CreateModel : BLElementCategoriesPageModel
 	{
         private readonly BucketListApplication.Data.BLContext _context;
-		public SelectList DesignSelect { get; set; }
-		public SelectList CategorySelect { get; set; }
-		public SelectList BLSelect { get; set; }
 
 		[BindProperty]
 		public int[] SelectedCategories { get; set; }
@@ -35,21 +31,15 @@ namespace BucketListApplication.Pages.BLElements
 			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
-				//Logged user's BucketLists
-				var CurrentUsersBucketLists = from bl in _context.BucketLists
-											  where bl.UserId == CurrentUserId
-											  select bl;
-				BLSelect = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
-
 				// Empty collection for the loop
 				// foreach (var category in Model.AssignedCategoryDataList)
 				// in the Create Razor page.
 				var emptyBLElement = new BucketListElement();
 				emptyBLElement.ElementCategories = new List<ElementCategory>();
 
-				DesignSelect = new SelectList(_context.Designs, nameof(Models.Design.DesignID), nameof(Models.Design.Name));
-				CategorySelect = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
 				PopulateAssignedCategoryData(_context, emptyBLElement);
+				PopulateDesignDropDownList(_context);
+				PopulateBucketListDropDownList(_context);
 				return Page();
 			}
 			else
@@ -76,7 +66,7 @@ namespace BucketListApplication.Pages.BLElements
 			// Defense against overposting attacks. Returns true if the update was successful.
 			if (await TryUpdateModelAsync<BucketListElement>(
 				newBLElement,
-				"BucketListElement",   // Prefix for form value.
+				"BucketListElement",
 				ble => ble.Name, ble => ble.DesignID,
                 ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
 			{
@@ -84,7 +74,11 @@ namespace BucketListApplication.Pages.BLElements
 				await _context.SaveChangesAsync();
 				return RedirectToPage("Index");
 			}
+
+			//If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
 			PopulateAssignedCategoryData(_context, newBLElement);
+			PopulateDesignDropDownList(_context, newBLElement.DesignID);
+			PopulateBucketListDropDownList(_context, newBLElement.BucketListID);
 			return Page();
 		}
     }

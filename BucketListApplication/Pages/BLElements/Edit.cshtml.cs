@@ -15,9 +15,6 @@ namespace BucketListApplication.Pages.BLElements
     public class EditModel : BLElementCategoriesPageModel
     {
         private readonly BucketListApplication.Data.BLContext _context;
-        public SelectList DesignSelect { get; set; }
-        public SelectList CategorySelect { get; set; }
-        public SelectList BLSelect { get; set; }
 
         [BindProperty]
         public BucketListElement BucketListElement { get; set; }
@@ -33,17 +30,6 @@ namespace BucketListApplication.Pages.BLElements
             var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId != null)
             {
-                //Logged user's BucketLists
-                var CurrentUsersBucketLists = from bl in _context.BucketLists
-                                              where bl.UserId == CurrentUserId
-                                              select bl;
-
-                //SelectLists
-                BLSelect = new SelectList(CurrentUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
-                DesignSelect = new SelectList(_context.Designs, nameof(Models.Design.DesignID), nameof(Models.Design.Name));
-                CategorySelect = new SelectList(_context.Categories, nameof(Models.Category.CategoryID), nameof(Models.Category.Name));
-
-                //Searching for the BLElement
                 if (id == null)
                     return NotFound();
 
@@ -59,6 +45,8 @@ namespace BucketListApplication.Pages.BLElements
                     return NotFound();
 
                 PopulateAssignedCategoryData(_context, BucketListElement);
+                PopulateDesignDropDownList(_context);
+                PopulateBucketListDropDownList(_context);
                 return Page();
             }
             else
@@ -80,7 +68,8 @@ namespace BucketListApplication.Pages.BLElements
             if (elementToUpdate == null)
                 return NotFound();
 
-			if (await TryUpdateModelAsync<BucketListElement>(
+            // Defense against overposting attacks. Returns true if the update was successful.
+            if (await TryUpdateModelAsync<BucketListElement>(
 				elementToUpdate,
 				"BucketListElement",
                 ble => ble.Name, ble => ble.DesignID,
@@ -90,8 +79,13 @@ namespace BucketListApplication.Pages.BLElements
 				await _context.SaveChangesAsync();
 				return RedirectToPage("./Index");
 			}
-            UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
+
+            //UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
+
+            //If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
             PopulateAssignedCategoryData(_context, elementToUpdate);
+            PopulateDesignDropDownList(_context, elementToUpdate.DesignID);
+            PopulateBucketListDropDownList(_context, elementToUpdate.BucketListID);
             return Page();
 		}
     }
