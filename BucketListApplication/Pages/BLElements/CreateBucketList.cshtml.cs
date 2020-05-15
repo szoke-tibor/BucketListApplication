@@ -39,11 +39,11 @@ namespace BucketListApplication.Pages.BLElements
             if (CurrentUserId != null)
                 BucketList.UserId = CurrentUserId;
             else
-                throw new Exception("Nincs bejelentkezett felhasználó.");
+                return RedirectToPage("../Index");
 
             if (await TryUpdateModelAsync<BucketList>(
                 emptyBucketList,
-                "bucketList",   // Prefix for form value.
+                "BucketList",
                 bl => bl.Name, bl => bl.UserId))
             {
                 _context.BucketLists.Add(BucketList);

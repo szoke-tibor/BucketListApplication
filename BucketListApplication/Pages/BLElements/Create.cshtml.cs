@@ -43,8 +43,8 @@ namespace BucketListApplication.Pages.BLElements
 				return Page();
 			}
 			else
-				throw new Exception("Nincs bejelentkezett felhasználó.");
-        }
+				return RedirectToPage("../Index");
+		}
 
         public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
