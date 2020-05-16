@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
+using System.Runtime.CompilerServices;
 
 namespace BucketListApplication.Pages.Social
 {
@@ -29,18 +30,18 @@ namespace BucketListApplication.Pages.Social
 			if (CurrentUserId != null)
 			{
 				CurrentFilter = searchString;
-				IQueryable<BLUser> usersIQ = from u in _context.Users select u;
-				usersIQ = usersIQ.Where(u => u.Id != CurrentUserId);
+
+				var usersQuery = from u in _context.Users
+								 where u.Id != CurrentUserId
+								 select u;
 
 				if (!String.IsNullOrEmpty(searchString))
-					usersIQ = usersIQ.Where(u => u.FullName.Contains(searchString));
+					usersQuery = usersQuery.Where(u => u.FullName.Contains(searchString));
 
-				Users = await usersIQ.AsNoTracking().ToListAsync();
+				Users = await usersQuery.AsNoTracking().ToListAsync();
 			}
 			else
-			{
-				throw new Exception("Nincs bejelentkezett felhasználó.");
-			}
+				RedirectToPage("../Index");
 		}
     }
 }
