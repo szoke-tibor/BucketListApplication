@@ -16,8 +16,6 @@ namespace BucketListApplication.Pages.BLElements
         private readonly BucketListApplication.Data.BLContext _context;
 
 		[BindProperty]
-		public int[] SelectedCategories { get; set; }
-		[BindProperty]
 		public BucketListElement BucketListElement { get; set; }
 
 		public CreateModel(BucketListApplication.Data.BLContext context)

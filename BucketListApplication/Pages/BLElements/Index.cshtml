@@ -16,8 +16,8 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="SelectedBLID" class="control-label">Select a BucketList:</label>
-        <select asp-for="SelectedBLID" class="form-control" asp-items="Model.BLSelect"></select>
+        <label asp-for="SelectedBucketList.BucketListID" class="control-label">Select a BucketList:</label>
+        <select asp-for="SelectedBucketList.BucketListID" class="form-control" asp-items="Model.BucketListSL"></select>
     </div>
     <div class="form-group">
         <input type="submit" value="List" class="btn btn-primary" />
@@ -28,24 +28,27 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SelectedBLElements[0].Name)
+                @Html.DisplayNameFor(model => model.SelectedBLElements.ElementAt(0).Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.SelectedBLElements)
+        @if (Model.SelectedBLElements != null)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ElementID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ElementID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ElementID">Delete</a>
-                </td>
-            </tr>
+            @foreach (var item in Model.SelectedBLElements)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.ElementID">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.ElementID">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ElementID">Delete</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>

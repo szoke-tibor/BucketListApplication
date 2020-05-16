@@ -9,11 +9,12 @@ using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BucketListApplication.Pages.BLElements;
 
 namespace BucketListApplication.Pages.Social
 {
-    public class UserCheckModel : PageModel
-    {
+    public class UserCheckModel : BLElementListingPageModel
+	{
         private readonly BucketListApplication.Data.BLContext _context;
 
         public UserCheckModel(BucketListApplication.Data.BLContext context)
@@ -22,10 +23,8 @@ namespace BucketListApplication.Pages.Social
         }
 
 		[BindProperty]
-		public int SelectedBLID { get; set; }
+		public BucketList SelectedBucketList { get; set; }
 
-		public List<BucketListElement> SelectedBLElements = new List<BucketListElement>();
-		public SelectList BLSelect { get; set; }
 		public string Title { get; set; }
 
 		public async Task OnGetAsync(string Id)
@@ -35,41 +34,24 @@ namespace BucketListApplication.Pages.Social
 			if ( CurrentUserId != null )
 			{
 				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + "'s BucketLists";
-				//Checked user's BucketLists
-				var CheckedUsersBucketLists = from bl in _context.BucketLists
-											  where bl.UserId == Id
-											  select bl;
-				BLSelect = new SelectList(CheckedUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
+				PopulateBucketListDropDownList(_context, Id);
 			}
 			else
-				throw new Exception("Nincs bejelentkezett felhasználó.");
+				RedirectToPage("../Index");
 		}
+
 		public async Task<IActionResult> OnPostAsync(string Id)
 		{
 			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
-				var SelectedBucketList = from bl in _context.BucketLists
-										 where bl.BucketListID == SelectedBLID
-										 select bl;
-
-				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " - " + SelectedBucketList.FirstOrDefault().Name;
-				//Checked user's BucketLists
-				var CheckedUsersBucketLists = from bl in _context.BucketLists
-											  where bl.UserId == Id
-											  select bl;
-				BLSelect = new SelectList(CheckedUsersBucketLists, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name));
-
-				//BucketListElements in selected BucketList
-				IQueryable<BucketListElement> bucketlistelementsIQ = from ble in _context.BLElements
-																	 where ble.BucketListID == SelectedBLID
-																	 select ble;
-				SelectedBLElements = await bucketlistelementsIQ.AsNoTracking().ToListAsync();
+				String SelectedBucketListName = _context.BucketLists.FirstOrDefault(bl => bl.BucketListID == SelectedBucketList.BucketListID).Name;
+				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " - " + SelectedBucketListName;
+				PopulateBucketListDropDownList(_context, Id);
+				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID);
 			}
 			else
-			{
-				throw new Exception("Nincs bejelentkezett felhasználó.");
-			}
+				return RedirectToPage("../Index");
 
 			return Page();
 		}
