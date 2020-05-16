@@ -21,29 +21,24 @@ namespace BucketListApplication.Pages.BLElements
         }
 
         [BindProperty]
-        public BucketListElement BLElement { get; set; }
+        public BucketListElement BucketListElement { get; set; }
+
 		public string ErrorMessage { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            BLElement = await _context.BLElements
-                .AsNoTracking()
-				.FirstOrDefaultAsync(m => m.ElementID == id);
+            BucketListElement = await _context.BLElements
+                                .AsNoTracking()
+				                .FirstOrDefaultAsync(m => m.ElementID == id);
 
-            if (BLElement == null)
-            {
+            if (BucketListElement == null)
                 return NotFound();
-            }
 
 			if (saveChangesError.GetValueOrDefault())
-			{
 				ErrorMessage = "Delete failed. Try again";
-			}
 
 			return Page();
         }
@@ -51,20 +46,16 @@ namespace BucketListApplication.Pages.BLElements
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-			var blelement = await _context.BLElements.FindAsync(id);
+			var BLElementToRemove = await _context.BLElements.FindAsync(id);
 
-			if (blelement == null)
-			{
+			if (BLElementToRemove == null)
 				return NotFound();
-			}
 
 			try
 			{
-				_context.BLElements.Remove(blelement);
+				_context.BLElements.Remove(BLElementToRemove);
 				await _context.SaveChangesAsync();
 				return RedirectToPage("Index");
 			}
