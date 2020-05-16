@@ -9,7 +9,7 @@ using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
 
-namespace BucketListApplication.Pages.BLElements
+namespace BucketListApplication.Pages.BucketLists
 {
     public class CreateBucketListModel : PageModel
     {
@@ -28,8 +28,6 @@ namespace BucketListApplication.Pages.BLElements
             return Page();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             var emptyBucketList = new BucketList();
@@ -48,7 +46,7 @@ namespace BucketListApplication.Pages.BLElements
             {
                 _context.BucketLists.Add(BucketList);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("Index");
+                return RedirectToPage("../BLElements/Index");
             }
             return Page();
         }
