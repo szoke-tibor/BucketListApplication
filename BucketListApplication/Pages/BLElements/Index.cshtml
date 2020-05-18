@@ -5,22 +5,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>My BucketLists</h1>
+<h1>Bakancslista</h1>
 
 <p>
-    <a asp-page="../BucketLists/CreateBucketList">Create New BucketList</a>
+    <a asp-page="../BucketLists/CreateBucketList">Új Bakancslista létrehozása</a>
 </p>
 <p>
-    <a asp-page="./Create">Create New BucketListElement</a>
+    <a asp-page="./Create">Új Bakancslista elem létrehozása</a>
 </p>
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="SelectedBucketList.BucketListID" class="control-label">Select a BucketList:</label>
+        <label asp-for="SelectedBucketList.BucketListID" class="control-label">Válassz egy Listát</label>
         <select asp-for="SelectedBucketList.BucketListID" class="form-control" asp-items="Model.BucketListSL"></select>
     </div>
     <div class="form-group">
-        <input type="submit" value="List" class="btn btn-primary" />
+        <input type="submit" value="Listáz" class="btn btn-primary" />
     </div>
 </form>
 
@@ -28,7 +28,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SelectedBLElements.ElementAt(0).Name)
+                Cél
             </th>
             <th></th>
         </tr>
@@ -43,9 +43,9 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.ElementID">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.ElementID">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.ElementID">Delete</a>
+                        <a asp-page="./Edit" asp-route-id="@item.ElementID">Szerkeszt</a> |
+                        <a asp-page="./Details" asp-route-id="@item.ElementID">Részletek</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ElementID">Törlés</a>
                     </td>
                 </tr>
             }

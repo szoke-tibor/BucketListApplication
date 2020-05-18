@@ -9,11 +9,11 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="SelectedBucketList.BucketListID" class="control-label">Select a BucketList:</label>
+        <label asp-for="SelectedBucketList.BucketListID" class="control-label">Válassz egy listát:</label>
         <select asp-for="SelectedBucketList.BucketListID" class="form-control" asp-items="Model.BucketListSL"></select>
     </div>
     <div class="form-group">
-        <input type="submit" value="List" class="btn btn-primary" />
+        <input type="submit" value="Listáz" class="btn btn-primary" />
     </div>
 </form>
 
@@ -21,7 +21,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SelectedBLElements.ElementAt(0).Name)
+                Cél
             </th>
             <th></th>
         </tr>
@@ -42,7 +42,7 @@
 </table>
 
 <div>
-    <a asp-page="./Index">Go back</a>
+    <a asp-page="./Index">Vissza</a>
 </div>
 
     

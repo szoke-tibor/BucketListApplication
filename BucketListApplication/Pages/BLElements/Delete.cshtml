@@ -5,17 +5,16 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Törlés</h1>
 
 <p class="Hiba tortent!">@Model.ErrorMessage</p>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Biztosan törölni szeretnéd?</h3>
 <div>
-    <h4>Element</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BucketListElement.Name)
+            Cél
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BucketListElement.Name)
@@ -24,7 +23,7 @@
     
     <form method="post">
         <input type="hidden" asp-for="BucketListElement.ElementID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <input type="submit" value="Töröl" class="btn btn-danger" /> |
+        <a asp-page="./Index">Vissza</a>
     </form>
 </div>

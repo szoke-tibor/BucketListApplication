@@ -33,7 +33,7 @@ namespace BucketListApplication.Pages.Social
 			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
-				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + "'s BucketLists";
+				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistája";
 				PopulateBucketListDropDownList(_context, Id);
 			}
 			else

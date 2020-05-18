@@ -5,15 +5,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Check other's BucketLists!</h1>
+<h1>Tekintsd meg mások bakancslistáját!</h1>
 
 <form asp-page="./Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find a user by name:
+            Keress név alapján:
             <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-primary" /> |
-            <a asp-page="./Index">Back to full List</a>
+            <input type="submit" value="Keresés" class="btn btn-primary" /> |
+            <a asp-page="./Index">Vissza a teljes listához</a>
         </p>
     </div>
 </form>
@@ -21,21 +21,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Users[0].FullName)
+                Teljes név
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Users) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    <a asp-page="./UserCheck" asp-route-id="@item.Id">Check</a>
-                </td>
-            </tr>
+        @if (Model.Users != null)
+        {
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        <a asp-page="./UserCheck" asp-route-id="@item.Id">Választ</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
