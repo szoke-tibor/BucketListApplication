@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
 
-namespace BucketListApplication.Pages.Elements
+namespace BucketListApplication.Pages.Collection
 {
     public class IndexModel : PageModel
     {
