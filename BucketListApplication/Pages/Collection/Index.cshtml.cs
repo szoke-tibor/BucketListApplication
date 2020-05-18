@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
+using BucketListApplication.Models.BLViewModels;
 
 namespace BucketListApplication.Pages.Collection
 {
@@ -19,14 +20,27 @@ namespace BucketListApplication.Pages.Collection
             _context = context;
         }
 
-        public IList<Element> Element { get;set; }
+        public CategoryIndexData CategoryData { get; set; }
+        public int CategoryID { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? id)
         {
-			IQueryable<Element> elementsIQ = from e in _context.Elements select e;
-			elementsIQ = elementsIQ.Where(e => e.Discriminator == "Element");
+            CategoryData = new CategoryIndexData();
+            CategoryData.Categories = await _context.Categories
+                .Include(c => c.ElementCategories)
+                    .ThenInclude(ec => ec.Element)
+                .AsNoTracking()
+                .OrderBy(c => c.Name)
+                .ToListAsync();
 
-			Element = await elementsIQ.AsNoTracking().ToListAsync();
-		}
+            if (id != null)
+            {
+                CategoryID = id.Value;
+                Category category = CategoryData.Categories.Where(c => c.CategoryID == id.Value).Single();
+                CategoryData.Elements = category.ElementCategories
+                    .Select(ec => ec.Element)
+                    .OrderBy(e => e.Name);
+            }
+        }
     }
 }

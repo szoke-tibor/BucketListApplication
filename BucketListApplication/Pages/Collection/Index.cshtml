@@ -8,21 +8,43 @@
 <h1>Collection</h1>
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Element[0].Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Element) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                </tr>
+    @foreach (var item in Model.CategoryData.Categories)
+    {
+        string selectedRow = "";
+        if (item.CategoryID == Model.CategoryID)
+        {
+            selectedRow = "table-success";
         }
-    </tbody>
+        <tr class="@selectedRow">
+            <td>
+                <a asp-page="./Index" asp-route-id="@item.CategoryID" name="id">Select</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+    }
 </table>
+
+@if (Model.CategoryData.Elements != null)
+{
+<table class="table">
+    <tr>
+        <th>
+            <font size="18">
+                @Model.CategoryData.Categories.Single(c => c.CategoryID == Model.CategoryID).Name
+            </font>
+        </th>
+    </tr>
+
+    @foreach (var item in Model.CategoryData.Elements)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+    }
+
+</table>
+}
