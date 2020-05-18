@@ -11,7 +11,7 @@
     <a asp-page="../BucketLists/CreateBucketList">Create New BucketList</a>
 </p>
 <p>
-    <a asp-page="Create">Create New BucketListElement</a>
+    <a asp-page="./Create">Create New BucketListElement</a>
 </p>
 
 <form method="post">
@@ -43,9 +43,9 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a asp-page="Edit" asp-route-id="@item.ElementID">Edit</a> |
-                        <a asp-page="Details" asp-route-id="@item.ElementID">Details</a> |
-                        <a asp-page="Delete" asp-route-id="@item.ElementID">Delete</a>
+                        <a asp-page="./Edit" asp-route-id="@item.ElementID">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.ElementID">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ElementID">Delete</a>
                     </td>
                 </tr>
             }
