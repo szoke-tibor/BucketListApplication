@@ -10,9 +10,7 @@ namespace BucketListApplication.Models
     {
         public int ElementID { get; set; }
         public string Name { get; set; }
-		public int DesignID { get; set; }
 
-        public Design Design { get; set; }
         public ICollection<ElementCategory> ElementCategories { get; set; }
 
 		public string Discriminator { get; private set; }

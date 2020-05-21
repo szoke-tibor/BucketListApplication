@@ -128,42 +128,12 @@ namespace BucketListApplication.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("BucketListApplication.Models.Design", b =>
-                {
-                    b.Property<int>("DesignID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BackgroundColorARGB")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BorderColorARGB")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BorderType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PictureURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DesignID");
-
-                    b.ToTable("Design");
-                });
-
             modelBuilder.Entity("BucketListApplication.Models.Element", b =>
                 {
                     b.Property<int>("ElementID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DesignID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -173,8 +143,6 @@ namespace BucketListApplication.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ElementID");
-
-                    b.HasIndex("DesignID");
 
                     b.ToTable("Element");
 
@@ -357,15 +325,6 @@ namespace BucketListApplication.Migrations
                     b.HasOne("BucketListApplication.Models.BLUser", "User")
                         .WithMany("Lists")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("BucketListApplication.Models.Element", b =>
-                {
-                    b.HasOne("BucketListApplication.Models.Design", "Design")
-                        .WithMany()
-                        .HasForeignKey("DesignID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("BucketListApplication.Models.ElementCategory", b =>

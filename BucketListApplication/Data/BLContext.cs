@@ -20,13 +20,9 @@ namespace BucketListApplication.Data
 			_httpContextAccessor = httpContextAccessor;
 		}
 
-
 		public DbSet<BucketListApplication.Models.BucketList> BucketLists { get; set; }
 		public DbSet<BucketListApplication.Models.Category> Categories { get; set; }
-		public DbSet<BucketListApplication.Models.Design> Designs { get; set; }
 		public DbSet<BucketListApplication.Models.ElementCategory> ElementCategories { get; set; }
-
-		// Elements + BuckeListElements
 		public DbSet<BucketListApplication.Models.Element> Elements { get; set; }
 		public DbSet<BucketListApplication.Models.BucketListElement> BLElements { get; set; }
 
@@ -36,8 +32,8 @@ namespace BucketListApplication.Data
 
 			modelBuilder.Entity<BucketList>().ToTable("BucketList");
 			modelBuilder.Entity<Category>().ToTable("Category");
-			modelBuilder.Entity<Design>().ToTable("Design");
 			modelBuilder.Entity<ElementCategory>().ToTable("ElementCategory");
+
 			//Table per Hierarchy -> BucketListElement is included
 			modelBuilder.Entity<Element>().ToTable("Element");
 

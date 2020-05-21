@@ -63,23 +63,6 @@ namespace BucketListApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Design",
-                columns: table => new
-                {
-                    DesignID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    PictureURL = table.Column<string>(nullable: true),
-                    BorderColorARGB = table.Column<int>(nullable: false),
-                    BackgroundColorARGB = table.Column<int>(nullable: false),
-                    BorderType = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Design", x => x.DesignID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -212,7 +195,6 @@ namespace BucketListApplication.Migrations
                     ElementID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    DesignID = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     BucketListID = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
@@ -227,12 +209,6 @@ namespace BucketListApplication.Migrations
                         column: x => x.BucketListID,
                         principalTable: "BucketList",
                         principalColumn: "BucketListID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Element_Design_DesignID",
-                        column: x => x.DesignID,
-                        principalTable: "Design",
-                        principalColumn: "DesignID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -310,11 +286,6 @@ namespace BucketListApplication.Migrations
                 column: "BucketListID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Element_DesignID",
-                table: "Element",
-                column: "DesignID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ElementCategory_CategoryID",
                 table: "ElementCategory",
                 column: "CategoryID");
@@ -351,9 +322,6 @@ namespace BucketListApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "BucketList");
-
-            migrationBuilder.DropTable(
-                name: "Design");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

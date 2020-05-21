@@ -113,26 +113,6 @@ namespace BucketListApplication.Data
 			context.Categories.AddRange(categories);
 			context.SaveChanges();
 
-			//DESIGNS
-			var designs = new Design[]
-			{
-				new Design { PictureURL = "url",    BorderColor = Color.Black,
-					BackgroundColor = Color.White, BorderType = BorderType.Regular,
-					Name = "Default"
-				},
-				new Design { PictureURL = "url",    BorderColor = Color.Blue,
-					BackgroundColor = Color.Orange,    BorderType = BorderType.Fancy,
-					Name = "Random1"
-				},
-				new Design { PictureURL = "url",    BorderColor = Color.Green,
-					BackgroundColor = Color.Red,   BorderType = BorderType.Fancy,
-					Name = "Random2"
-				}
-			};
-
-			context.Designs.AddRange(designs);
-			context.SaveChanges();
-
 			//BUCKETLISTS
 			var bucketlists = new BucketList[]
 			{
@@ -164,48 +144,39 @@ namespace BucketListApplication.Data
 			{
 				new BucketListElement { Name = "Tanulj meg 2 különböző nyelven folyékonyan beszélni",
 					Description = "Angol, Spanyol", Completed = true, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID
 				},
 				new BucketListElement { Name = "Végezd el az egyetemet",
 					Description = "Bukás nélkül, mintatanterv szerint", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID
 				},
 				new BucketListElement { Name = "Tanulj meg curlingezni",
 					Description = "Nem olcsó sportág, érdemes előtte egy kisebb összeget félre raknom.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID
 				},
 				new BucketListElement { Name = "Próbáld ki a bungee jumpingot",
 					Description = "Kötnöm kell egy fogadást előtte, hogy még véletlen se gondoljam meg magam fent.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID
 				},
 				new BucketListElement { Name = "Csinálj egy spanyolországi családi nyaralást",
 					Description = "Látványosságok, melyeket mindenképp meg szeretnénk nézni: ...", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Utazási lista").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Utazási lista").BucketListID
 				},
 				new BucketListElement { Name = "Légy 3 gyermek szülője",
 					Description = "Ha az egyik gyermekem lány lesz, Karolinának fogom elnevezni.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Családi lista").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Családi lista").BucketListID
 				},
 				new BucketListElement { Name = "Alapíts családot",
 					Description = "Igyekszem majd a lehető legjobb családapa lenni.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Random1").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID
 				},
 				new BucketListElement { Name = "Kalandozz egy moziban a feleségeddel",
 					Description = "Mindenképp a hátsó sorba kell majd helyet foglalnunk.", Completed = false, Visibility = Visibility.Private,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Random1").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID
 				},
 				new BucketListElement { Name = "Tanulj meg 20 különböző főtt ételt elkészíteni",
 					Description = "Nagymamám receptkönyve alapján fogok megtanulni.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Másodlagos céljaim").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Random1").DesignID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Másodlagos céljaim").BucketListID
 				}
 			};
 
@@ -217,594 +188,228 @@ namespace BucketListApplication.Data
 			{
 				// Hobbi
 
-				new Element { Name = "Restaurálj valamit",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kerülj be egy zenekarba",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vigyél végig egy számítógépes játékot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nyerj meg egy e-sport bajnokságot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Olvasd el a kedvenc iród össze könyvét",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Publikáltasd egy fotódat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj el egy kaszinóba",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Fess egy tájképet",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vezess tankot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a célbalövést éles fegyverrel",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Írj naplót",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a sörfőzést",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki magad az irodalomban",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nézd meg a kedvenc csapatodat élőben",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tervezz egy társasjátékot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj el egy Forma 1-es futamra",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Készíts egy zenei albumot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nézz meg egy Cirque du Soleil előadást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tölts egy teljes napot moziban",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Restaurálj valamit"},
+				new Element { Name = "Kerülj be egy zenekarba"},
+				new Element { Name = "Vigyél végig egy számítógépes játékot"},
+				new Element { Name = "Nyerj meg egy e-sport bajnokságot"},
+				new Element { Name = "Olvasd el a kedvenc iród össze könyvét"},
+				new Element { Name = "Publikáltasd egy fotódat"},
+				new Element { Name = "Menj el egy kaszinóba"},
+				new Element { Name = "Fess egy tájképet"},
+				new Element { Name = "Vezess tankot"},
+				new Element { Name = "Próbáld ki a célbalövést éles fegyverrel"},
+				new Element { Name = "Írj naplót"},
+				new Element { Name = "Próbáld ki a sörfőzést"},
+				new Element { Name = "Próbáld ki magad az irodalomban"},
+				new Element { Name = "Nézd meg a kedvenc csapatodat élőben"},
+				new Element { Name = "Tervezz egy társasjátékot"},
+				new Element { Name = "Menj el egy Forma 1-es futamra"},
+				new Element { Name = "Készíts egy zenei albumot"},
+				new Element { Name = "Nézz meg egy Cirque du Soleil előadást"},
+				new Element { Name = "Tölts egy teljes napot moziban"},
 
 				// Ételek és italok
 
-				new Element { Name = "Próbáld ki az olasz konyhát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kóstold meg a Sushit",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kóstolj meg egy 100 éves Whikeyt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt egy borkóstolón",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt egy pálinkakostolón",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki európa jellegzetes alkoholos italait",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kóstold meg a kaviárt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Egyél házi készítésű sajtokat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kóstold meg a sült békacombot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kóstold meg milyen íze van a csigának",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kóstold meg a cápalevest",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Próbáld ki az olasz konyhát"},
+				new Element { Name = "Kóstold meg a Sushit"},
+				new Element { Name = "Kóstolj meg egy 100 éves Whikeyt"},
+				new Element { Name = "Vegyél részt egy borkóstolón"},
+				new Element { Name = "Vegyél részt egy pálinkakostolón"},
+				new Element { Name = "Próbáld ki európa jellegzetes alkoholos italait"},
+				new Element { Name = "Kóstold meg a kaviárt"},
+				new Element { Name = "Egyél házi készítésű sajtokat"},
+				new Element { Name = "Kóstold meg a sült békacombot"},
+				new Element { Name = "Kóstold meg milyen íze van a csigának"},
+				new Element { Name = "Kóstold meg a cápalevest"},
 
 				// Készségek
 
-				new Element { Name = "Tanulj meg egy harcművészetet",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg faragni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg rajzolni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg síelni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg valamilyen hangszeren játszani",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg autót szerelni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg táncolni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt egy önfejlesztő tanfolyamon",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szerezz jogosítványt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg lóval ugratni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg fotózni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg videót vágni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg kenyeret sütni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg elektronikus zenét készíteni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg elkészíteni 20 különböző ételt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg pálinkát főzni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg a 3D-s origami hajtogatást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg kertészkedni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg csempézni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Tanulj meg egy harcművészetet"},
+				new Element { Name = "Tanulj meg faragni"},
+				new Element { Name = "Tanulj meg rajzolni"},
+				new Element { Name = "Tanulj meg síelni"},
+				new Element { Name = "Tanulj meg valamilyen hangszeren játszani"},
+				new Element { Name = "Tanulj meg autót szerelni"},
+				new Element { Name = "Tanulj meg táncolni"},
+				new Element { Name = "Vegyél részt egy önfejlesztő tanfolyamon"},
+				new Element { Name = "Szerezz jogosítványt"},
+				new Element { Name = "Tanulj meg lóval ugratni"},
+				new Element { Name = "Tanulj meg fotózni"},
+				new Element { Name = "Tanulj meg videót vágni"},
+				new Element { Name = "Tanulj meg kenyeret sütni"},
+				new Element { Name = "Tanulj meg elektronikus zenét készíteni"},
+				new Element { Name = "Tanulj meg elkészíteni 20 különböző ételt"},
+				new Element { Name = "Tanulj meg pálinkát főzni"},
+				new Element { Name = "Tanulj meg a 3D-s origami hajtogatást"},
+				new Element { Name = "Tanulj meg kertészkedni"},
+				new Element { Name = "Tanulj meg csempézni"},
 
 				// Jótettek
 
-				new Element { Name = "Önkénteskedj egy katasztrófa súlytotta területen",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Írj egy dalt, mely másokat jobb kedvre derít",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Adakozz a rászorulóknak",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nyiss játszóházat mozgássérült gyerekek számára",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vágasd le a hajad és adományozd rászoruló gyermekeknek",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Mentsd meg valaki életét",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Ápolj valakit míg teljesen fel nem épül",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nyújts lelki támaszt valakinek",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Önkénteskedj vadakat mentő alapítványnál",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél fel az utcán egy szemetet és dobd a kukába",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Kapcsold le mások után a villanyt 20 alkalommal",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Adj ételt egy hajléktalannak",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Juttass vissza egy talált tárgyat a jogos tulajdonosának",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Adj borravalót 10 alkalommal",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Önkénteskedj egy katasztrófa súlytotta területen"},
+				new Element { Name = "Írj egy dalt, mely másokat jobb kedvre derít"},
+				new Element { Name = "Adakozz a rászorulóknak"},
+				new Element { Name = "Nyiss játszóházat mozgássérült gyerekek számára"},
+				new Element { Name = "Vágasd le a hajad és adományozd rászoruló gyermekeknek"},
+				new Element { Name = "Mentsd meg valaki életét"},
+				new Element { Name = "Ápolj valakit míg teljesen fel nem épül"},
+				new Element { Name = "Nyújts lelki támaszt valakinek"},
+				new Element { Name = "Önkénteskedj vadakat mentő alapítványnál"},
+				new Element { Name = "Vegyél fel az utcán egy szemetet és dobd a kukába"},
+				new Element { Name = "Kapcsold le mások után a villanyt 20 alkalommal"},
+				new Element { Name = "Adj ételt egy hajléktalannak"},
+				new Element { Name = "Juttass vissza egy talált tárgyat a jogos tulajdonosának"},
+				new Element { Name = "Adj borravalót 10 alkalommal"},
 
 				// Szexuális élmények
 
-				new Element { Name = "Feküdj le egy hírességgel",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki az édeshármast",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szeretkezz a természetben",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Feküdj le egy külföldivel",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbálj ki izgalmas dolgokat nyilvános helyen",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szeretkezz egy vízibiciklin",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Csókolj meg egy vadidegent",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szeretkezz a Balatonban",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Teljesítsd egy különös vágyad",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Feküdj le egy hírességgel"},
+				new Element { Name = "Próbáld ki az édeshármast"},
+				new Element { Name = "Szeretkezz a természetben"},
+				new Element { Name = "Feküdj le egy külföldivel"},
+				new Element { Name = "Próbálj ki izgalmas dolgokat nyilvános helyen"},
+				new Element { Name = "Szeretkezz egy vízibiciklin"},
+				new Element { Name = "Csókolj meg egy vadidegent"},
+				new Element { Name = "Szeretkezz a Balatonban"},
+				new Element { Name = "Teljesítsd egy különös vágyad"},
 
 				// Tanulmányok
 
-				new Element { Name = "Végezd el az orvosi egyetemet",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szerezz diplomát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg kínaiul",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj ki Finnországba tanulni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Építs informatikai karriert",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Végezz el egy mérnöki egyetemet",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szerezd meg a síoktatói státuszt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Teljesíts egy tárgyat az egyetemen",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tanulj meg spanyolul",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Végezd el a mesterképzést",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Végezd el a PhD-t",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Írj szakdolgozatot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Végezd el a középiskolát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Légy kitűnő év végén",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Ne bukj meg semmiből",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Végezd el az orvosi egyetemet"},
+				new Element { Name = "Szerezz diplomát"},
+				new Element { Name = "Tanulj meg kínaiul"},
+				new Element { Name = "Menj ki Finnországba tanulni"},
+				new Element { Name = "Építs informatikai karriert"},
+				new Element { Name = "Végezz el egy mérnöki egyetemet"},
+				new Element { Name = "Szerezd meg a síoktatói státuszt"},
+				new Element { Name = "Teljesíts egy tárgyat az egyetemen"},
+				new Element { Name = "Tanulj meg spanyolul"},
+				new Element { Name = "Végezd el a mesterképzést"},
+				new Element { Name = "Végezd el a PhD-t"},
+				new Element { Name = "Írj szakdolgozatot"},
+				new Element { Name = "Végezd el a középiskolát"},
+				new Element { Name = "Légy kitűnő év végén"},
+				new Element { Name = "Ne bukj meg semmiből"},
 
 				// Utazás
 
-				new Element { Name = "Menj ki spontán a repülőtérre és ülj fel a legkorábbi járatra",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nézd meg a sarki fényt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Látogasd meg a kínai nagy falat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Járd be Európa összes országát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vágj neki az El Caminonak",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Utazz el Ausztráliába",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj el egy világkörüli utazásra",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Látogass meg 3 lélegzetelállító túristalátványosságot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Élj egy évig külföldön",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Sátrazz Izlandon",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tekintsd meg a Grand Canyont",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Végy részt egy portugáliai szörftáborban",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Juss el Amerikába",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt egy road tripen",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Juss el Disneylandbe",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj el nászútra Erdélybe",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Utazz el egy lakatlan szigetre",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Juss el az űrbe",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nézd meg a világ 7 csodáját",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Menj ki spontán a repülőtérre és ülj fel a legkorábbi járatra"},
+				new Element { Name = "Nézd meg a sarki fényt"},
+				new Element { Name = "Látogasd meg a kínai nagy falat"},
+				new Element { Name = "Járd be Európa összes országát"},
+				new Element { Name = "Vágj neki az El Caminonak"},
+				new Element { Name = "Utazz el Ausztráliába"},
+				new Element { Name = "Menj el egy világkörüli utazásra"},
+				new Element { Name = "Látogass meg 3 lélegzetelállító túristalátványosságot"},
+				new Element { Name = "Élj egy évig külföldön"},
+				new Element { Name = "Sátrazz Izlandon"},
+				new Element { Name = "Tekintsd meg a Grand Canyont"},
+				new Element { Name = "Végy részt egy portugáliai szörftáborban"},
+				new Element { Name = "Juss el Amerikába"},
+				new Element { Name = "Vegyél részt egy road tripen"},
+				new Element { Name = "Juss el Disneylandbe"},
+				new Element { Name = "Menj el nászútra Erdélybe"},
+				new Element { Name = "Utazz el egy lakatlan szigetre"},
+				new Element { Name = "Juss el az űrbe"},
+				new Element { Name = "Nézd meg a világ 7 csodáját"},
 
 				// Sport
 
-				new Element { Name = "Fusd le a maratont",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a hegymászást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki az ejtőernyőzést",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a bungee jumpingot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a siklóernyőzést",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a tandem ugrást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Biciklizd körbe a Földközi-tengert",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Úszd át a Balatont",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Fuss az Ultrabalatonon",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szörfözz",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Utazz kutyaszánnal",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nyomj ki 100 kg-ot fekvenyomással",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a snowboardozást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt egy vitorlásversenyen",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Döntsd meg egy sport rekordod",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Fusd le a maratont"},
+				new Element { Name = "Próbáld ki a hegymászást"},
+				new Element { Name = "Próbáld ki az ejtőernyőzést"},
+				new Element { Name = "Próbáld ki a bungee jumpingot"},
+				new Element { Name = "Próbáld ki a siklóernyőzést"},
+				new Element { Name = "Próbáld ki a tandem ugrást"},
+				new Element { Name = "Biciklizd körbe a Földközi-tengert"},
+				new Element { Name = "Úszd át a Balatont"},
+				new Element { Name = "Fuss az Ultrabalatonon"},
+				new Element { Name = "Szörfözz"},
+				new Element { Name = "Utazz kutyaszánnal"},
+				new Element { Name = "Nyomj ki 100 kg-ot fekvenyomással"},
+				new Element { Name = "Próbáld ki a snowboardozást"},
+				new Element { Name = "Vegyél részt egy vitorlásversenyen"},
+				new Element { Name = "Döntsd meg egy sport rekordod"},
 
 				// Család és otthon
 
-				new Element { Name = "Költözz családi házba",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Alapíts családot",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Fogadj örökbe egy kiskutyát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Hosszabb időn keresztül figyelj oda, hogy minőségi időt tölts a szereteiddel",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj férhez / Vegyél feleségül valakit",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Építs egy családi házat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Légy anyuka / apuka",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Adj életet 2 gyermeknek",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Válj nagyszülővé",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Találd meg életed szerelmét és öregedj meg vele",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Valósítsd meg a saját álomotthonodat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Alakíts ki rendszeres családi programokat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Költözz családi házba"},
+				new Element { Name = "Alapíts családot"},
+				new Element { Name = "Fogadj örökbe egy kiskutyát"},
+				new Element { Name = "Hosszabb időn keresztül figyelj oda, hogy minőségi időt tölts a szereteiddel"},
+				new Element { Name = "Menj férhez / Vegyél feleségül valakit"},
+				new Element { Name = "Építs egy családi házat"},
+				new Element { Name = "Légy anyuka / apuka"},
+				new Element { Name = "Adj életet 2 gyermeknek"},
+				new Element { Name = "Válj nagyszülővé"},
+				new Element { Name = "Találd meg életed szerelmét és öregedj meg vele"},
+				new Element { Name = "Valósítsd meg a saját álomotthonodat"},
+				new Element { Name = "Alakíts ki rendszeres családi programokat"},
 
 				// Vagyon
 
-				new Element { Name = "Vegyél egy saját lakást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy autót",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy motort",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy vitorlást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy önbefűzős cipőt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy karórát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy játékkonzolt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Újítsd fel a ruhatárad",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Újítsd fel a házadat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy medencét",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy VR headsettet",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél egy lávalámpát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Vegyél egy saját lakást"},
+				new Element { Name = "Vegyél egy autót"},
+				new Element { Name = "Vegyél egy motort"},
+				new Element { Name = "Vegyél egy vitorlást"},
+				new Element { Name = "Vegyél egy önbefűzős cipőt"},
+				new Element { Name = "Vegyél egy karórát"},
+				new Element { Name = "Vegyél egy játékkonzolt"},
+				new Element { Name = "Újítsd fel a ruhatárad"},
+				new Element { Name = "Újítsd fel a házadat"},
+				new Element { Name = "Vegyél egy medencét"},
+				new Element { Name = "Vegyél egy VR headsettet"},
+				new Element { Name = "Vegyél egy lávalámpát"},
 
 				// Szórakozás és élmények
 
-				new Element { Name = "Repülj hőlégballonnal",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj el a strand fesztiválra",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Juss el Tomorrowlandre",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a búvárkodást",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Ússz delfinekkel",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Tarts egy olyan bulit 100 főnek ahol ingyen fogyaszt mindenki",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Juss el a kedvenc előadód koncertjére",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Ússz teljesen áttetsző tengerben",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Csinálj valami bolondságot részegen",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Látogass el a legnagyobb vidámparkba",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vezess egy igazi F1-es autót",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Repülj hőlégballonnal"},
+				new Element { Name = "Menj el a strand fesztiválra"},
+				new Element { Name = "Juss el Tomorrowlandre"},
+				new Element { Name = "Próbáld ki a búvárkodást"},
+				new Element { Name = "Ússz delfinekkel"},
+				new Element { Name = "Tarts egy olyan bulit 100 főnek ahol ingyen fogyaszt mindenki"},
+				new Element { Name = "Juss el a kedvenc előadód koncertjére"},
+				new Element { Name = "Ússz teljesen áttetsző tengerben"},
+				new Element { Name = "Csinálj valami bolondságot részegen"},
+				new Element { Name = "Látogass el a legnagyobb vidámparkba"},
+				new Element { Name = "Vezess egy igazi F1-es autót"},
 
 				// Vallás
 
-				new Element { Name = "Lépj be egy gyülekezetbe",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Találd meg Istent",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt elsőáldozáson",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt bérmáláson",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt egy keresztelőn",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Mondj asztali áldást egy éven keresztül minden alkalommal",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Olvasd el a Bibliát",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Gyónd meg bűneidet",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Vegyél részt 100 misén",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Lépj be egy gyülekezetbe"},
+				new Element { Name = "Találd meg Istent"},
+				new Element { Name = "Vegyél részt elsőáldozáson"},
+				new Element { Name = "Vegyél részt bérmáláson"},
+				new Element { Name = "Vegyél részt egy keresztelőn"},
+				new Element { Name = "Mondj asztali áldást egy éven keresztül minden alkalommal"},
+				new Element { Name = "Olvasd el a Bibliát"},
+				new Element { Name = "Gyónd meg bűneidet"},
+				new Element { Name = "Vegyél részt 100 misén"},
 
 				// Karrier
 
-				new Element { Name = "Légy magánvállalkozó",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Nyiss egy klinikát a barátaiddal",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Menj ki külföldre dolgozni",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Légy elismert",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Érj el egy bizonyos fizetést",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Részesülj fizetésemelésben",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Részesülj előléptetésben",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Válj vezetővé",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Válj szakértővé a munkaterületeden belül",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
+				new Element { Name = "Légy magánvállalkozó"},
+				new Element { Name = "Nyiss egy klinikát a barátaiddal"},
+				new Element { Name = "Menj ki külföldre dolgozni"},
+				new Element { Name = "Légy elismert"},
+				new Element { Name = "Érj el egy bizonyos fizetést"},
+				new Element { Name = "Részesülj fizetésemelésben"},
+				new Element { Name = "Részesülj előléptetésben"},
+				new Element { Name = "Válj vezetővé"},
+				new Element { Name = "Válj szakértővé a munkaterületeden belül"},
 
 				// Egyéb
 
-				new Element { Name = "Tetováltass magadra valamit",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Fesd át a hajad",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Találkozz egy hírességgel",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Aludj a szabad ég alatt",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki a jeges vizes fürdőzést",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Szerepelj egy filmben",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Próbáld ki magad egy teljesen idegen munkában",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Furasd ki a füled",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new Element { Name = "Fehéríttesd ki a fogaidat",
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				}
+				new Element { Name = "Tetováltass magadra valamit"},
+				new Element { Name = "Fesd át a hajad"},
+				new Element { Name = "Találkozz egy hírességgel"},
+				new Element { Name = "Aludj a szabad ég alatt"},
+				new Element { Name = "Próbáld ki a jeges vizes fürdőzést"},
+				new Element { Name = "Szerepelj egy filmben"},
+				new Element { Name = "Próbáld ki magad egy teljesen idegen munkában"},
+				new Element { Name = "Furasd ki a füled"},
+				new Element { Name = "Fehéríttesd ki a fogaidat"}
 			};
 
 			context.Elements.AddRange(elements);

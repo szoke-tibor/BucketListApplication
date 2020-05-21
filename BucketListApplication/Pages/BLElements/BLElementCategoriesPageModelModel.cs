@@ -15,7 +15,6 @@ namespace BucketListApplication.Pages.BLElements
     {
         public List<AssignedCategoryData> AssignedCategoryDataList;
 
-        public SelectList DesignSL { get; set; }
         public SelectList BucketListSL { get; set; }
 
         public void PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement)
@@ -75,15 +74,6 @@ namespace BucketListApplication.Pages.BLElements
                     }
                 }
             }
-        }
-
-        public void PopulateDesignDropDownList(BLContext _context, object selectedDesign = null)
-        {
-            var designsQuery = from d in _context.Designs
-                               orderby d.Name
-                               select d;
-
-            DesignSL = new SelectList(designsQuery.AsNoTracking(), nameof(Models.Design.DesignID), nameof(Models.Design.Name), selectedDesign);
         }
 
         public void PopulateBucketListDropDownList(BLContext _context, object selectedBucketList = null)

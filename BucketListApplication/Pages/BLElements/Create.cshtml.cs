@@ -36,7 +36,6 @@ namespace BucketListApplication.Pages.BLElements
 				emptyBLElement.ElementCategories = new List<ElementCategory>();
 
 				PopulateAssignedCategoryData(_context, emptyBLElement);
-				PopulateDesignDropDownList(_context);
 				PopulateBucketListDropDownList(_context);
 				return Page();
 			}
@@ -65,7 +64,7 @@ namespace BucketListApplication.Pages.BLElements
 			if (await TryUpdateModelAsync<BucketListElement>(
 				newBLElement,
 				"BucketListElement",
-				ble => ble.Name, ble => ble.DesignID,
+				ble => ble.Name,
                 ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
 			{
 				_context.BLElements.Add(newBLElement);
@@ -75,7 +74,6 @@ namespace BucketListApplication.Pages.BLElements
 
 			//If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
 			PopulateAssignedCategoryData(_context, newBLElement);
-			PopulateDesignDropDownList(_context, newBLElement.DesignID);
 			PopulateBucketListDropDownList(_context, newBLElement.BucketListID);
 			return Page();
 		}
