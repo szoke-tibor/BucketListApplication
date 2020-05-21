@@ -31,6 +31,7 @@ namespace BucketListApplication.Pages.BLElements
                 return NotFound();
 
             BucketListElement = await _context.BLElements
+                                .Include(ble => ble.BucketList)
                                 .AsNoTracking()
 				                .FirstOrDefaultAsync(m => m.ElementID == id);
 

@@ -14,10 +14,24 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            Cél
+            Cél:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BucketListElement.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            Tartalmazó lista:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BucketListElement.BucketList.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            Leírás
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BucketListElement.Description)
         </dd>
     </dl>
     
