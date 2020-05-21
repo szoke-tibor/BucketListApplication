@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
 
-//Not yet implemented
 namespace BucketListApplication.Pages.BLElements
 {
     public class DetailsModel : PageModel
@@ -21,26 +20,28 @@ namespace BucketListApplication.Pages.BLElements
         }
 
         public BucketListElement BLElement { get; set; }
+        public String YesOrNo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
-
-            //Element = await _context.Elements.FirstOrDefaultAsync(m => m.ID == id);
 
             BLElement = await _context.BLElements
-                .Include(e => e.ElementCategories)
+                .Include(ble => ble.BucketList)
+                .Include(ble => ble.ElementCategories)
 				.ThenInclude(ec => ec.Category)
 				.AsNoTracking()
-				.FirstOrDefaultAsync(m => m.ElementID == id);
+				.FirstOrDefaultAsync(ble => ble.ElementID == id);
 
 			if (BLElement == null)
-            {
                 return NotFound();
-            }
+
+            if (BLElement.Completed == true)
+                YesOrNo = "Igen";
+            else
+                YesOrNo = "Nem";
+
             return Page();
         }
     }

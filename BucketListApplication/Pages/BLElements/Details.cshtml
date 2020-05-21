@@ -11,29 +11,57 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BLElement.Name)
+            Cél:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BLElement.Name)
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BLElement.ElementCategories)
+            Tartalmazó lista:
         </dt>
         <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BLElement.BucketList.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            Leírás:
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.BLElement.Description)
+        </dd>
+        <dd class="col-sm-2"></dd>
+
+        <dt class="col-sm-2">
+            Láthatóság:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BLElement.Visibility)
+        </dd>
+
+        <dd class="col-sm-12">
             <table class="table">
                 <tr>
-                    <th>Categories</th>
+                    <th>Kategóriák:</th>
                 </tr>
                 @foreach (var item in Model.BLElement.ElementCategories)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Category.Name)
+                            <span style="margin-left:2em">
+                                @Html.DisplayFor(modelItem => item.Category.Name)
+                            </span>
                         </td>
                     </tr>
                 }
             </table>
+        </dd>
+
+        <dt class="col-sm-1">
+            Teljesítve:
+        </dt>
+        <dd class="col-sm-11">
+            @Html.DisplayFor(model => model.YesOrNo)
         </dd>
     </dl>
 </div>
