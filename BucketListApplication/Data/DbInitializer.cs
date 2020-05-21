@@ -96,7 +96,7 @@ namespace BucketListApplication.Data
 			{
 				new Category { Name = "Hobbi" },
 				new Category { Name = "Ételek és italok" },
-				new Category { Name = "Képeszségek" },
+				new Category { Name = "Készségek" },
 				new Category { Name = "Jótettek" },
 				new Category { Name = "Szexuális élmények" },
 				new Category { Name = "Tanulmányok" },
@@ -136,27 +136,80 @@ namespace BucketListApplication.Data
 			//BUCKETLISTS
 			var bucketlists = new BucketList[]
 			{
-				new BucketList { Name = "MyEpicBucketList",
+				new BucketList { Name = "Elsődleges céljaim",
 					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
 				},
-				new BucketList { Name = "MyNonEpicBucketList",
+				new BucketList { Name = "Másodlagos céljaim",
 					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
 				},
-				new BucketList { Name = "FamilyList",
+				new BucketList { Name = "Családi lista",
 					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
 				},
-				new BucketList { Name = "SportList",
+				new BucketList { Name = "Sportbeli céljaim",
 					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
 				},
-				new BucketList { Name = "LanguageList",
+				new BucketList { Name = "Tanulmányi céljaim",
 					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
 				},
-				new BucketList { Name = "TravelList",
+				new BucketList { Name = "Utazási lista",
 					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
 				}
 			};
 
 			context.BucketLists.AddRange(bucketlists);
+			context.SaveChanges();
+
+			//BUCKETLISTELEMENTS
+			var bucketlistelements = new BucketListElement[]
+			{
+				new BucketListElement { Name = "Tanulj meg 2 különböző nyelven folyékonyan beszélni",
+					Description = "Angol, Spanyol", Completed = true, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Default").DesignID
+				},
+				new BucketListElement { Name = "Végezd el az egyetemet",
+					Description = "Bukás nélkül, mintatanterv szerint", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Default").DesignID
+				},
+				new BucketListElement { Name = "Tanulj meg curlingezni",
+					Description = "Nem olcsó sportág, érdemes előtte egy kisebb összeget félre raknom.", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Default").DesignID
+				},
+				new BucketListElement { Name = "Próbáld ki a bungee jumpingot",
+					Description = "Kötnöm kell egy fogadást előtte, hogy még véletlen se gondoljam meg magam fent.", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Default").DesignID
+				},
+				new BucketListElement { Name = "Csinálj egy spanyolországi családi nyaralást",
+					Description = "Látványosságok, melyeket mindenképp meg szeretnénk nézni: ...", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Utazási lista").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Default").DesignID
+				},
+				new BucketListElement { Name = "Légy 3 gyermek szülője",
+					Description = "Ha az egyik gyermekem lány lesz, Karolinának fogom elnevezni.", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Családi lista").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Default").DesignID
+				},
+				new BucketListElement { Name = "Alapíts családot",
+					Description = "Igyekszem majd a lehető legjobb családapa lenni.", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Random1").DesignID
+				},
+				new BucketListElement { Name = "Kalandozz egy moziban a feleségeddel",
+					Description = "Mindenképp a hátsó sorba kell majd helyet foglalnunk.", Completed = false, Visibility = Visibility.Private,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Random1").DesignID
+				},
+				new BucketListElement { Name = "Tanulj meg 20 különböző főtt ételt elkészíteni",
+					Description = "Nagymamám receptkönyve alapján fogok megtanulni.", Completed = false, Visibility = Visibility.Private,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Másodlagos céljaim").BucketListID,
+					DesignID = designs.Single( d => d.Name == "Random1").DesignID
+				}
+			};
+
+			context.BLElements.AddRange(bucketlistelements);
 			context.SaveChanges();
 
 			//ELEMENTS
@@ -258,7 +311,7 @@ namespace BucketListApplication.Data
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
 				},
 
-				// Képeszségek
+				// Készségek
 
 				new Element { Name = "Tanulj meg egy harcművészetet",
 					DesignID = designs.Single( d => d.Name == "Default").DesignID
@@ -757,49 +810,6 @@ namespace BucketListApplication.Data
 			context.Elements.AddRange(elements);
 			context.SaveChanges();
 
-			//BUCKETLISTELEMENTS
-			var bucketlistelements = new BucketListElement[]
-			{
-				new BucketListElement { Name = "Learn 2 different languages",
-					Description = "Angol, Spanyol", Completed = true, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "LanguageList").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new BucketListElement { Name = "Learn 3 different languages",
-					Description = "Angol, Spanyol, Francia", Completed = false, Visibility = Visibility.Private,
-					BucketListID = bucketlists.Single( bl => bl.Name == "LanguageList").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new BucketListElement { Name = "Learn to play Curling",
-					Description = "It will be expensive", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "SportList").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new BucketListElement { Name = "Try bungee jumping",
-					Description = "I will need some courage", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "SportList").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new BucketListElement { Name = "Travel to Spain with my family",
-					Description = "", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "TravelList").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new BucketListElement { Name = "Have 3 children",
-					Description = "", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "FamilyList").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Default").DesignID
-				},
-				new BucketListElement { Name = "ASD",
-					Description = "", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "MyEpicBucketList").BucketListID,
-					DesignID = designs.Single( d => d.Name == "Random1").DesignID
-				}
-			};
-
-			context.BLElements.AddRange(bucketlistelements);
-			context.SaveChanges();
-
 			var elementcategories = new ElementCategory[]
 			{
 				// Hobbi
@@ -928,83 +938,83 @@ namespace BucketListApplication.Data
 					CategoryID = categories.Single(c => c.Name == "Ételek és italok").CategoryID
 				},
 
-				// Képeszségek
+				// Készségek
 
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg egy harcművészetet").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg faragni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg rajzolni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg síelni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg valamilyen hangszeren játszani").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg autót szerelni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg táncolni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Vegyél részt egy önfejlesztő tanfolyamon").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Szerezz jogosítványt").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg lóval ugratni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg fotózni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg videót vágni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg kenyeret sütni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg elektronikus zenét készíteni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg elkészíteni 20 különböző ételt").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg pálinkát főzni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg a 3D-s origami hajtogatást").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg kertészkedni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 				new ElementCategory {
 					ElementID = elements.Single(e => e.Name == "Tanulj meg csempézni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Képeszségek").CategoryID
+					CategoryID = categories.Single(c => c.Name == "Készségek").CategoryID
 				},
 
 				// Jótettek
@@ -1579,36 +1589,44 @@ namespace BucketListApplication.Data
 				///////// BucketListElements
 
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Learn 2 different languages").ElementID,
+					ElementID = bucketlistelements.Single(e => e.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Learn 3 different languages").ElementID,
+					ElementID = bucketlistelements.Single(e => e.Name == "Végezd el az egyetemet").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Learn to play Curling").ElementID,
+					ElementID = bucketlistelements.Single(e => e.Name == "Tanulj meg curlingezni").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Sport" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Try bungee jumping").ElementID,
+					ElementID = bucketlistelements.Single(e => e.Name == "Próbáld ki a bungee jumpingot").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Sport" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Travel to Spain with my family").ElementID,
+					ElementID = bucketlistelements.Single(e => e.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Utazás" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Travel to Spain with my family").ElementID,
+					ElementID = bucketlistelements.Single(e => e.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Have 3 children").ElementID,
+					ElementID = bucketlistelements.Single(e => e.Name == "Légy 3 gyermek szülője").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "ASD").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Egyéb" ).CategoryID
+					ElementID = bucketlistelements.Single(e => e.Name == "Alapíts családot").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single(e => e.Name == "Kalandozz egy moziban a feleségeddel").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szexuális élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single(e => e.Name == "Tanulj meg 20 különböző főtt ételt elkészíteni").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Készségek" ).CategoryID
 				}
 			};
 
