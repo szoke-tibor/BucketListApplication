@@ -203,7 +203,7 @@ namespace BucketListApplication.Data
 					DesignID = designs.Single( d => d.Name == "Random1").DesignID
 				},
 				new BucketListElement { Name = "Tanulj meg 20 különböző főtt ételt elkészíteni",
-					Description = "Nagymamám receptkönyve alapján fogok megtanulni.", Completed = false, Visibility = Visibility.Private,
+					Description = "Nagymamám receptkönyve alapján fogok megtanulni.", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "Másodlagos céljaim").BucketListID,
 					DesignID = designs.Single( d => d.Name == "Random1").DesignID
 				}

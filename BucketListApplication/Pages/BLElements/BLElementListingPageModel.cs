@@ -27,12 +27,24 @@ namespace BucketListApplication.Pages.BLElements
 			BucketListSL = new SelectList(bucketListsQuery.AsNoTracking(), nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name), selectedBucketList);
 		}
 
-		public void PopulateSelectedBLElementsList(BLContext _context, int SelectedBucketListID)
+		public void PopulateSelectedBLElementsList(BLContext _context, int SelectedBucketListID, bool PublicOnly)
 		{
-			SelectedBLElements = _context.BLElements
-								 .Where(ble => ble.BucketListID == SelectedBucketListID)
-								 .OrderBy(ble => ble.Name)
-								 .ToList();
+			if (PublicOnly)
+			{
+				SelectedBLElements = _context.BLElements
+									.Where(ble => ble.BucketListID == SelectedBucketListID)
+									.Where(ble => ble.Visibility == Visibility.Public)
+									.OrderBy(ble => ble.Name)
+									.ToList();
+			}
+				
+			else
+			{
+				SelectedBLElements = _context.BLElements
+									.Where(ble => ble.BucketListID == SelectedBucketListID)
+									.OrderBy(ble => ble.Name)
+									.ToList();
+			}
 		}
 	}
 }

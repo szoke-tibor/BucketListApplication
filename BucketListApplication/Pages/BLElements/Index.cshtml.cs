@@ -43,7 +43,7 @@ namespace BucketListApplication.Pages.BLElements
 			if (CurrentUserId != null)
 			{
 				PopulateBucketListDropDownList(_context, CurrentUserId);
-				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID);
+				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, false);
 			}
 			else
 				return RedirectToPage("../Index");

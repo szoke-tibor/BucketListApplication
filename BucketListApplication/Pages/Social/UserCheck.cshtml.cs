@@ -48,7 +48,7 @@ namespace BucketListApplication.Pages.Social
 				String SelectedBucketListName = _context.BucketLists.FirstOrDefault(bl => bl.BucketListID == SelectedBucketList.BucketListID).Name;
 				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " - " + SelectedBucketListName;
 				PopulateBucketListDropDownList(_context, Id);
-				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID);
+				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
 			}
 			else
 				return RedirectToPage("../Index");
