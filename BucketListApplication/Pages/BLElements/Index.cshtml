@@ -27,20 +27,24 @@
 @if (Model.SelectedBLElements != null)
 {
     <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Cél
-                </th>
-                <th></th>
-            </tr>
-        </thead>
         <tbody>
+            <tr>
+                <td class="font-weight-bold">
+                    Cél
+                </td>
+                <td align="center" class="font-weight-bold">
+                    Teljesítve
+                </td>
+                <td></td>
+            </tr>
             @foreach (var item in Model.SelectedBLElements)
             {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelItem => item.Completed)
                     </td>
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.ElementID">Szerkeszt</a> |
