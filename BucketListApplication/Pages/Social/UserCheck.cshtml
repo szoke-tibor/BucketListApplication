@@ -17,18 +17,18 @@
     </div>
 </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Cél
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.SelectedBLElements != null)
-        {
+@if (Model.SelectedBLElements != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Cél
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var item in Model.SelectedBLElements)
             {
                 <tr>
@@ -37,12 +37,12 @@
                     </td>
                 </tr>
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
 
 <div>
     <a asp-page="./Index">Vissza</a>
 </div>
 
-    
+

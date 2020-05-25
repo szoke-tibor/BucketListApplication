@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Szerszesztés</h1>
+<h1>Szerkesztés</h1>
 
 <hr />
 <div class="row">
@@ -17,7 +17,7 @@
                 <select asp-for="BucketListElement.BucketListID" class="form-control" asp-items="Model.BucketListSL"></select>
             </div>
             <div class="form-group">
-                <label asp-for="BucketListElement.Name" class="control-label">Név:</label>
+                <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
                 <input asp-for="BucketListElement.Name" class="form-control" />
                 <span asp-validation-for="BucketListElement.Name" class="text-danger"></span>
             </div>
