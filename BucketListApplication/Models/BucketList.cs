@@ -15,5 +15,11 @@ namespace BucketListApplication.Models
 
 		public BLUser User { get; set; }
         public ICollection<BucketListElement> BLElements { get; set; }
-    }
+
+		[NotMapped]
+		public int ElementCount
+		{
+			get { return BLElements.Count(); }
+		}
+	}
 }

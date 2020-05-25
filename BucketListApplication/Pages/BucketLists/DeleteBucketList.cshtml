@@ -1,0 +1,37 @@
+﻿@page
+@model BucketListApplication.Pages.BucketLists.DeleteBucketListModel
+@{
+    ViewData["Title"] = "DeleteBucketList";
+}
+
+<h1>Törlés</h1>
+
+<p class="Hiba tortent!">@Model.ErrorMessage</p>
+
+<h3>Biztosan törölni szeretnéd?</h3>
+<h4>A bakancslistához tartozó összes bakancslista is törlődni fog így.</h4>
+    
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            Név:
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.BucketList.Name)
+        </dd>
+
+        <dt class="col-sm-4">
+            Bakancslistán található bakancslista elemek:
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.BucketList.ElementCount)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="BucketList.BucketListID" />
+        <input type="submit" value="Töröl" class="btn btn-danger" /> |
+        <a asp-page="../BLElements/Index">Vissza</a>
+    </form>
+</div>

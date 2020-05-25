@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
 
-//Not yet implemented
 namespace BucketListApplication.Pages.BLElements
 {
     public class DeleteModel : PageModel

@@ -57,3 +57,8 @@
     </table>
 }
 
+@if (Model.SelectedBucketList != null)
+{
+    <a asp-page="../BucketLists/DeleteBucketList" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
+}
+
