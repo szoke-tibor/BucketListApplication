@@ -26,7 +26,7 @@ namespace BucketListApplication.Pages.BLElements
         public IActionResult OnGet()
         {
 			//Logged user's userId
-			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
 				// Empty collection for the loop

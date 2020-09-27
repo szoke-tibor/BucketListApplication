@@ -33,7 +33,7 @@ namespace BucketListApplication.Pages.BucketLists
             var emptyBucketList = new BucketList();
 
             //Logged user's userId
-            var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId != null)
                 BucketList.UserId = CurrentUserId;
             else

@@ -28,7 +28,7 @@ namespace BucketListApplication.Pages.BLElements
 		public async Task OnGetAsync()
         {
 			//Logged user's userId
-			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
 				PopulateBucketListDropDownList(_context, CurrentUserId);
@@ -39,7 +39,7 @@ namespace BucketListApplication.Pages.BLElements
 		}
 		public async Task<IActionResult> OnPostAsync()
 		{
-			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
 				PopulateBucketListDropDownList(_context, CurrentUserId);

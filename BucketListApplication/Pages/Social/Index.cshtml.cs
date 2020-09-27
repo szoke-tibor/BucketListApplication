@@ -26,7 +26,7 @@ namespace BucketListApplication.Pages.Social
 
         public async Task OnGetAsync(string searchString)
         {
-			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
 				CurrentFilter = searchString;

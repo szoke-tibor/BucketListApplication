@@ -30,7 +30,7 @@ namespace BucketListApplication.Pages.Social
 		public async Task OnGetAsync(string Id)
         {
 			//Logged user's userId
-			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
 				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistája";
@@ -42,7 +42,7 @@ namespace BucketListApplication.Pages.Social
 
 		public async Task<IActionResult> OnPostAsync(string Id)
 		{
-			var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
 				String SelectedBucketListName = _context.BucketLists.FirstOrDefault(bl => bl.BucketListID == SelectedBucketList.BucketListID).Name;

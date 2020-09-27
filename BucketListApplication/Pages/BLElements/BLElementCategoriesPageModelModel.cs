@@ -79,7 +79,7 @@ namespace BucketListApplication.Pages.BLElements
         public void PopulateBucketListDropDownList(BLContext _context, object selectedBucketList = null)
         {
             //Logged user's userId
-            var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId != null)
             {
                 var usersBucketListsQuery = from bl in _context.BucketLists

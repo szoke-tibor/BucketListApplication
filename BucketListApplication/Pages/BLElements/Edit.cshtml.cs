@@ -27,7 +27,7 @@ namespace BucketListApplication.Pages.BLElements
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             //Logged user's userId
-            var CurrentUserId = _context._httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId != null)
             {
                 if (id == null)
