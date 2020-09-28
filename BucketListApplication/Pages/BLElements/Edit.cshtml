@@ -5,11 +5,34 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Szerkesztés</h1>
+@*<script type='text/javascript'>
+    function addNewField() {
 
+        // Container <div> where dynamic content will be placed
+        var container = document.getElementById("container");
+        // Clear previous contents of the container
+        while (container.hasChildNodes()) {
+            container.removeChild(container.lastChild);
+        }
+        for (i = 0; i < 5; i++) {
+            // Append a node with a random text
+            container.appendChild(document.createTextNode("Member " + (i + 1)));
+            // Create an <input> element, set its type and name attributes
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = "member" + i;
+            container.appendChild(input);
+            // Append a line break
+            container.appendChild(document.createElement("br"));
+        }
+    }
+</script>*@
+
+<h1>Szerkesztés</h1>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
+    <section class="col-md-6">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -49,24 +72,29 @@
                                 }
                             @:</tr>
                             }
-                        </table>
-                    </div>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label asp-for="BucketListElement.Visibility" class="control-label">Láthatóság:</label>
-                    <select asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
-                    <span asp-validation-for="BucketListElement.Visibility" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="BucketListElement.Completed" /> Teljesítve
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Mentés" class="btn btn-primary" />
-                </div>
-            </form>
-    </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="BucketListElement.Visibility" class="control-label">Láthatóság:</label>
+                <select asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
+                <span asp-validation-for="BucketListElement.Visibility" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BucketListElement.Completed" /> Teljesítve
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Mentés" class="btn btn-primary" />
+            </div>
+        </form>
+    </section>
+
+@*    <section class="col-md-6">
+        <a href="#" id="filldetails" onclick="addNewField()">Új hozzáadása</a>
+        <div id="container" />
+    </section>*@
 </div>
 
 <div>

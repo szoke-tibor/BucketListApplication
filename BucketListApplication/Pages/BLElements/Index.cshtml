@@ -33,7 +33,10 @@
                     Cél
                 </td>
                 <td align="center" class="font-weight-bold">
-                    Teljesítve
+                    Taszkok teljesítettsége
+                </td>
+                <td align="center" class="font-weight-bold">
+                    Kész
                 </td>
                 <td></td>
             </tr>
@@ -42,6 +45,16 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td align="center">
+                        @if (item.Progression != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
                     </td>
                     <td align="center">
                         @Html.DisplayFor(modelItem => item.Completed)

@@ -32,6 +32,8 @@ namespace BucketListApplication.Pages.BLElements
 			if (PublicOnly)
 			{
 				SelectedBLElements = _context.BLElements
+									.Include(ble => ble.Progression)
+									.Include(ble => ble.Progression.BLETasks)
 									.Where(ble => ble.BucketListID == SelectedBucketListID)
 									.Where(ble => ble.Visibility == Visibility.Public)
 									.OrderBy(ble => ble.Name)
@@ -41,6 +43,8 @@ namespace BucketListApplication.Pages.BLElements
 			else
 			{
 				SelectedBLElements = _context.BLElements
+									.Include(ble => ble.Progression)
+									.Include(ble => ble.Progression.BLETasks)
 									.Where(ble => ble.BucketListID == SelectedBucketListID)
 									.OrderBy(ble => ble.Name)
 									.ToList();

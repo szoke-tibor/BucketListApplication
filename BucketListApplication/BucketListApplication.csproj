@@ -39,6 +39,12 @@
     <Compile Remove="Migrations\20191129014700_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20191129134500_InitialCreate.cs" />
     <Compile Remove="Migrations\20191129134500_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200521180837_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200521180837_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200928163443_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200928163443_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200928172536_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200928172536_InitialCreate.Designer.cs" />
   </ItemGroup>
 
 
@@ -46,6 +52,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />

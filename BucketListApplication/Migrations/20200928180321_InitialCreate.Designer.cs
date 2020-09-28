@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketListApplication.Migrations
 {
     [DbContext(typeof(BLContext))]
-    [Migration("20200521180837_InitialCreate")]
+    [Migration("20200928180321_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,29 @@ namespace BucketListApplication.Migrations
                 .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BucketListApplication.Models.BLETask", b =>
+                {
+                    b.Property<int>("BLETaskID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProgressionID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BLETaskID");
+
+                    b.HasIndex("ProgressionID");
+
+                    b.ToTable("BLETask");
+                });
 
             modelBuilder.Entity("BucketListApplication.Models.BLUser", b =>
                 {
@@ -164,6 +187,24 @@ namespace BucketListApplication.Migrations
                     b.HasIndex("CategoryID");
 
                     b.ToTable("ElementCategory");
+                });
+
+            modelBuilder.Entity("BucketListApplication.Models.Progression", b =>
+                {
+                    b.Property<int>("ProgressionID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ElementID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProgressionID");
+
+                    b.HasIndex("ElementID")
+                        .IsUnique();
+
+                    b.ToTable("Progression");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -322,6 +363,15 @@ namespace BucketListApplication.Migrations
                     b.HasDiscriminator().HasValue("BucketListElement");
                 });
 
+            modelBuilder.Entity("BucketListApplication.Models.BLETask", b =>
+                {
+                    b.HasOne("BucketListApplication.Models.Progression", "Progression")
+                        .WithMany("BLETasks")
+                        .HasForeignKey("ProgressionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BucketListApplication.Models.BucketList", b =>
                 {
                     b.HasOne("BucketListApplication.Models.BLUser", "User")
@@ -340,6 +390,15 @@ namespace BucketListApplication.Migrations
                     b.HasOne("BucketListApplication.Models.Element", "Element")
                         .WithMany("ElementCategories")
                         .HasForeignKey("ElementID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BucketListApplication.Models.Progression", b =>
+                {
+                    b.HasOne("BucketListApplication.Models.BucketListElement", "BLElement")
+                        .WithOne("Progression")
+                        .HasForeignKey("BucketListApplication.Models.Progression", "ElementID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -61,7 +61,7 @@ namespace BucketListApplication.Pages.BLElements
 				newBLElement,
 				"BucketListElement",
 				ble => ble.Name,
-                ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
+				ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
 			{
 				_context.BLElements.Add(newBLElement);
 				await _context.SaveChangesAsync();

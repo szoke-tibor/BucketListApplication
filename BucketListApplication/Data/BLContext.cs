@@ -20,11 +20,14 @@ namespace BucketListApplication.Data
 			_httpContextAccessor = httpContextAccessor;
 		}
 
-		public DbSet<BucketListApplication.Models.BucketList> BucketLists { get; set; }
-		public DbSet<BucketListApplication.Models.Category> Categories { get; set; }
-		public DbSet<BucketListApplication.Models.ElementCategory> ElementCategories { get; set; }
-		public DbSet<BucketListApplication.Models.Element> Elements { get; set; }
-		public DbSet<BucketListApplication.Models.BucketListElement> BLElements { get; set; }
+		public DbSet<BucketList> BucketLists { get; set; }
+		public DbSet<Category> Categories { get; set; }
+		public DbSet<ElementCategory> ElementCategories { get; set; }
+		public DbSet<Element> Elements { get; set; }
+		public DbSet<BucketListElement> BLElements { get; set; }
+		public DbSet<Progression> Progressions { get; set; }
+		public DbSet<BLETask> BLETasks { get; set; }
+
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -33,6 +36,13 @@ namespace BucketListApplication.Data
 			modelBuilder.Entity<BucketList>().ToTable("BucketList");
 			modelBuilder.Entity<Category>().ToTable("Category");
 			modelBuilder.Entity<ElementCategory>().ToTable("ElementCategory");
+
+			modelBuilder.Entity<Progression>().ToTable("Progression")
+				.HasOne(p => p.BLElement)
+				.WithOne(ble => ble.Progression)
+				.HasForeignKey<Progression>(p => p.ElementID);
+
+			modelBuilder.Entity<BLETask>().ToTable("BLETask");
 
 			//Table per Hierarchy -> BucketListElement is included
 			modelBuilder.Entity<Element>().ToTable("Element");

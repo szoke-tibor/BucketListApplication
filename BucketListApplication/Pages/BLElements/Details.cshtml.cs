@@ -29,9 +29,11 @@ namespace BucketListApplication.Pages.BLElements
 
             BLElement = await _context.BLElements
                 .Include(ble => ble.BucketList)
+                .Include(ble => ble.Progression)
+                .Include(ble => ble.Progression.BLETasks)
                 .Include(ble => ble.ElementCategories)
-				.ThenInclude(ec => ec.Category)
-				.AsNoTracking()
+                .ThenInclude(ec => ec.Category)
+                .AsNoTracking()
 				.FirstOrDefaultAsync(ble => ble.ElementID == id);
 
 			if (BLElement == null)

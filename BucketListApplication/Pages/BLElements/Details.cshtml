@@ -39,6 +39,13 @@
             @Html.DisplayFor(model => model.BLElement.Visibility)
         </dd>
 
+        <dt class="col-sm-2">
+            Teljesítve:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.YesOrNo)
+        </dd>
+
         <dd class="col-sm-12">
             <table class="table">
                 <tr>
@@ -57,11 +64,22 @@
             </table>
         </dd>
 
-        <dt class="col-sm-1">
-            Teljesítve:
-        </dt>
-        <dd class="col-sm-11">
-            @Html.DisplayFor(model => model.YesOrNo)
+        <dd class="col-sm-12">
+            <table class="table">
+                <tr>
+                    <th>Taszkok:</th>
+                </tr>
+                @foreach (var task in Model.BLElement.Progression.BLETasks)
+                {
+                    <tr>
+                        <td>
+                            <span style="margin-left:2em">
+                                @Html.DisplayFor(modelItem => task.Text)
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </table>
         </dd>
     </dl>
 </div>

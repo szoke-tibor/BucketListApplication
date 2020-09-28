@@ -15,6 +15,7 @@ namespace BucketListApplication.Models
 		public Visibility Visibility { get; set; }
 
 		public BucketList BucketList { get; set; }
+		public Progression Progression { get; set; }
 	}
 
 	//Later Hidden can be added

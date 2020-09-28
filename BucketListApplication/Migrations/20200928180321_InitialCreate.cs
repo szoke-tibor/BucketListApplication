@@ -236,6 +236,46 @@ namespace BucketListApplication.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Progression",
+                columns: table => new
+                {
+                    ProgressionID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ElementID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Progression", x => x.ProgressionID);
+                    table.ForeignKey(
+                        name: "FK_Progression_Element_ElementID",
+                        column: x => x.ElementID,
+                        principalTable: "Element",
+                        principalColumn: "ElementID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BLETask",
+                columns: table => new
+                {
+                    BLETaskID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProgressionID = table.Column<int>(nullable: false),
+                    Text = table.Column<string>(nullable: true),
+                    Completed = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BLETask", x => x.BLETaskID);
+                    table.ForeignKey(
+                        name: "FK_BLETask_Progression_ProgressionID",
+                        column: x => x.ProgressionID,
+                        principalTable: "Progression",
+                        principalColumn: "ProgressionID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -276,6 +316,11 @@ namespace BucketListApplication.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BLETask_ProgressionID",
+                table: "BLETask",
+                column: "ProgressionID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BucketList_UserId",
                 table: "BucketList",
                 column: "UserId");
@@ -289,6 +334,12 @@ namespace BucketListApplication.Migrations
                 name: "IX_ElementCategory_CategoryID",
                 table: "ElementCategory",
                 column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Progression_ElementID",
+                table: "Progression",
+                column: "ElementID",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -309,10 +360,16 @@ namespace BucketListApplication.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BLETask");
+
+            migrationBuilder.DropTable(
                 name: "ElementCategory");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Progression");
 
             migrationBuilder.DropTable(
                 name: "Category");
