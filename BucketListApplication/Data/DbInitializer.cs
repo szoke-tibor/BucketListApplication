@@ -202,44 +202,43 @@ namespace BucketListApplication.Data
 			{
 				new BLETask {
 					Text = "Találd meg a párod",
-					//ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
 					Text = "Költözz vele össze",
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
 					Text = "Jegyezd el",
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
 					Text = "Házasodj össze vele",
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
 					Text = "Vállaljatok gyermeket",
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
 					Completed = false
 				},
 
 				new BLETask {
 					Text = "Beszéld meg a pároddal",
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
 					Text = "Keress egy unalmas filmet amire senki sem megy be",
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
 					Text = "Vedd meg a jegyeket",
-					ProgressionID = progressions.Single( p => p.ElementID == bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").ElementID).ProgressionID,
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").Progression.ProgressionID,
 					Completed = false
 				}
 			};
