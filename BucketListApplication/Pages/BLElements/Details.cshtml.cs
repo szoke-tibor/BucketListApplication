@@ -30,7 +30,7 @@ namespace BucketListApplication.Pages.BLElements
             BLElement = await _context.BLElements
                 .Include(ble => ble.BucketList)
                 .Include(ble => ble.Progression)
-                .Include(ble => ble.Progression.BLETasks)
+                .ThenInclude(p => p.BLETasks)
                 .Include(ble => ble.ElementCategories)
                 .ThenInclude(ec => ec.Category)
                 .AsNoTracking()

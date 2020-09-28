@@ -64,23 +64,26 @@
             </table>
         </dd>
 
-        <dd class="col-sm-12">
-            <table class="table">
-                <tr>
-                    <th>Taszkok:</th>
-                </tr>
-                @foreach (var task in Model.BLElement.Progression.BLETasks)
-                {
+        @if (Model.BLElement.Progression != null)
+        {
+            <dd class="col-sm-12">
+                <table class="table">
                     <tr>
-                        <td>
-                            <span style="margin-left:2em">
-                                @Html.DisplayFor(modelItem => task.Text)
-                            </span>
-                        </td>
+                        <th>Taszkok:</th>
                     </tr>
-                }
-            </table>
-        </dd>
+                    @foreach (var task in Model.BLElement.Progression.BLETasks)
+                    {
+                        <tr>
+                            <td>
+                                <span style="margin-left:2em">
+                                    @Html.DisplayFor(modelItem => task.Text)
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </dd>
+        }
     </dl>
 </div>
 <div>
