@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
+using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BLElements
 {
@@ -32,12 +33,16 @@ namespace BucketListApplication.Pages.BLElements
             BucketListElement = await _context.BLElements
                                 .Include(ble => ble.BucketList)
                                 .AsNoTracking()
-				                .FirstOrDefaultAsync(m => m.ElementID == id);
+				                .FirstOrDefaultAsync(ble => ble.ElementID == id);
 
             if (BucketListElement == null)
                 return NotFound();
 
-			if (saveChangesError.GetValueOrDefault())
+            //Not the owner tries to delete their BucketListElement
+            if (BucketListElement.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return Forbid();
+
+            if (saveChangesError.GetValueOrDefault())
 				ErrorMessage = "Delete failed. Try again";
 
 			return Page();
@@ -48,12 +53,19 @@ namespace BucketListApplication.Pages.BLElements
             if (id == null)
                 return NotFound();
 
-			var BLElementToRemove = await _context.BLElements.FindAsync(id);
+            var BLElementToRemove = await _context.BLElements
+                                    .Include(ble => ble.BucketList)
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(ble => ble.ElementID == id);
 
-			if (BLElementToRemove == null)
+            if (BLElementToRemove == null)
 				return NotFound();
 
-			try
+            //Not the owner tries to delete their BucketListElement
+            if (BLElementToRemove.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return Forbid();
+
+            try
 			{
 				_context.BLElements.Remove(BLElementToRemove);
 				await _context.SaveChangesAsync();

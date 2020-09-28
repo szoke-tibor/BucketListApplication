@@ -48,7 +48,7 @@ namespace BucketListApplication.Pages.BLElements
                 return Page();
             }
             else
-                return RedirectToPage("../Index");
+                return RedirectToPage("../AuthError");
         }
 
         public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)

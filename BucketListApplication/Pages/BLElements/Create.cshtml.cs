@@ -25,26 +25,22 @@ namespace BucketListApplication.Pages.BLElements
 
         public IActionResult OnGet()
         {
-			//Logged user's userId
-			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			if (CurrentUserId != null)
-			{
-				// Empty collection for the loop
-				// foreach (var category in Model.AssignedCategoryDataList)
-				// in the Create Razor page.
-				var emptyBLElement = new BucketListElement();
-				emptyBLElement.ElementCategories = new List<ElementCategory>();
+			if (!User.Identity.IsAuthenticated)
+				return RedirectToPage("../AuthError");
 
-				PopulateAssignedCategoryData(_context, emptyBLElement);
-				PopulateBucketListDropDownList(_context);
-				return Page();
-			}
-			else
-				return RedirectToPage("../Index");
+			var emptyBLElement = new BucketListElement();
+			emptyBLElement.ElementCategories = new List<ElementCategory>();
+
+			PopulateAssignedCategoryData(_context, emptyBLElement);
+			PopulateBucketListDropDownList(_context);
+			return Page();
 		}
 
         public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
+			if (!User.Identity.IsAuthenticated)
+				return RedirectToPage("../AuthError");
+
 			var newBLElement = new BucketListElement();
 
 			if (selectedCategories != null)

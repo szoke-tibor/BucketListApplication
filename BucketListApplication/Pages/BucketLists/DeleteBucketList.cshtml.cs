@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
+using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BucketLists
 {
@@ -23,7 +24,7 @@ namespace BucketListApplication.Pages.BucketLists
         public BucketList BucketList { get; set; }
 
         public string ErrorMessage { get; set; }
-
+        
         public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -36,6 +37,10 @@ namespace BucketListApplication.Pages.BucketLists
 
             if (BucketList == null)
                 return NotFound();
+
+            //Not the owner tries to delete their BucketList
+            if (BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return Forbid();
 
             if (saveChangesError.GetValueOrDefault())
                 ErrorMessage = "Delete failed. Try again";
@@ -52,6 +57,10 @@ namespace BucketListApplication.Pages.BucketLists
 
             if (BucketListToRemove == null)
                 return NotFound();
+
+            //Not the owner tries to delete their BucketList
+            if (BucketListToRemove.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return Forbid();
 
             try
             {

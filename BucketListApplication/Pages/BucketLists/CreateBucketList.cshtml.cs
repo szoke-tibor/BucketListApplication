@@ -25,19 +25,21 @@ namespace BucketListApplication.Pages.BucketLists
 
         public IActionResult OnGet()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToPage("../AuthError");
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var emptyBucketList = new BucketList();
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToPage("../AuthError");
 
-            //Logged user's userId
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (CurrentUserId != null)
-                BucketList.UserId = CurrentUserId;
-            else
-                return RedirectToPage("../Index");
+            BucketList.UserId = CurrentUserId;
+
+            var emptyBucketList = new BucketList();
 
             if (await TryUpdateModelAsync<BucketList>(
                 emptyBucketList,

@@ -27,7 +27,7 @@ namespace BucketListApplication.Pages.Social
 
 		public string Title { get; set; }
 
-		public async Task OnGetAsync(string Id)
+		public async Task<IActionResult> OnGetAsync(string Id)
         {
 			//Logged user's userId
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -35,9 +35,10 @@ namespace BucketListApplication.Pages.Social
 			{
 				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistája";
 				PopulateBucketListDropDownList(_context, Id);
+				return Page();
 			}
 			else
-				RedirectToPage("../Index");
+				return RedirectToPage("../AuthError");
 		}
 
 		public async Task<IActionResult> OnPostAsync(string Id)
@@ -49,11 +50,10 @@ namespace BucketListApplication.Pages.Social
 				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " - " + SelectedBucketListName;
 				PopulateBucketListDropDownList(_context, Id);
 				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
+				return Page();
 			}
 			else
-				return RedirectToPage("../Index");
-
-			return Page();
+				return RedirectToPage("../AuthError");
 		}
 	}
 }

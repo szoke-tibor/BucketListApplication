@@ -25,16 +25,17 @@ namespace BucketListApplication.Pages.BLElements
 		[BindProperty]
 		public BucketList SelectedBucketList { get; set; }
 
-		public async Task OnGetAsync()
+		public IActionResult OnGet()
         {
 			//Logged user's userId
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
 				PopulateBucketListDropDownList(_context, CurrentUserId);
+				return Page();
 			}
 			else
-				RedirectToPage("../Index");
+				return RedirectToPage("../AuthError");
 
 		}
 		public async Task<IActionResult> OnPostAsync()
@@ -46,7 +47,7 @@ namespace BucketListApplication.Pages.BLElements
 				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, false);
 			}
 			else
-				return RedirectToPage("../Index");
+				return RedirectToPage("../AuthError");
 
 			return Page();
 		}

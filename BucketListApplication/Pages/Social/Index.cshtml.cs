@@ -24,7 +24,7 @@ namespace BucketListApplication.Pages.Social
 		public string CurrentFilter { get; set; }
 		public IList<BLUser> Users { get; set; }
 
-        public async Task OnGetAsync(string searchString)
+        public async Task<IActionResult> OnGetAsync(string searchString)
         {
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
@@ -39,9 +39,10 @@ namespace BucketListApplication.Pages.Social
 					usersQuery = usersQuery.Where(u => u.FullName.Contains(searchString));
 
 				Users = await usersQuery.AsNoTracking().ToListAsync();
+				return Page();
 			}
 			else
-				RedirectToPage("../Index");
+				return RedirectToPage("../AuthError");
 		}
     }
 }
