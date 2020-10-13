@@ -187,10 +187,31 @@ namespace BucketListApplication.Data
 			var progressions = new Progression[]
 			{
 				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg curlingezni").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Próbáld ki a bungee jumpingot").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Légy 3 gyermek szülője").ElementID
+				},
+				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID
 				},
 				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 20 különböző főtt ételt elkészíteni").ElementID
 				}
 			};
 

@@ -42,6 +42,8 @@ namespace BucketListApplication.Pages.BLElements
 				return RedirectToPage("../AuthError");
 
 			var newBLElement = new BucketListElement();
+			newBLElement.Progression = new Progression();
+			newBLElement.Progression.BLETasks = new List<BLETask>();
 
 			if (selectedCategories != null)
 			{
@@ -57,11 +59,13 @@ namespace BucketListApplication.Pages.BLElements
 			}
 
 			// Defense against overposting attacks. Returns true if the update was successful.
-			if (await TryUpdateModelAsync<BucketListElement>(
-				newBLElement,
-				"BucketListElement",
+			if (await TryUpdateModelAsync<BucketListElement>(newBLElement, "BucketListElement",
 				ble => ble.Name,
-				ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
+				ble => ble.BucketListID,
+				ble => ble.Description,
+				ble => ble.Completed,
+				ble => ble.Visibility,
+				ble => ble.Progression))
 			{
 				_context.BLElements.Add(newBLElement);
 				await _context.SaveChangesAsync();

@@ -34,9 +34,11 @@ namespace BucketListApplication.Pages.BLElements
                     return NotFound();
 
                 BucketListElement = await _context.BLElements
-                    .Include(ble => ble.ElementCategories)
-                        .ThenInclude(ec => ec.Category)
                     .Include(ble => ble.BucketList)
+                        .Include(ble => ble.Progression)
+                    .ThenInclude(p => p.BLETasks)
+                        .Include(ble => ble.ElementCategories)
+                    .ThenInclude(ec => ec.Category)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(ble => ble.ElementID == id);
 
@@ -57,21 +59,26 @@ namespace BucketListApplication.Pages.BLElements
                 return NotFound();
 
             var elementToUpdate = await _context.BLElements
-                    .Include(ble => ble.ElementCategories)
-                        .ThenInclude(ec => ec.Category)
-                    .Include(ble => ble.BucketList)
-                    .FirstOrDefaultAsync(ble => ble.ElementID == id);
+                .Include(ble => ble.BucketList)
+                .Include(ble => ble.Progression)
+                    .ThenInclude(p => p.BLETasks)
+                .Include(ble => ble.ElementCategories)
+                    .ThenInclude(ec => ec.Category)
+                .FirstOrDefaultAsync(ble => ble.ElementID == id);
 
             if (elementToUpdate == null)
                 return NotFound();
 
             // Defense against overposting attacks. Returns true if the update was successful.
-            if (await TryUpdateModelAsync<BucketListElement>(
-				elementToUpdate,
-				"BucketListElement",
+            if (await TryUpdateModelAsync<BucketListElement>(elementToUpdate, "BucketListElement",
                 ble => ble.Name,
-                ble => ble.BucketListID, ble => ble.Description, ble => ble.Completed, ble => ble.Visibility))
+                ble => ble.BucketListID,
+                ble => ble.Description,
+                ble => ble.Completed,
+                ble => ble.Visibility,
+                ble => ble.Progression))
 			{
+                elementToUpdate.Progression.DeleteEmptyTasks();
                 UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
 				await _context.SaveChangesAsync();
 				return RedirectToPage("./Index");

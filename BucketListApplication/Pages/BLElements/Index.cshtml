@@ -47,7 +47,7 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td align="center">
-                        @if (item.Progression != null)
+                        @if (item.Progression.BLETasks.Count != 0)
                         {
                             @Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text>
                         }
