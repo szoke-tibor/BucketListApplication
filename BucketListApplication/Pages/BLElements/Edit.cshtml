@@ -123,7 +123,7 @@
         var currentRow = parseInt($(element).val());
         let nextsiblings = document.querySelectorAll('.taskRow:nth-child(' + (currentRow + 1) + ') ~ *');
         for (var i = 0; i < nextsiblings.length; i++) {
-            var childElements = nextsiblings[i].childNodes;
+            var childElements = nextsiblings[i].children;
             childElements[0].textContent = "Task " + (currentRow + 1) + ":";
             childElements[1].setAttribute("name", "BucketListElement.Progression.BLETasks[" + currentRow + "].Text");
             childElements[2].setAttribute("name", "BucketListElement.Progression.BLETasks[" + currentRow + "].Completed");
