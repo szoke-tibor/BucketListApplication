@@ -32,9 +32,19 @@ namespace BucketListApplication
 			services.AddDbContext<BLContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDefaultIdentity<BLUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+			services.AddDefaultIdentity<BLUser>(options =>
+			{
+				options.SignIn.RequireConfirmedEmail = false;
+				options.User.RequireUniqueEmail = true;
+				options.Password.RequiredLength = 6;
+				options.Password.RequireNonAlphanumeric = false;
+				options.Password.RequireUppercase = false;
+				options.Password.RequireDigit = false;
+			})
 				.AddRoles<IdentityRole>()
 				.AddEntityFrameworkStores<BLContext>();
+
 			services.AddRazorPages();
 
 		    services.AddDbContext<BLContext>(options =>
