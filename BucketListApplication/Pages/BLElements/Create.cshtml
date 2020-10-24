@@ -85,14 +85,17 @@
                                                value="@Model.AssignedCategoryDataList.ElementAt(i).CategoryID"
                                                @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i).Assigned ? "checked=\"checked\"" : "")) />
                                     </td>
-                                    <td>
-                                        @Model.AssignedCategoryDataList.ElementAt(i+1).Name
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="selectedCategories"
-                                               value="@Model.AssignedCategoryDataList.ElementAt(i+1).CategoryID"
-                                               @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i+1).Assigned ? "checked=\"checked\"" : "")) />
-                                    </td>
+                                    @if (i + 1 < Model.AssignedCategoryDataList.Count)
+                                    {
+                                        <td>
+                                            @Model.AssignedCategoryDataList.ElementAt(i + 1).Name
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="selectedCategories"
+                                                   value="@Model.AssignedCategoryDataList.ElementAt(i + 1).CategoryID"
+                                                   @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i + 1).Assigned ? "checked=\"checked\"" : "")) />
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }
