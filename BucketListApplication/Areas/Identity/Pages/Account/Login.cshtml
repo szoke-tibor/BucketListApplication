@@ -5,49 +5,76 @@
     ViewData["Title"] = "Log in";
 }
 
-
-<div class="row" style="display: flex; justify-content:center; align-items: center; height: 75vh">
-    <div class="col-md-4" >
-        <section>
-            <form id="account" method="post">
-                <h1>@ViewData["Title"]</h1>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+<div class="login-container">
+    <div class="col-lg-6 login-form">
+        <form id="account" method="post">
+            <h2>@ViewData["Title"]</h2>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email">E-mail</label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password">Jelszó</label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="Input.RememberMe">
+                        <input asp-for="Input.RememberMe" />
+                        @*@Html.DisplayNameFor(m => m.Input.RememberMe)*@
+                        Emlékezz rám.
+                    </label>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
-                        <button type="button" class="btn btn-outline-primary">Sign up</button>
-                    </a>
-                </div>
-                <div class="form-group">
-                    
-                </div>
-                <div class="form-group">
-                    
-                </div>
-            </form>
-        </section>
+            </div>
+            <button type="submit" class="btn btnSubmit">Bejelentkezés</button>
+            <div>
+                <span id="regquestion">Nincs még felhasználói fiókod?</span>
+                <a href="./Register" id="reg">Regisztráció</a>
+            </div>
+        </form>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .login-form {
+        margin: 2.5%;
+        padding: 5%;
+        background: #36393f;
+        color: #b9bbbe;
+        box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-form h2 {
+        text-align: center;
+        color: #fff;
+    }
+
+    .login-container form {
+        padding: 5%;
+    }
+
+    .btnSubmit {
+        width: 100%;
+        background-color: #677bc4;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    #reg {
+        color: #677bc4;
+        margin-left: 4px;
+    }
+</style>
