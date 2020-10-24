@@ -16,7 +16,6 @@
 
 <form method="post" id="bucketlistselectform">
     <div class="form-group">
-        <label asp-for="SelectedBucketList.BucketListID" class="control-label">Válassz egy Listát</label>
         <select asp-for="SelectedBucketList.BucketListID" class="form-control" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
     </div>
 </form>

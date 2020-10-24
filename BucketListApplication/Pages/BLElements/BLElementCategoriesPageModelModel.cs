@@ -20,8 +20,7 @@ namespace BucketListApplication.Pages.BLElements
         public void PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement)
         {
             var allCategories = context.Categories;
-            var BLCategories = new HashSet<int>(
-                BLElement.ElementCategories.Select(ec => ec.CategoryID));
+            var BLCategories = new HashSet<int>(BLElement.ElementCategories.Select(ec => ec.CategoryID));
             AssignedCategoryDataList = new List<AssignedCategoryData>();
             foreach (var category in allCategories)
             {
@@ -43,8 +42,7 @@ namespace BucketListApplication.Pages.BLElements
             }
 
             //Categories before editing
-            var BLElementCategoriesBeforeEdit = new HashSet<int>
-                (BLElementToUpdate.ElementCategories.Select(ec => ec.Category.CategoryID));
+            var BLElementCategoriesBeforeEdit = new HashSet<int>(BLElementToUpdate.ElementCategories.Select(ec => ec.Category.CategoryID));
             //Categories selected at editing
             var BLElementCategoriesAfterEdit = new HashSet<string>(selectedCategories);
             

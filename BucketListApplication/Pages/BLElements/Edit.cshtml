@@ -8,60 +8,100 @@
 <h1>Szerkesztés</h1>
 <hr />
 
-<div class="row">
-    <section class="col-md-6">
-        <form method="post">
+<form method="post">
+    <div class="row">
+        <section class="col-lg-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="BucketListElement.BucketListID" class="control-label">Bakancslista:</label>
-                <select asp-for="BucketListElement.BucketListID" class="form-control" asp-items="Model.BucketListSL"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
-                <input asp-for="BucketListElement.Name" class="form-control" />
-                <span asp-validation-for="BucketListElement.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BucketListElement.Description" class="control-label">Leírás:</label>
-                <textarea asp-for="BucketListElement.Description" class="form-control"></textarea>
-                <span asp-validation-for="BucketListElement.Description" class="text-danger"></span>
-            </div>
+            <table>
+                <tr class="form-group">
+                    <td>
+                        <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
+                    </td>
+                    <td>
+                        <input asp-for="BucketListElement.Name" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <span asp-validation-for="BucketListElement.Name" class="text-danger"></span>
+                </tr>
+                <tr class="form-group">
+                    <td>
+                        <label asp-for="BucketListElement.BucketListID" class="control-label">Lista:</label>
+                    </td>
+                    <td>
+                        <select asp-for="BucketListElement.BucketListID" class="form-control" asp-items="Model.BucketListSL"></select>
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td>
+                        <label asp-for="BucketListElement.Visibility" class="control-label">Láthatóság:</label>
+                    </td>
+                    <td>
+                        <select asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td style="vertical-align:top">
+                        <label asp-for="BucketListElement.Description" class="control-label">Leírás:</label>
+                    </td>
+                    <td>
+                        <textarea asp-for="BucketListElement.Description" class="form-control" rows="4"></textarea>
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td>
+                        <label asp-for="BucketListElement.Completed" class="control-label">Teljesítve:</label>
+                    </td>
+                    <td>
+                        <input asp-for="BucketListElement.Completed"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-group">
+                        <input type="submit" value="Hozzáad" class="btn btn-primary" />
+                    </td>
+                    <td>
+                        <a asp-page="./Index">
+                            <button type="button" class="btn btn-outline-primary">Vissza</button>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="col-lg-4">
             <div class="form-group">
                 <div class="table">
                     <table>
-                        <tr>
-                            @{
-                                int cnt = 0;
-                                foreach (var category in Model.AssignedCategoryDataList)
-                                {
-                                    if (cnt++ % 3 == 0)
-                                    {
-                                        @:</tr><tr>
-                                    }
-                                    @:<td align="center">
-                                        <input type="checkbox" name="selectedCategories" value="@category.CategoryID" @(Html.Raw(category.Assigned ? "checked=\"checked\"" : "")) />
-                                        <br />@category.Name
-                                    @:</td>
-                                }
-                                @:</tr>
+                        @{
+                            for (int i = 0; i < Model.AssignedCategoryDataList.Count; i += 2)
+                            {
+                                <tr>
+                                    <td>
+                                        @Model.AssignedCategoryDataList.ElementAt(i).Name
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="selectedCategories"
+                                               value="@Model.AssignedCategoryDataList.ElementAt(i).CategoryID"
+                                               @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i).Assigned ? "checked=\"checked\"" : "")) />
+                                    </td>
+                                    <td>
+                                        @Model.AssignedCategoryDataList.ElementAt(i + 1).Name
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="selectedCategories"
+                                               value="@Model.AssignedCategoryDataList.ElementAt(i+1).CategoryID"
+                                               @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i + 1).Assigned ? "checked=\"checked\"" : "")) />
+                                    </td>
+                                </tr>
                             }
-                        </table>
-                    </div>
+                        }
+                    </table>
+                </div>
             </div>
+        </section>
+        <section class="col-lg-4">
             <div class="form-group">
-                <label asp-for="BucketListElement.Visibility" class="control-label">Láthatóság:</label>
-                <select asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
-                <span asp-validation-for="BucketListElement.Visibility" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="BucketListElement.Completed" /> Teljesítve
-                </label>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="BucketListElement.Progression.BLETasks" class="control-label"></label>
-                <button id="addTask" class='btn btn-primary'>+</button>
                 <div id="Tasks" style="margin-top:10px">
                     @{
                         int indexCounter = 0;
@@ -79,21 +119,11 @@
                         }
                     }
                 </div>
+                <button id="addTask" class='btn btn-primary'>Új taszk</button>
             </div>
-
-            <div class="form-group">
-                <input type="submit" value="Mentés" class="btn btn-primary" />
-            </div>
-        </form>
-    </section>
-    <section class="col-md-6">
-
-    </section>
-</div>
-
-<div>
-    <a asp-page="./Index">Vissza</a>
-</div>
+        </section>
+    </div>
+</form>
 
 <style>
     .largerCheckbox {
