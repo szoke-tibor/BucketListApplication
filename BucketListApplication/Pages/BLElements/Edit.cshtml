@@ -63,7 +63,6 @@
                 </tr>
             </table>
         </section>
-
         <section class="col-lg-4">
             <div class="form-group">
                 <div class="table">
@@ -98,7 +97,7 @@
                 </div>
             </div>
         </section>
-        <section class="col-lg-4">
+        <section class="col-lg-4 tasks">
             <div class="form-group">
                 <div id="Tasks" style="margin-top:10px">
                     @{
@@ -108,8 +107,8 @@
                         {
                             <div class="taskRow">
                                 <label>Task @taskCounter:</label>
-                                <input class="form-control" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Text" required="required" />
-                                <input class="largerCheckbox" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Completed" />
+                                <input class="taskInput" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Text" required="required"/>
+                                <input class="largerCheckbox" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Completed"/>
                                 <button class="btn btn-danger" style="padding-top:1px" onclick="deleteRow(this)" value="@indexCounter">-</button>
                             </div>
                             indexCounter++;
@@ -124,12 +123,21 @@
 </form>
 
 <style>
+    .tasks label {
+        margin: 0px;
+    }
+
+    .taskInput {
+        margin: 0px;
+        width: 50%;
+    }
+
     .largerCheckbox {
         width: 25px;
         height: 25px;
         margin-left: 20px;
         margin-right: 20px;
-        vertical-align: middle
+        vertical-align: middle;
     }
 </style>
 
@@ -139,9 +147,9 @@
 <script>
     var counter = @Model.BucketListElement.Progression.BLETasks.Count + 1;
     $("#addTask").on("click", function () {
-        var htmlstring = "<div class='taskRow'><label>Task " + counter + ":</label>";
-        htmlstring += "<input type='text' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Text' required='required'>";
-        htmlstring += "<input type='checkbox' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Completed' class='largerCheckbox' value='true'>";
+        var htmlstring = "<div class='taskRow'><label>Task " + counter + ":</label> ";
+        htmlstring += "<input type='text' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Text' class='taskInput' required='required'> ";
+        htmlstring += "<input type='checkbox' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Completed' class='largerCheckbox' value='true'> ";
         htmlstring += "<button class='btn btn-danger' style='padding-top:1px' onclick='deleteRow(this)' value='" + (counter - 1) + "'>-</button></div>"
         $("#Tasks").append(htmlstring);
         counter++;
