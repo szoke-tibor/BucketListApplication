@@ -5,44 +5,43 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Bakancslista</h1>
+<h1>Bakancslistáim</h1>
 
-<p>
-    <a asp-page="../BucketLists/CreateBucketList">Új Bakancslista létrehozása</a>
-</p>
-<p>
-    <a asp-page="./Create">Új Bakancslista elem létrehozása</a>
-</p>
 
-<form method="post" id="bucketlistselectform">
-    <div class="form-group">
-        <select asp-for="SelectedBucketList.BucketListID" class="form-control" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
-    </div>
-</form>
+<div>
+    <form method="post" id="bucketlistselectform">
+        <select asp-for="SelectedBucketList.BucketListID" class="form-control BLselect" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
+    </form>
+    <a class="goal" id="addListBtn" asp-page="../BucketLists/CreateBucketList">Új lista</a>
+    @if (Model.SelectedBucketList != null)
+    {
+        <a id="deleteBL" asp-page="../BucketLists/DeleteBucketList" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
+    }
+</div>
 
 @if (Model.SelectedBLElements != null)
 {
     <table class="table">
         <tbody>
-            <tr>
-                <td class="font-weight-bold">
-                    Cél
-                </td>
-                <td align="center" class="font-weight-bold">
-                    Taszkok teljesítettsége
-                </td>
-                <td align="center" class="font-weight-bold">
-                    Kész
-                </td>
-                <td></td>
-            </tr>
             @foreach (var item in Model.SelectedBLElements)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                <tr class="tableRow">
+                    <td align="center" class="checkCell">
+                        @if (item.Completed)
+                        {
+                            <img class="completedImage" src="~/images/checked.png" />
+                        }
+                        else
+                        {
+                            <img class="completedImage" src="~/images/unchecked.png" />
+                        }
                     </td>
-                    <td align="center">
+                    <td class="goalCell">
+                        <a class="goal" asp-page="./Details" asp-route-id="@item.ElementID">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </a>
+                    </td>
+                    <td class="progressionCell">
                         @if (item.Progression.BLETasks.Count != 0)
                         {
                             @Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text>
@@ -52,24 +51,20 @@
                             <text>-</text>
                         }
                     </td>
-                    <td align="center">
-                        @Html.DisplayFor(modelItem => item.Completed)
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.ElementID">Szerkeszt</a> |
-                        <a asp-page="./Details" asp-route-id="@item.ElementID">Részletek</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.ElementID">Törlés</a>
-                    </td>
+                    @*<td>
+                            <a asp-page="./Edit" asp-route-id="@item.ElementID">Szerkeszt</a> |
+                            <a asp-page="./Details" asp-route-id="@item.ElementID">Részletek</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.ElementID">Törlés</a>
+                        </td>*@
                 </tr>
             }
         </tbody>
     </table>
 }
 
-@if (Model.SelectedBucketList != null)
-{
-    <a asp-page="../BucketLists/DeleteBucketList" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
-}
+<p>
+    <a asp-page="./Create">Új Bakancslista elem létrehozása</a>
+</p>
 
 @section Scripts
 {
@@ -82,3 +77,117 @@
         }
     </script>
 }
+
+<style>
+    #deleteBL {
+        display: block;
+        color: #677bc4;
+        margin-left: 0.5rem;
+        margin-bottom: 20px;
+        font-size: 12px;
+    }
+
+    #bucketlistselectform {
+        display: inline;
+    }
+
+    .tableRow {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkCell {
+        display: block;
+        width: 7.5%;
+    }
+
+    .goalCell {
+        align-items: center;
+        width: 85%;
+    }
+
+    .progressionCell {
+        text-align: center;
+        width: 7.5%;
+    }
+
+    .completedImage {
+        height: 3rem;
+        width: 3rem;
+    }
+
+    .table > tbody > tr > td {
+        border-top: none;
+    }
+
+    body {
+        background-color: #202225;
+    }
+
+    h1 {
+        color: white;
+        margin-bottom: 1.5rem;
+    }
+
+    .table {
+        color: white;
+    }
+
+    .BLselect {
+        display: inline;
+        width: 30%;
+        background-color: #2f3136;
+        border-color: #18191c;
+        color: white;
+    }
+
+    .BLselect:focus {
+        width: 30%;
+        background-color: #2f3136;
+        border-color: #677bc4;
+        color: white;
+        box-shadow: none;
+    }
+
+    .goal {
+        display: inline-block;
+        width: 100%;
+        background-color: #36393f;
+        border-radius: 0.5rem;
+        border: 1px solid #18191c;
+        line-height: 3rem;
+        text-align: start;
+        color: white;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #addListBtn {
+        display: inline;
+        background-color: #616466;
+        border-radius: 0.3rem;
+        text-align: center;
+        font-size: 14px;
+        padding: 4px;
+        margin-left: 10px;
+    }
+
+        #addListBtn:hover {
+            background-color: #36393f;
+        }
+
+    .goal:hover {
+        color: white;
+        background-color: #2f3136;
+        border-color: #18191c;
+        text-decoration: none;
+    }
+
+    .goal:focus, .addListBtn:focus {
+        box-shadow: 0 0 0 0.1rem #9b9da1;
+    }
+</style>
