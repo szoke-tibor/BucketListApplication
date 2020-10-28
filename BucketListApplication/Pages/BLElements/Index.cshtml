@@ -7,12 +7,11 @@
 
 <h1>Bakancslistáim</h1>
 
-
 <div>
     <form method="post" id="bucketlistselectform">
         <select asp-for="SelectedBucketList.BucketListID" class="form-control BLselect" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
     </form>
-    <a class="goal" id="addListBtn" asp-page="../BucketLists/CreateBucketList">Új lista</a>
+    <a class="addBtn" id="addListBtn" asp-page="../BucketLists/CreateBucketList">Új lista</a>
     @if (Model.SelectedBucketList != null)
     {
         <a id="deleteBL" asp-page="../BucketLists/DeleteBucketList" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
@@ -53,17 +52,19 @@
                     </td>
                 </tr>
             }
+            <tr class="tableRow">
+                <td class="checkCell"></td>
+                <td class="goalCell">
+                    @if (Model.SelectedBucketList != null)
+                    {
+                        <a asp-page="./Create" asp-route-bucketlistid="@Model.SelectedBucketList.BucketListID" class="addBtn" id="addBLEBtn">Új elem</a>
+                    }
+                </td>
+                <td class="progressionCell"></td>
+            </tr>
         </tbody>
     </table>
 }
-
-@if (Model.SelectedBucketList != null)
-{
-    <p>
-        <a asp-page="./Create" asp-route-bucketlistid="@Model.SelectedBucketList.BucketListID">Új Bakancslista elem létrehozása</a>
-    </p>
-}
-
 
 @section Scripts
 {
@@ -78,6 +79,35 @@
 }
 
 <style>
+    body {
+        background-color: #202225;
+    }
+
+    h1 {
+        color: white;
+        margin-bottom: 1.5rem;
+    }
+
+    #bucketlistselectform {
+        display: inline;
+    }
+
+    .BLselect {
+        display: inline;
+        width: 30%;
+        background-color: #2f3136;
+        border-color: #18191c;
+        color: white;
+    }
+
+    .BLselect:focus {
+        width: 30%;
+        background-color: #2f3136;
+        border-color: #677bc4;
+        color: white;
+        box-shadow: none;
+    }
+
     #deleteBL {
         display: block;
         color: #677bc4;
@@ -86,8 +116,12 @@
         font-size: 12px;
     }
 
-    #bucketlistselectform {
-        display: inline;
+    .table {
+        color: white;
+    }
+
+    .table > tbody > tr > td {
+        border-top: none;
     }
 
     .tableRow {
@@ -115,78 +149,61 @@
         width: 3rem;
     }
 
-    .table > tbody > tr > td {
-        border-top: none;
-    }
-
-    body {
-        background-color: #202225;
-    }
-
-    h1 {
-        color: white;
-        margin-bottom: 1.5rem;
-    }
-
-    .table {
-        color: white;
-    }
-
-    .BLselect {
-        display: inline;
-        width: 30%;
-        background-color: #2f3136;
-        border-color: #18191c;
-        color: white;
-    }
-
-        .BLselect:focus {
-            width: 30%;
-            background-color: #2f3136;
-            border-color: #677bc4;
-            color: white;
-            box-shadow: none;
-        }
-
     .goal {
         display: inline-block;
         width: 100%;
+        line-height: 3rem;
+        text-align: start;
         background-color: #36393f;
         border-radius: 0.5rem;
         border: 1px solid #18191c;
-        line-height: 3rem;
-        text-align: start;
+        padding-left: 10px;
+        padding-right: 10px;
         color: white;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        padding-left: 10px;
-        padding-right: 10px;
     }
 
-    #addListBtn {
-        display: inline;
-        background-color: #616466;
-        border-radius: 0.3rem;
-        text-align: center;
-        font-size: 14px;
-        padding: 4px;
-        margin-left: 10px;
-    }
-
-        #addListBtn:hover {
-            background-color: #36393f;
-        }
-
-    .goal:hover {
+    .goal:hover{
         color: white;
         background-color: #2f3136;
         border-color: #18191c;
         text-decoration: none;
     }
 
-    .goal:focus, .addListBtn:focus {
+    .goal:focus, #addListBtn:focus, #addBLEBtn:focus{
         box-shadow: 0 0 0 0.1rem #9b9da1;
+    }
+
+    .addBtn {
+        display: inline;
+        border-radius: 0.3rem;
+        text-align: center;
+        font-size: 14px;
+        padding: 4px;
+        color: white;
+    }
+
+    #addListBtn {
+        background-color: #616466;
+        margin-left: 10px;
+    }
+
+    #addListBtn:hover {
+        color: white;
+        background-color: #36393f;
+        text-decoration: none;
+    }
+
+    #addBLEBtn {
+        background-color: #495da6;
+    }
+
+    #addBLEBtn:hover {
+        color: white;
+        background-color: #354992;
+        text-decoration: none;
     }
 </style>
