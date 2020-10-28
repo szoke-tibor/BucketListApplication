@@ -32,6 +32,6 @@
     <form method="post">
         <input type="hidden" asp-for="BucketList.BucketListID" />
         <input type="submit" value="Töröl" class="btn btn-danger" /> |
-        <a asp-page="../BLElements/Index">Vissza</a>
+        <a asp-page="../BLElements/Index" asp-route-selectedbucketlistid="@Model.BucketList.BucketListID">Vissza</a>
     </form>
 </div>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace BucketListApplication.Pages.BLElements
 {
@@ -23,17 +24,19 @@ namespace BucketListApplication.Pages.BLElements
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int bucketlistid)
         {
 			if (!User.Identity.IsAuthenticated)
 				return RedirectToPage("../AuthError");
 
-			var emptyBLElement = new BucketListElement
+			BucketListElement = new BucketListElement
 			{
+				BucketListID = bucketlistid,
+				BucketList = _context.BucketLists.Find(bucketlistid),
 				ElementCategories = new List<ElementCategory>()
 			};
 
-			PopulateAssignedCategoryData(_context, emptyBLElement);
+			PopulateAssignedCategoryData(_context, BucketListElement);
 			PopulateBucketListDropDownList(_context);
 			return Page();
 		}

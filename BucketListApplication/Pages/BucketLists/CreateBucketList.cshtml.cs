@@ -41,10 +41,9 @@ namespace BucketListApplication.Pages.BucketLists
 
             var emptyBucketList = new BucketList();
 
-            if (await TryUpdateModelAsync<BucketList>(
-                emptyBucketList,
-                "BucketList",
-                bl => bl.Name, bl => bl.UserId))
+            if (await TryUpdateModelAsync<BucketList>(emptyBucketList, "BucketList",
+                bl => bl.Name,
+                bl => bl.UserId))
             {
                 _context.BucketLists.Add(BucketList);
                 await _context.SaveChangesAsync();

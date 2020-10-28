@@ -5,7 +5,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Létrehozás</h1>
+<h1>Új elem létrehozása ide: @Model.BucketListElement.BucketList.Name</h1>
 <hr />
 
 <form method="post">
@@ -50,7 +50,7 @@
                         <input type="submit" value="Hozzáad" class="btn btn-primary" />
                     </td>
                     <td>
-                        <a href="./Index" class="btn btn-outline-primary">Vissza</a>
+                        <a asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID" class="btn btn-outline-primary">Vissza</a>
                     </td>
                 </tr>
             </table>
