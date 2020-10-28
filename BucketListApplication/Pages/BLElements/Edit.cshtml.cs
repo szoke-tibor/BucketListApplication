@@ -81,8 +81,8 @@ namespace BucketListApplication.Pages.BLElements
                 elementToUpdate.Progression.DeleteEmptyTasks();
                 UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
 				await _context.SaveChangesAsync();
-				return RedirectToPage("./Index");
-			}
+                return RedirectToPage("Index", new { selectedbucketlistid = elementToUpdate.BucketListID });
+            }
 
             //If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
             PopulateAssignedCategoryData(_context, elementToUpdate);

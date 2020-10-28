@@ -14,21 +14,21 @@
             Cél:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BLElement.Name)
+            @Html.DisplayFor(model => model.BucketListElement.Name)
         </dd>
 
         <dt class="col-sm-2">
             Tartalmazó lista:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BLElement.BucketList.Name)
+            @Html.DisplayFor(model => model.BucketListElement.BucketList.Name)
         </dd>
 
         <dt class="col-sm-2">
             Leírás:
         </dt>
         <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.BLElement.Description)
+            @Html.DisplayFor(model => model.BucketListElement.Description)
         </dd>
         <dd class="col-sm-2"></dd>
 
@@ -36,7 +36,7 @@
             Láthatóság:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BLElement.Visibility)
+            @Html.DisplayFor(model => model.BucketListElement.Visibility)
         </dd>
 
         <dt class="col-sm-2">
@@ -51,7 +51,7 @@
                 <tr>
                     <th>Kategóriák:</th>
                 </tr>
-                @foreach (var item in Model.BLElement.ElementCategories)
+                @foreach (var item in Model.BucketListElement.ElementCategories)
                 {
                     <tr>
                         <td>
@@ -64,14 +64,14 @@
             </table>
         </dd>
 
-        @if (Model.BLElement.Progression != null)
+        @if (Model.BucketListElement.Progression != null)
         {
             <dd class="col-sm-12">
                 <table class="table">
                     <tr>
                         <th>Taszkok:</th>
                     </tr>
-                    @foreach (var task in Model.BLElement.Progression.BLETasks)
+                    @foreach (var task in Model.BucketListElement.Progression.BLETasks)
                     {
                         <tr>
                             <td>
@@ -87,6 +87,7 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.BLElement.ElementID">Szerkeszt</a> |
-    <a asp-page="./Index">Vissza</a>
+    <a asp-page="./Edit" asp-route-id="@Model.BucketListElement.ElementID">Szerkeszt</a> |
+    <a asp-page="./Delete" asp-route-id="@Model.BucketListElement.ElementID">Törlés</a> |
+    <a asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID">Vissza</a>
 </div>

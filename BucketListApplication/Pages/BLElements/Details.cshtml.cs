@@ -19,7 +19,7 @@ namespace BucketListApplication.Pages.BLElements
             _context = context;
         }
 
-        public BucketListElement BLElement { get; set; }
+        public BucketListElement BucketListElement { get; set; }
         public String YesOrNo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -27,19 +27,19 @@ namespace BucketListApplication.Pages.BLElements
             if (id == null)
                 return NotFound();
 
-            BLElement = await _context.BLElements
+            BucketListElement = await _context.BLElements
                 .Include(ble => ble.BucketList)
                 .Include(ble => ble.Progression)
-                .ThenInclude(p => p.BLETasks)
+                    .ThenInclude(p => p.BLETasks)
                 .Include(ble => ble.ElementCategories)
-                .ThenInclude(ec => ec.Category)
+                    .ThenInclude(ec => ec.Category)
                 .AsNoTracking()
 				.FirstOrDefaultAsync(ble => ble.ElementID == id);
 
-			if (BLElement == null)
+			if (BucketListElement == null)
                 return NotFound();
 
-            if (BLElement.Completed == true)
+            if (BucketListElement.Completed == true)
                 YesOrNo = "Igen";
             else
                 YesOrNo = "Nem";

@@ -69,8 +69,8 @@ namespace BucketListApplication.Pages.BLElements
 			{
 				_context.BLElements.Remove(BLElementToRemove);
 				await _context.SaveChangesAsync();
-				return RedirectToPage("Index");
-			}
+                return RedirectToPage("Index", new { selectedbucketlistid = BLElementToRemove.BucketListID });
+            }
 			catch (DbUpdateException /* ex */)
 			{
 				//Log the error (uncomment ex variable name and write a log.)

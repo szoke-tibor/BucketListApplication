@@ -75,9 +75,8 @@ namespace BucketListApplication.Pages.BLElements
 			{
 				_context.BLElements.Add(newBLElement);
 				await _context.SaveChangesAsync();
-				return RedirectToPage("Index");
+				return RedirectToPage("Index", new { selectedbucketlistid = bucketlistid });
 			}
-
 			//If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
 			PopulateAssignedCategoryData(_context, newBLElement);
 			PopulateBucketListDropDownList(_context, newBLElement.BucketListID);

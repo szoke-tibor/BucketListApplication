@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{selectedbucketlist:int?}"
 @model BucketListApplication.Pages.BLElements.IndexModel
 
 @{
@@ -50,9 +50,6 @@
                         {
                             <text>-</text>
                         }
-                    </td>
-                    <td>
-                        <a asp-page="./Delete" asp-route-id="@item.ElementID">Törlés</a>
                     </td>
                 </tr>
             }

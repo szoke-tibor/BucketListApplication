@@ -25,31 +25,27 @@ namespace BucketListApplication.Pages.BLElements
 		[BindProperty]
 		public BucketList SelectedBucketList { get; set; }
 
-		public IActionResult OnGet()
+		public IActionResult OnGet(int? selectedbucketlistid)
         {
 			//Logged user's userId
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
 				PopulateBucketListDropDownList(_context, CurrentUserId);
+				if (selectedbucketlistid != null)
+				{
+					SelectedBucketList = _context.BucketLists.Single(bl => bl.BucketListID == selectedbucketlistid);
+					PopulateSelectedBLElementsList(_context, (int)selectedbucketlistid, false);
+				}
 				return Page();
 			}
 			else
 				return RedirectToPage("../AuthError");
 
 		}
-		public async Task<IActionResult> OnPostAsync()
+		public IActionResult OnPost()
 		{
-			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			if (CurrentUserId != null)
-			{
-				PopulateBucketListDropDownList(_context, CurrentUserId);
-				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, false);
-			}
-			else
-				return RedirectToPage("../AuthError");
-
-			return Page();
+			return RedirectToPage("Index", new { selectedbucketlistid = SelectedBucketList.BucketListID });
 		}
 	}
 }
