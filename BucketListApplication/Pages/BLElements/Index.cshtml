@@ -51,20 +51,22 @@
                             <text>-</text>
                         }
                     </td>
-                    @*<td>
-                            <a asp-page="./Edit" asp-route-id="@item.ElementID">Szerkeszt</a> |
-                            <a asp-page="./Details" asp-route-id="@item.ElementID">Részletek</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.ElementID">Törlés</a>
-                        </td>*@
+                    <td>
+                        <a asp-page="./Delete" asp-route-id="@item.ElementID">Törlés</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 }
 
-<p>
-    <a asp-page="./Create">Új Bakancslista elem létrehozása</a>
-</p>
+@if (Model.SelectedBucketList != null)
+{
+    <p>
+        <a asp-page="./Create" asp-route-bucketlistid="@Model.SelectedBucketList.BucketListID">Új Bakancslista elem létrehozása</a>
+    </p>
+}
+
 
 @section Scripts
 {
@@ -141,13 +143,13 @@
         color: white;
     }
 
-    .BLselect:focus {
-        width: 30%;
-        background-color: #2f3136;
-        border-color: #677bc4;
-        color: white;
-        box-shadow: none;
-    }
+        .BLselect:focus {
+            width: 30%;
+            background-color: #2f3136;
+            border-color: #677bc4;
+            color: white;
+            box-shadow: none;
+        }
 
     .goal {
         display: inline-block;

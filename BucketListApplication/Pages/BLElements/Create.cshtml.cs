@@ -28,22 +28,29 @@ namespace BucketListApplication.Pages.BLElements
 			if (!User.Identity.IsAuthenticated)
 				return RedirectToPage("../AuthError");
 
-			var emptyBLElement = new BucketListElement();
-			emptyBLElement.ElementCategories = new List<ElementCategory>();
+			var emptyBLElement = new BucketListElement
+			{
+				ElementCategories = new List<ElementCategory>()
+			};
 
 			PopulateAssignedCategoryData(_context, emptyBLElement);
 			PopulateBucketListDropDownList(_context);
 			return Page();
 		}
 
-        public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
+        public async Task<IActionResult> OnPostAsync(int bucketlistid, string[] selectedCategories)
         {
 			if (!User.Identity.IsAuthenticated)
 				return RedirectToPage("../AuthError");
 
-			var newBLElement = new BucketListElement();
-			newBLElement.Progression = new Progression();
-			newBLElement.Progression.BLETasks = new List<BLETask>();
+			var newBLElement = new BucketListElement
+			{
+				BucketListID = bucketlistid,
+				Progression = new Progression
+				{
+					BLETasks = new List<BLETask>()
+				}
+			};
 
 			if (selectedCategories != null)
 			{
