@@ -48,8 +48,12 @@ namespace BucketListApplication.Pages.BucketLists
             {
                 _context.BucketLists.Add(BucketList);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("../BLElements/Index");
-            }
+				int newBucketListID = _context.BucketLists
+					.Where(bl => bl.Name == BucketList.Name)
+					.Where(bl => bl.UserId == BucketList.UserId)
+					.SingleOrDefault().BucketListID;
+				return RedirectToPage("../BLElements/Index", new { selectedbucketlistid = newBucketListID });
+			}
             return Page();
         }
     }
