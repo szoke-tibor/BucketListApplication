@@ -68,7 +68,6 @@ namespace BucketListApplication.Pages.BLElements
 			// Defense against overposting attacks. Returns true if the update was successful.
 			if (await TryUpdateModelAsync<BucketListElement>(newBLElement, "BucketListElement",
 				ble => ble.Name,
-				ble => ble.BucketListID,
 				ble => ble.Description,
 				ble => ble.Completed,
 				ble => ble.Visibility,
