@@ -5,27 +5,23 @@
     ViewData["Title"] = "CreateBucketList";
 }
 
-<h1>Létrehozás</h1>
+<h3>Új bakancslista létrehozása</h3>
 
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="BucketList.Name" class="control-label">Név:</label>
-                <input asp-for="BucketList.Name" class="form-control" />
+                <label asp-for="BucketList.Name" class="control-label">Cél:</label>
+                <input asp-for="BucketList.Name" class="form-control input" />
                 <span asp-validation-for="BucketList.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Hozzáad" class="btn btn-primary" />
+                <input type="submit" value="Hozzáad" class="btn myBtn submitBtn" />
+                <a asp-page="../BLElements/Index" class="btn backBtn">Vissza</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-page="../BLElements/Index">Vissza</a>
 </div>
 
 @section Scripts {
