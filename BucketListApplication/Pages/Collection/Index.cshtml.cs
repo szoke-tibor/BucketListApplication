@@ -39,6 +39,7 @@ namespace BucketListApplication.Pages.Collection
                 Category category = CategoryData.Categories.Where(c => c.CategoryID == id.Value).Single();
                 CategoryData.Elements = category.ElementCategories
                     .Select(ec => ec.Element)
+                    .Where(ec => ec.Discriminator == "Element")
                     .OrderBy(e => e.Name);
             }
         }
