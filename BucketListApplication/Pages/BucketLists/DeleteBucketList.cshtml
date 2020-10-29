@@ -4,34 +4,34 @@
     ViewData["Title"] = "DeleteBucketList";
 }
 
-<h1>Törlés</h1>
-
 <p class="Hiba tortent!">@Model.ErrorMessage</p>
 
-<h3>Biztosan törölni szeretnéd?</h3>
-<h4>A bakancslistához tartozó összes bakancslista is törlődni fog így.</h4>
+<h4>Biztosan törölni szeretnéd?</h4>
+<h4 style="margin-bottom: 40px">A bakancslistához tartozó összes bakancslista is törlődni fog.</h4>
     
 <div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-4">
-            Név:
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.BucketList.Name)
-        </dd>
-
-        <dt class="col-sm-4">
-            Bakancslistán található bakancslista elemek:
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.BucketList.ElementCount)
-        </dd>
-    </dl>
+    <table style="margin-bottom: 40px">
+        <tr>
+            <td>
+                Törlendő bakancslista neve:
+            </td>
+            <td style="padding-left: 15px">
+                @Html.DisplayFor(model => model.BucketList.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Bakancslistán található elemek száma:
+            </td>
+            <td style="padding-left: 15px">
+                @Html.DisplayFor(model => model.BucketList.ElementCount)
+            </td>
+        </tr>
+    </table>
 
     <form method="post">
         <input type="hidden" asp-for="BucketList.BucketListID" />
-        <input type="submit" value="Töröl" class="btn btn-danger" /> |
-        <a asp-page="../BLElements/Index" asp-route-selectedbucketlistid="@Model.BucketList.BucketListID">Vissza</a>
+        <input type="submit" value="Töröl" class="btn btn-danger" />
+        <a class="btn btn-outline-primary" asp-page="../BLElements/Index" asp-route-selectedbucketlistid="@Model.BucketList.BucketListID">Vissza</a>
     </form>
 </div>
