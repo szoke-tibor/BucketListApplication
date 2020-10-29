@@ -31,7 +31,7 @@ html {
 }
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 
@@ -59,8 +59,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    background-color: #25272a;
+    color: #9b9da1;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 
 .header {
@@ -74,4 +76,51 @@ body {
     white-space: nowrap;
     background-color: #18191c;
     line-height: 60px; /* Vertically center the text there */
+}
+
+.myBtn {
+    display: inline;
+    border-radius: 0.3rem;
+    text-align: center;
+    color: white;
+}
+
+.myBtn:focus, .backBtn:focus {
+    box-shadow: 0 0 0 0.1rem #9b9da1;
+}
+
+.submitBtn {
+    background-color: #495da6;
+    font-size: 1rem;
+    padding: 5px 10px;
+}
+
+.submitBtn:hover {
+    color: white;
+    background-color: #354992;
+    text-decoration: none;
+}
+
+.backBtn {
+    color: #495da6;
+    border-color: #495da6;
+}
+
+.backBtn:hover {
+    color: white;
+    border-color: #495da6;
+    background-color: #495da6;
+}
+
+.input {
+    background-color: #1e1f20;
+    border-color: black;
+    color: #9b9da1;
+}
+
+.input:focus {
+    background-color: #1e1f20;
+    border-color: black;
+    color: #9b9da1;
+    box-shadow: 0 0 0 1px #677bc4;
 }

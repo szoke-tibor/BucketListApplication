@@ -5,13 +5,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Bakancslistáim</h1>
+<h3>Bakancslistáim</h3>
 
 <div>
     <form method="post" id="bucketlistselectform">
         <select asp-for="SelectedBucketList.BucketListID" class="form-control BLselect" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
     </form>
-    <a class="addBtn" id="addListBtn" asp-page="../BucketLists/CreateBucketList">Új lista</a>
+    <a class="myBtn" id="addListBtn" asp-page="../BucketLists/CreateBucketList">Új lista</a>
     @if (Model.SelectedBucketList != null)
     {
         <a id="deleteBL" asp-page="../BucketLists/DeleteBucketList" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
@@ -45,10 +45,6 @@
                         {
                             @Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text>
                         }
-                        else
-                        {
-                            <text>-</text>
-                        }
                     </td>
                 </tr>
             }
@@ -57,7 +53,7 @@
                 <td class="goalCell">
                     @if (Model.SelectedBucketList != null)
                     {
-                        <a asp-page="./Create" asp-route-bucketlistid="@Model.SelectedBucketList.BucketListID" class="addBtn" id="addBLEBtn">Új elem</a>
+                        <a asp-page="./Create" asp-route-bucketlistid="@Model.SelectedBucketList.BucketListID" class="myBtn submitBtn" id="addBLEBtn">Új elem</a>
                     }
                 </td>
                 <td class="progressionCell"></td>
@@ -83,7 +79,7 @@
         background-color: #25272a;
     }
 
-    h1 {
+    h3 {
         color: white;
         margin-bottom: 1.5rem;
     }
@@ -173,37 +169,20 @@
         text-decoration: none;
     }
 
-    .goal:focus, #addListBtn:focus, #addBLEBtn:focus{
+    .goal:focus {
         box-shadow: 0 0 0 0.1rem #9b9da1;
-    }
-
-    .addBtn {
-        display: inline;
-        border-radius: 0.3rem;
-        text-align: center;
-        font-size: 14px;
-        padding: 4px;
-        color: white;
     }
 
     #addListBtn {
         background-color: #616466;
+        font-size: 0.85rem;
+        padding: 4px;
         margin-left: 10px;
     }
 
     #addListBtn:hover {
         color: white;
         background-color: #36393f;
-        text-decoration: none;
-    }
-
-    #addBLEBtn {
-        background-color: #495da6;
-    }
-
-    #addBLEBtn:hover {
-        color: white;
-        background-color: #354992;
         text-decoration: none;
     }
 </style>

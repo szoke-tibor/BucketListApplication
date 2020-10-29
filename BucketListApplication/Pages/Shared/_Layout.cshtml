@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav class="header navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
+        <nav class="header navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3 navbar-dark">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="./Index"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,15 +20,15 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         @if (Context.User.Identity.IsAuthenticated)
-                        { 
-                            <li class="nav-item"><a class="nav-link text-light" asp-area="" asp-page="/BLElements/Index">Bakancslistám</a></li>
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/BLElements/Index">Bakancslistám</a></li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collection/Index">Kollekció</a>
+                            <a class="nav-link" asp-area="" asp-page="/Collection/Index">Kollekció</a>
                         </li>
                         @if (Context.User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item"><a class="nav-link text-light" asp-area="" asp-page="/Social/Index">Mások bakancslistái</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Social/Index">Mások bakancslistái</a></li>
                         }
                     </ul>
                 </div>

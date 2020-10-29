@@ -5,101 +5,85 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Szerkesztés</h1>
-<hr />
+<h3>Szerkesztés - @Model.BucketListElement.Name</h3>
 
 <form method="post">
     <div class="row">
-        <section class="col-lg-4">
+        <section class="col-lg-4" style="padding-top:3.5rem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <table>
-                <tr class="form-group">
-                    <td>
+                <tr class="form-group editRow">
+                    <td class="firstColumn">
                         <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
                     </td>
-                    <td>
-                        <input asp-for="BucketListElement.Name" class="form-control" required="required"/>
+                    <td class="secondColumn">
+                        <input asp-for="BucketListElement.Name" class="form-control input" required="required" />
                     </td>
                 </tr>
-                <tr class="form-group">
-                    <td>
+                <tr class="form-group editRow">
+                    <td class="firstColumn">
                         <label asp-for="BucketListElement.BucketListID" class="control-label">Lista:</label>
                     </td>
-                    <td>
-                        <select asp-for="BucketListElement.BucketListID" class="form-control" asp-items="Model.BucketListSL"></select>
+                    <td class="secondColumn">
+                        <select asp-for="BucketListElement.BucketListID" class="form-control input" asp-items="Model.BucketListSL"></select>
                     </td>
                 </tr>
-                <tr class="form-group">
-                    <td>
+                <tr class="form-group editRow">
+                    <td class="firstColumn">
                         <label asp-for="BucketListElement.Visibility" class="control-label">Láthatóság:</label>
                     </td>
-                    <td>
-                        <select asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control"></select>
+                    <td class="secondColumn">
+                        <select asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control input"></select>
                     </td>
                 </tr>
-                <tr class="form-group">
-                    <td style="vertical-align:top">
+                <tr class="form-group editRow">
+                    <td class="firstColumn" style="vertical-align:top">
                         <label asp-for="BucketListElement.Description" class="control-label">Leírás:</label>
                     </td>
-                    <td>
-                        <textarea asp-for="BucketListElement.Description" class="form-control" rows="4"></textarea>
+                    <td class="secondColumn">
+                        <textarea asp-for="BucketListElement.Description" class="form-control input" rows="6"></textarea>
                     </td>
                 </tr>
-                <tr class="form-group">
-                    <td>
+                <tr class="form-group completedRow">
+                    <td class="firstColumn">
                         <label asp-for="BucketListElement.Completed" class="control-label">Teljesítve:</label>
                     </td>
-                    <td>
-                        <input asp-for="BucketListElement.Completed"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-group">
-                        <input type="submit" value="Hozzáad" class="btn btn-primary" />
-                    </td>
-                    <td>
-                        <a asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID" class="btn btn-outline-primary">Vissza</a>
+                    <td class="secondColumn">
+                        <div class="switchToggle">
+                            <input type="checkbox" asp-for="BucketListElement.Completed" id="completed">
+                            <label for="completed" />
+                        </div>
                     </td>
                 </tr>
             </table>
+            <input type="submit" value="Mentés" class="btn myBtn submitBtn" />
+            <a asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID" class="btn backBtn">Vissza</a>
         </section>
-        <section class="col-lg-4">
-            <div class="form-group">
-                <div class="table">
-                    <table>
-                        @{
-                            for (int i = 0; i < Model.AssignedCategoryDataList.Count; i += 2)
-                            {
-                                <tr>
-                                    <td>
-                                        @Model.AssignedCategoryDataList.ElementAt(i).Name
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="selectedCategories"
-                                               value="@Model.AssignedCategoryDataList.ElementAt(i).CategoryID"
-                                               @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i).Assigned ? "checked=\"checked\"" : "")) />
-                                    </td>
-                                    @if (i + 1 < Model.AssignedCategoryDataList.Count)
-                                    {
-                                        <td>
-                                            @Model.AssignedCategoryDataList.ElementAt(i + 1).Name
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" name="selectedCategories"
-                                                   value="@Model.AssignedCategoryDataList.ElementAt(i + 1).CategoryID"
-                                                   @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i + 1).Assigned ? "checked=\"checked\"" : "")) />
-                                        </td>
-                                    }
-                                </tr>
-                            }
+        
+        <section class="col-lg-3">
+            <h4>Kategóriák</h4>
+            <div class="form-group" style="padding-top:1rem">
+                <div>
+                    @{
+                        for (int i = 0; i < Model.AssignedCategoryDataList.Count; i++)
+                        {
+                            <input type="checkbox"
+                                   class="categoryCheckbox"
+                                   id="category_@i"
+                                   name="selectedCategories"
+                                   value="@Model.AssignedCategoryDataList.ElementAt(i).CategoryID"
+                                   @(Html.Raw(Model.AssignedCategoryDataList.ElementAt(i).Assigned ? "checked=\"checked\"" : "")) />
+                            <label for="category_@i">@Model.AssignedCategoryDataList.ElementAt(i).Name</label>
                         }
-                    </table>
+                    }
                 </div>
             </div>
         </section>
-        <section class="col-lg-4 tasks">
-            <div class="form-group">
-                <div id="Tasks" style="margin-top:10px">
+
+        <section class="col-lg-5 tasks">
+            <h4>Részfeladatok</h4>
+            <div class="form-group" style="padding-top:1rem">
+                <div id="Tasks">
                     @{
                         int indexCounter = 0;
                         int taskCounter = 1;
@@ -107,8 +91,8 @@
                         {
                             <div class="taskRow">
                                 <label>Task @taskCounter:</label>
-                                <input class="taskInput" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Text" required="required"/>
-                                <input class="largerCheckbox" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Completed"/>
+                                <input class="taskInput" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Text" required="required" />
+                                <input class="largerCheckbox" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Completed" />
                                 <button class="btn btn-danger" style="padding-top:1px" onclick="deleteRow(this)" value="@indexCounter">-</button>
                             </div>
                             indexCounter++;
@@ -123,6 +107,26 @@
 </form>
 
 <style>
+    h3 {
+        color: white;
+        margin-bottom: 1.5rem;
+    }
+
+    .firstColumn {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 14px;
+    }
+
+    .editRow {
+        line-height: 2.25rem;
+        width: 100%;
+    }
+
+    .completedRow{
+        line-height: 5rem;
+    }
+
     .tasks label {
         margin: 0px;
     }
@@ -132,12 +136,127 @@
         width: 50%;
     }
 
+    .table {
+        color: #9b9da1;
+    }
+
     .largerCheckbox {
         width: 25px;
         height: 25px;
         margin-left: 20px;
         margin-right: 20px;
         vertical-align: middle;
+    }
+
+    /*Completed toggle styles*/
+    .switchToggle input[type=checkbox] {
+        display: none;
+    }
+
+    .switchToggle label {
+        cursor: pointer;
+        width: 80px;
+        max-width: 80px;
+        height: 30px;
+        /*No color*/
+        background: #36393f;
+        display: block;
+        border-radius: 100px;
+        position: relative;
+    }
+
+    /*Circle*/
+    .switchToggle label:after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 26px;
+        height: 26px;
+        background: #fff;
+        border-radius: 50px;
+        transition: 0.3s;
+    }
+
+    .switchToggle input + label:before, .switchToggle input + input + label:before {
+        content: 'Nem';
+        position: absolute;
+        top: -29px;
+        left: 36px;
+        transition: 0.3s;
+        text-indent: 0;
+        color: #fff;
+    }
+
+    /*Yes color*/
+    .switchToggle input:checked + label, .switchToggle input:checked + input + label {
+        background: #1b6dc2;
+    }
+
+    .switchToggle input:checked + label:before, .switchToggle input:checked + input + label:before {
+        content: 'Igen';
+        position: absolute;
+        top: -29px;
+        left: 10px;
+        transition: 0.3s;
+        text-indent: 0;
+        color: #fff;
+    }
+
+    .switchToggle input:checked + label:after, .switchToggle input:checked + input + label:after {
+        left: calc(100% - 2px);
+        transform: translateX(-100%);
+    }
+
+    .toggle-switchArea {
+        margin: 10px 0 10px 0;
+    }
+
+    /*Checkboxes styles*/
+    input[type="checkbox"].categoryCheckbox {
+        display: none;
+    }
+
+    input[type="checkbox"].categoryCheckbox + label {
+        display: block;
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 0.5rem;
+        color: white;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    input[type="checkbox"].categoryCheckbox + label:last-child {
+        margin-bottom: 0;
+    }
+
+    input[type="checkbox"].categoryCheckbox + label:before {
+        content: '';
+        display: block;
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 1px solid #6cc0e5;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: .6;
+        -webkit-transition: all .12s, border-color .1s;
+        transition: all .12s, border-color .1s;
+    }
+
+    input[type="checkbox"]:checked.categoryCheckbox + label:before {
+        width: 0.6rem;
+        top: -5px;
+        left: 5px;
+        border-radius: 0;
+        opacity: 1;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
     }
 </style>
 
