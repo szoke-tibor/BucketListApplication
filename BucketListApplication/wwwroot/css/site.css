@@ -126,6 +126,12 @@ body {
     box-shadow: 0 0 0 1px #677bc4;
 }
 
+input[disabled], select[disabled], textarea[disabled] {
+    color: #9b9da1;
+    background-color: #36393f !important;
+    border-color: black;
+}
+
     /*Edit + Create page*/
 h3 {
     color: white;
@@ -151,6 +157,26 @@ h3 {
     color: #9b9da1;
 }
 
+.mt-40 {
+    margin-top: 40px;
+}
+
+.horiz-center {
+    display: flex;
+    justify-content: center;
+}
+
+.dirColumn-centered {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.myFormGroup {
+    padding-top: 1rem;
+    width: 95%;
+}
+
 /*Completed toggle styles*/
 .switchToggle input[type=checkbox] {
     display: none;
@@ -166,6 +192,10 @@ h3 {
     display: block;
     border-radius: 100px;
     position: relative;
+}
+
+input[disabled] ~ label {
+    cursor: default;
 }
 
 /*Circle*/

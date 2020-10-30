@@ -7,7 +7,7 @@
 <p class="Hiba tortent!">@Model.ErrorMessage</p>
 
 <h4>Biztosan törölni szeretnéd?</h4>
-<h4 style="margin-bottom: 40px">A bakancslistához tartozó összes bakancslista is törlődni fog.</h4>
+<h5 style="margin-bottom: 40px">A bakancslistához tartozó összes bakancslista is törlődni fog.</h5>
     
 <table style="margin-bottom: 40px">
     <tr>
@@ -31,5 +31,5 @@
 <form method="post">
     <input type="hidden" asp-for="BucketList.BucketListID" />
     <input type="submit" value="Töröl" class="btn btn-danger" />
-    <a class="btn btn-outline-primary" asp-page="../BLElements/Index" asp-route-selectedbucketlistid="@Model.BucketList.BucketListID">Vissza</a>
+    <a class="btn backBtn" asp-page="../BLElements/Index" asp-route-selectedbucketlistid="@Model.BucketList.BucketListID">Vissza</a>
 </form>

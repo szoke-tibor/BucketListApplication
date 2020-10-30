@@ -5,18 +5,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h3>Bakancslistáim</h3>
-
-<div>
+<div class="mt-40" style="display: flex; align-items: center;">
     <form method="post" id="bucketlistselectform">
         <select asp-for="SelectedBucketList.BucketListID" class="form-control BLselect" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
     </form>
     <a class="myBtn" id="addListBtn" asp-page="../BucketLists/CreateBucketList">Új lista</a>
-    @if (Model.SelectedBucketList != null)
-    {
-        <a id="deleteBL" asp-page="../BucketLists/DeleteBucketList" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
-    }
 </div>
+@if (Model.SelectedBucketList != null)
+{
+    <a id="deleteBL" asp-page="../BucketLists/DeleteBucketList" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
+}
 
 @if (Model.SelectedBLElements != null)
 {
@@ -85,19 +83,20 @@
     }
 
     #bucketlistselectform {
-        display: inline;
+        width: 40%;
     }
 
     .BLselect {
         display: inline;
-        width: 30%;
+        width: 100%;
         background-color: #2f3136;
         border-color: #18191c;
         color: white;
+        font-size: 1.75rem;
     }
 
     .BLselect:focus {
-        width: 30%;
+        width: 100%;
         background-color: #2f3136;
         border-color: #677bc4;
         color: white;
@@ -108,6 +107,7 @@
         display: block;
         color: #677bc4;
         margin-left: 0.5rem;
+        margin-top: 5px;
         margin-bottom: 20px;
         font-size: 12px;
     }

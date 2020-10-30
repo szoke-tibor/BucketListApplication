@@ -5,89 +5,120 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Részletek</h1>
+<div class="row mt-40">
+    <section class="col-lg-4" style="padding-top:3.5rem">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <table>
+            <tr class="form-group editRow">
+                <td class="firstColumn">
+                    <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
+                </td>
+                <td class="secondColumn">
+                    <input disabled asp-for="BucketListElement.Name" class="form-control input" required="required" />
+                </td>
+            </tr>
+            <tr class="form-group editRow">
+                <td class="firstColumn">
+                    <label asp-for="BucketListElement.BucketListID" class="control-label">Lista:</label>
+                </td>
+                <td class="secondColumn">
+                    <input disabled asp-for="BucketListElement.BucketList.Name" class="form-control input"></input>
+                </td>
+            </tr>
+            <tr class="form-group editRow">
+                <td class="firstColumn">
+                    <label asp-for="BucketListElement.Visibility" class="control-label">Láthatóság:</label>
+                </td>
+                <td class="secondColumn">
+                    <select disabled asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control input"></select>
+                </td>
+            </tr>
+            <tr class="form-group editRow">
+                <td class="firstColumn" style="vertical-align:top">
+                    <label asp-for="BucketListElement.Description" class="control-label">Leírás:</label>
+                </td>
+                <td class="secondColumn">
+                    <textarea disabled asp-for="BucketListElement.Description" class="form-control input" rows="6"></textarea>
+                </td>
+            </tr>
+            <tr class="form-group completedRow">
+                <td class="firstColumn">
+                    <label asp-for="BucketListElement.Completed" class="control-label">Teljesítve:</label>
+                </td>
+                <td class="secondColumn">
+                    <div class="switchToggle">
+                        <input disabled type="checkbox" asp-for="BucketListElement.Completed" id="completed">
+                        <label for="completed" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </section>
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Cél:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BucketListElement.Name)
-        </dd>
-
-        <dt class="col-sm-2">
-            Tartalmazó lista:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BucketListElement.BucketList.Name)
-        </dd>
-
-        <dt class="col-sm-2">
-            Leírás:
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.BucketListElement.Description)
-        </dd>
-        <dd class="col-sm-2"></dd>
-
-        <dt class="col-sm-2">
-            Láthatóság:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BucketListElement.Visibility)
-        </dd>
-
-        <dt class="col-sm-2">
-            Teljesítve:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.YesOrNo)
-        </dd>
-
-        <dd class="col-sm-12">
-            <table class="table">
-                <tr>
-                    <th>Kategóriák:</th>
-                </tr>
+    @if (Model.BucketListElement.ElementCategories.Count != 0)
+    {
+        <section class="col-lg-3 dirColumn-centered">
+            <h4>Kategóriák</h4>
+            <div class="form-group myFormGroup dirColumn-centered">
                 @foreach (var item in Model.BucketListElement.ElementCategories)
                 {
-                    <tr>
-                        <td>
-                            <span style="margin-left:2em">
-                                @Html.DisplayFor(modelItem => item.Category.Name)
-                            </span>
-                        </td>
-                    </tr>
+                    <label class="bordered category">
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </label>
                 }
-            </table>
-        </dd>
+            </div>
+        </section>
+    }
 
-        @if (Model.BucketListElement.Progression != null)
-        {
-            <dd class="col-sm-12">
-                <table class="table">
-                    <tr>
-                        <th>Taszkok:</th>
-                    </tr>
-                    @foreach (var task in Model.BucketListElement.Progression.BLETasks)
-                    {
-                        <tr>
-                            <td>
-                                <span style="margin-left:2em">
-                                    @Html.DisplayFor(modelItem => task.Text)
-                                </span>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </dd>
-        }
-    </dl>
+
+    @if (Model.BucketListElement.Progression.BLETasks.Count != 0)
+    {
+        <section class="col-lg-5 dirColumn-centered">
+            <h4>Részfeladatok</h4>
+            <div class="form-group myFormGroup dirColumn-centered">
+                @foreach (var task in Model.BucketListElement.Progression.BLETasks)
+                {
+                    <label class="bordered @(Html.Raw(task.Completed ? "completed" : "uncompleted")) task">
+                        @Html.DisplayFor(modelItem => task.Text)
+                    </label>
+                }
+            </div>
+        </section>
+    }
 </div>
+
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.BucketListElement.ElementID">Szerkeszt</a> |
-    <a asp-page="./Delete" asp-route-id="@Model.BucketListElement.ElementID">Törlés</a> |
-    <a asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID">Vissza</a>
+    <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.BucketListElement.ElementID"><i class="far fa-edit"></i></a>
+    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@Model.BucketListElement.ElementID"><i class="fas fa-trash-alt"></i></a>
+    <a class="btn backBtn" asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID">Vissza</a>
 </div>
+
+<style>
+    .bordered {
+        display: block;
+        padding: 0.375rem 1rem;
+        border: 1px solid;
+        border-radius: 0.25rem;
+        background-color: transparent;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .category {
+        border-color: #6cc0e5;
+        width: 100%;
+    }
+
+    .completed {
+        border-color: green;
+    }
+
+    .uncompleted {
+        border-color: red;
+    }
+
+    .task {
+        width: 70%;
+    }
+
+</style>

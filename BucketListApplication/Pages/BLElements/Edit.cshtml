@@ -5,10 +5,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h3>Szerkesztés - @Model.BucketListElement.Name</h3>
-
 <form method="post">
-    <div class="row">
+    <div class="row mt-40">
         <section class="col-lg-4" style="padding-top:3.5rem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <table>
@@ -60,9 +58,9 @@
             <a asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID" class="btn backBtn">Vissza</a>
         </section>
         
-        <section class="col-lg-3">
+        <section class="col-lg-3 dirColumn-centered">
             <h4>Kategóriák</h4>
-            <div class="form-group" style="padding-top:1rem">
+            <div class="form-group myFormGroup">
                 <div>
                     @{
                         for (int i = 0; i < Model.AssignedCategoryDataList.Count; i++)
@@ -80,20 +78,19 @@
             </div>
         </section>
 
-        <section class="col-lg-5 tasks">
+        <section class="col-lg-5 dirColumn-centered">
             <h4>Részfeladatok</h4>
-            <div class="form-group" style="padding-top:1rem">
+            <div class="form-group myFormGroup">
                 <div id="Tasks">
                     @{
                         int indexCounter = 0;
                         int taskCounter = 1;
                         foreach (var task in Model.BucketListElement.Progression.BLETasks)
                         {
-                            <div class="taskRow">
-                                <label>@taskCounter -</label>
-                                <input class="taskInput input form-control" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Text" required="required" />
+                            <div class="taskRow horiz-center">
                                 <input class="largerCheckbox" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Completed" />
-                                <button class="btn btn-danger" onclick="deleteRow(this)" value="@indexCounter"><i class="fas fa-trash-alt"></i></button>
+                                <input class="taskInput input form-control" asp-for="@Model.BucketListElement.Progression.BLETasks[indexCounter].Text" required="required" />
+                                <button class="btn btn-danger deleteBtn" onclick="deleteRow(this)" value="@indexCounter"><i class="fas fa-trash-alt"></i></button>
                             </div>
                             indexCounter++;
                             taskCounter++;
@@ -110,57 +107,62 @@
     #addTask {
         padding: 2.5px 5px;
         margin-top: 5px;
-        margin-left: 22px;
+        margin-left: 3.5rem;
     }
 
     .taskInput {
         display:inline;
-        width: 50%;
-        margin-left: 5px;
+        text-align: center;
+        width: 70%;
     }
 
-    .taskRow, .taskRow label {
+    .taskRow {
         display: flex;
         align-items: center;
-        margin: 5px 0;
+        justify-content: space-evenly;
+        margin-bottom: 10px;
     }
 
     .largerCheckbox {
-        width: 25px;
-        height: 25px;
-        margin-left: 20px;
-        margin-right: 20px;
+        width: 1rem;
+        height: 1rem;
+        margin-left: 1rem;
         vertical-align: middle;
+    }
+
+    .deleteBtn {
+        height: 2rem;
+        width: 2rem;
+        padding: 0;
     }
 </style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script>
-    var counter = @Model.BucketListElement.Progression.BLETasks.Count + 1;
-    $("#addTask").on("click", function () {
-        var htmlstring = "<div class='taskRow'><label>" + counter + " -</label> ";
-        htmlstring += "<input type='text' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Text' class='taskInput input form-control' required='required'> ";
-        htmlstring += "<input type='checkbox' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Completed' class='largerCheckbox' value='true'> ";
-        htmlstring += "<button class='btn btn-danger' onclick='deleteRow(this)' value='" + (counter - 1) + "'><i class='fas fa-trash-alt'></i></button></div>"
-        $("#Tasks").append(htmlstring);
-        counter++;
-    })
+    <script>
+        var counter = @Model.BucketListElement.Progression.BLETasks.Count + 1;
+        $("#addTask").on("click", function () {
+            var htmlstring = "<div class='taskRow horiz-center'>";
+            htmlstring += "<input type='checkbox' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Completed' class='largerCheckbox' value='true'> ";
+            htmlstring += "<input type='text' name='BucketListElement.Progression.BLETasks[" + (counter - 1) + "].Text' class='taskInput input form-control' required='required'> ";
+            htmlstring += "<button class='btn btn-danger deleteBtn' onclick='deleteRow(this)' value='" + (counter - 1) + "'><i class='fas fa-trash-alt'></i></button></div>"
+            $("#Tasks").append(htmlstring);
+            counter++;
+        })
 
-    function deleteRow(element) {
-        var currentRow = parseInt($(element).val());
-        let nextsiblings = document.querySelectorAll('.taskRow:nth-child(' + (currentRow + 1) + ') ~ *');
-        for (var i = 0; i < nextsiblings.length; i++) {
-            var childElements = nextsiblings[i].children;
-            childElements[0].textContent = "Task " + (currentRow + 1) + ":";
-            childElements[1].setAttribute("name", "BucketListElement.Progression.BLETasks[" + currentRow + "].Text");
-            childElements[2].setAttribute("name", "BucketListElement.Progression.BLETasks[" + currentRow + "].Completed");
-            childElements[3].setAttribute("value", currentRow)
-            currentRow++;
+        function deleteRow(element) {
+            var currentRow = parseInt($(element).val());
+            let nextsiblings = document.querySelectorAll('.taskRow:nth-child(' + (currentRow + 1) + ') ~ *');
+            for (var i = 0; i < nextsiblings.length; i++) {
+                var childElements = nextsiblings[i].children;
+                childElements[0].setAttribute("name", "BucketListElement.Progression.BLETasks[" + currentRow + "].Completed");
+                childElements[1].setAttribute("name", "BucketListElement.Progression.BLETasks[" + currentRow + "].Text");
+                childElements[2].setAttribute("value", currentRow)
+                currentRow++;
+            }
+            $(element).parent("div").remove();
+            counter--;
         }
-        $(element).parent("div").remove();
-        counter--;
-    }
-</script>
+    </script>
 }
