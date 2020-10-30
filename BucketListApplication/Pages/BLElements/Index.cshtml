@@ -73,15 +73,6 @@
 }
 
 <style>
-    body {
-        background-color: #25272a;
-    }
-
-    h3 {
-        color: white;
-        margin-bottom: 1.5rem;
-    }
-
     #bucketlistselectform {
         width: 40%;
     }
@@ -89,10 +80,16 @@
     .BLselect {
         display: inline;
         width: 100%;
-        background-color: #2f3136;
         border-color: #18191c;
         color: white;
         font-size: 1.75rem;
+        height: 3.5rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: linear-gradient(45deg, transparent 50%, #18191c 50%), linear-gradient(135deg, #18191c 50%, transparent 50%), #2f3136;
+        background-position: calc(100% - 9px) calc(1em), calc(100% - 4px) calc(1em), 100% 0;
+        background-size: 5px 5px, 5px 5px, 1rem 3.5rem;
+        background-repeat: no-repeat;
     }
 
     .BLselect:focus {
@@ -101,6 +98,10 @@
         border-color: #677bc4;
         color: white;
         box-shadow: none;
+    }
+
+    .BLselect option {
+        font-size: 0.75rem;
     }
 
     #deleteBL {
