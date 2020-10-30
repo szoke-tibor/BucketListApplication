@@ -157,6 +157,10 @@ h3 {
     color: #9b9da1;
 }
 
+.table > tbody > tr > td {
+    border-top: none;
+}
+
 .mt-40 {
     margin-top: 40px;
 }

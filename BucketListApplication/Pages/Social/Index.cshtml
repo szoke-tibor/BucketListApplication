@@ -5,39 +5,37 @@
     ViewData["Title"] = "Index";
 }
 
-<form asp-page="./Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Keress név alapján:
-            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Keresés" class="btn btn-primary" /> |
-            <a asp-page="./Index">Vissza a teljes listához</a>
-        </p>
+<section class="col-lg-6">
+    <div class="mt-40">
+        <form asp-page="./Index" method="get">
+            <label for="SearchString" class="control-label">Keress név alapján:</label>
+            <div class="form-group" style="display: flex; align-items: center;">
+                <input class="form-control input" type="text" name="SearchString" id="SearchString" value="@Model.CurrentFilter" />
+                <input type="submit" value="Keresés" class="btn myBtn submitBtn" />
+            </div>
+        </form>
     </div>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Teljes név
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <table class="table mt-40">
         @if (Model.Users != null)
         {
             @foreach (var item in Model.Users)
             {
                 <tr>
-                    <td>
+                    <td style="font-size: 1.5rem">
                         @Html.DisplayFor(modelItem => item.FullName)
                     </td>
-                    <td>
-                        <a asp-page="./UserCheck" asp-route-id="@item.Id">Választ</a>
+                    <td style="vertical-align: middle">
+                        <a asp-page="./UserCheck" asp-route-id="@item.Id">Megtekintés</a>
                     </td>
                 </tr>
             }
         }
-    </tbody>
-</table>
+    </table>
+</section>
+
+<style>
+    #SearchString {
+        width: 50%;
+        margin-right: 10px;
+    }
+</style>
