@@ -33,7 +33,7 @@ namespace BucketListApplication.Pages.Social
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
-				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistája";
+				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistái";
 				PopulateBucketListDropDownList(_context, Id);
 				return Page();
 			}
@@ -46,8 +46,6 @@ namespace BucketListApplication.Pages.Social
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
-				String SelectedBucketListName = _context.BucketLists.FirstOrDefault(bl => bl.BucketListID == SelectedBucketList.BucketListID).Name;
-				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " - " + SelectedBucketListName;
 				PopulateBucketListDropDownList(_context, Id);
 				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
 				return Page();

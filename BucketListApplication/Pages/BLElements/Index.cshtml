@@ -41,7 +41,11 @@
                     <td class="progressionCell">
                         @if (item.Progression.BLETasks.Count != 0)
                         {
-                            @Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text>
+                            <div>@Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text></div>
+                            <div class="progress" style="background-color: #36393f">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                     aria-valuenow="@item.Progression.CompletedPercentage" style="width: @(Html.Raw(item.Progression.CompletedPercentage + "%"))"></div>
+                            </div>
                         }
                     </td>
                 </tr>
@@ -125,12 +129,12 @@
 
     .goalCell {
         align-items: center;
-        width: 85%;
+        width: 75%;
     }
 
     .progressionCell {
         text-align: center;
-        width: 7.5%;
+        width: 17.5%;
     }
 
     .completedImage {
