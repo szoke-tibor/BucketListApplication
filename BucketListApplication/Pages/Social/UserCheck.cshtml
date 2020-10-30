@@ -7,52 +7,55 @@
 
 <h3>@Model.Title</h3>
 
-<form method="post" id="bucketlistselectform">
-    <div class="form-group">
-        <label asp-for="SelectedBucketList.BucketListID" class="control-label">Válassz egy listát:</label>
-        <select asp-for="SelectedBucketList.BucketListID" class="form-control" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
-    </div>
-</form>
+<div class="mt-20" style="display: flex; align-items: center;">
+    <form method="post" id="bucketlistselectform">
+        <select asp-for="SelectedBucketList.BucketListID" class="form-control BLselect" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
+    </form>
+</div>
 
 @if (Model.SelectedBLElements != null)
 {
-    <table class="table">
+    <table class="table mt-20">
         <tbody>
-            <tr>
-                <td class="font-weight-bold">
-                    Cél
-                </td>
-                <td align="center" class="font-weight-bold">
-                    Teljesítve
-                </td>
-            </tr>
             @foreach (var item in Model.SelectedBLElements)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                <tr class="tableRow">
+                    <td align="center" class="checkCell">
+                        @if (item.Completed)
+                        {
+                            <img class="completedImage" src="~/images/checked.png" />
+                        }
+                        else
+                        {
+                            <img class="completedImage" src="~/images/unchecked.png" />
+                        }
                     </td>
-                    <td align="center">
-                        @Html.DisplayFor(modelItem => item.Completed)
+                    <td class="goalCell">
+                        <span class="otherUsersGoal" asp-page="./Details" asp-route-id="@item.ElementID">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </span>
+                    </td>
+                    <td class="progressionCell">
+                        @if (item.Progression.BLETasks.Count != 0)
+                        {
+                            <div>@Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text></div>
+                            <div class="progress" style="background-color: #36393f">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                     aria-valuenow="@item.Progression.CompletedPercentage" style="width: @(Html.Raw(item.Progression.CompletedPercentage + "%"))"></div>
+                            </div>
+                        }
                     </td>
                 </tr>
             }
+            <tr class="tableRow">
+                <td class="checkCell">
+                    <div>
+                        <a class="btn backBtn" asp-page="./Index">Vissza</a>
+                    </div>
+                </td>
+                <td class="goalCell"></td>
+                <td class="progressionCell"></td>
+            </tr>
         </tbody>
     </table>
-}
-
-<div>
-    <a asp-page="./Index">Vissza</a>
-</div>
-
-@section Scripts
-{
-    <script>
-        function SubmitBLEListing() {
-            var selectlist = document.getElementById("SelectedBucketList_BucketListID");
-            var option = selectlist.options[selectlist.selectedIndex];
-            if (option.value != "null")
-                document.getElementById("bucketlistselectform").submit();
-        }
-    </script>
 }

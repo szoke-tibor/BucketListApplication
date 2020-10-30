@@ -165,6 +165,10 @@ h3 {
     margin-top: 40px;
 }
 
+.mt-20 {
+    margin-top: 20px;
+}
+
 .horiz-center {
     display: flex;
     justify-content: center;
@@ -218,7 +222,6 @@ h3 {
     color: #677bc4;
     margin-left: 0.5rem;
     margin-top: 5px;
-    margin-bottom: 20px;
     font-size: 12px;
 }
 
@@ -247,7 +250,7 @@ h3 {
     width: 3rem;
 }
 
-.goal {
+.goal, .otherUsersGoal {
     display: inline-block;
     width: 100%;
     line-height: 3rem;

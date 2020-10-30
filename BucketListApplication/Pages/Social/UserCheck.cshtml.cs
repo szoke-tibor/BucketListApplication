@@ -46,6 +46,7 @@ namespace BucketListApplication.Pages.Social
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (CurrentUserId != null)
 			{
+				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistái";
 				PopulateBucketListDropDownList(_context, Id);
 				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
 				return Page();
