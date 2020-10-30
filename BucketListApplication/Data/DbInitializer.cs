@@ -31,15 +31,19 @@ namespace BucketListApplication.Data
 		{
 			if (!roleManager.RoleExistsAsync("Admin").Result)
 			{
-				IdentityRole role = new IdentityRole();
-				role.Name = "Admin";
+				IdentityRole role = new IdentityRole
+				{
+					Name = "Admin"
+				};
 				IdentityResult roleResult = roleManager.CreateAsync(role).Result;
 			}
 
 			if (!roleManager.RoleExistsAsync("User").Result)
 			{
-				IdentityRole role = new IdentityRole();
-				role.Name = "User";
+				IdentityRole role = new IdentityRole
+				{
+					Name = "User"
+				};
 				IdentityResult roleResult = roleManager.CreateAsync(role).Result;
 			}
 		}
@@ -48,11 +52,14 @@ namespace BucketListApplication.Data
 		{
 			if (userManager.FindByNameAsync("1@gmail.com").Result == null)
 			{
-				BLUser user = new BLUser();
-				user.UserName = "1@gmail.com";
-				user.Email = "1@gmail.com";
-				user.EmailConfirmed = true;
-				user.FullName = "Sovány Áldáska";
+				BLUser user = new BLUser
+				{
+					UserName = "1@gmail.com",
+					Email = "1@gmail.com",
+					EmailConfirmed = true,
+					FullName = "Sovány Áldáska",
+					SeededUser = true
+				};
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 
@@ -62,11 +69,14 @@ namespace BucketListApplication.Data
 
 			if (userManager.FindByNameAsync("2@gmail.com").Result == null)
 			{
-				BLUser user = new BLUser();
-				user.UserName = "2@gmail.com";
-				user.Email = "2@gmail.com";
-				user.EmailConfirmed = true;
-				user.FullName = "Kardos Pompónia";
+				BLUser user = new BLUser
+				{
+					UserName = "2@gmail.com",
+					Email = "2@gmail.com",
+					EmailConfirmed = true,
+					FullName = "Kardos Pompónia",
+					SeededUser = true
+				};
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 
@@ -76,11 +86,14 @@ namespace BucketListApplication.Data
 
 			if (userManager.FindByNameAsync("3@gmail.com").Result == null)
 			{
-				BLUser user = new BLUser();
-				user.UserName = "3@gmail.com";
-				user.Email = "3@gmail.com";
-				user.EmailConfirmed = true;
-				user.FullName = "Lakatos Fortunátó";
+				BLUser user = new BLUser
+				{
+					UserName = "3@gmail.com",
+					Email = "3@gmail.com",
+					EmailConfirmed = true,
+					FullName = "Lakatos Fortunátó",
+					SeededUser = true
+				};
 
 				IdentityResult result = userManager.CreateAsync(user, "Proba123'").Result;
 

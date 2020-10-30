@@ -15,7 +15,7 @@ namespace BucketListApplication.Models
 		public string About { get; set; }
 		[PersonalData]
 		public string FullName { get; set; }
-
+		public bool SeededUser { get; set; }
         public ICollection<BucketList> Lists { get; set; }
     }
 }

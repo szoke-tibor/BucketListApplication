@@ -81,9 +81,10 @@ namespace BucketListApplication.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new BLUser {
-					FullName = Input.FullName,
-					UserName = Input.Email,
-					Email = Input.Email
+                    FullName = Input.FullName,
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    SeededUser = false
 				};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
