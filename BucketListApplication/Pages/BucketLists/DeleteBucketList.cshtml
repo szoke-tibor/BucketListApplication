@@ -9,29 +9,27 @@
 <h4>Biztosan törölni szeretnéd?</h4>
 <h4 style="margin-bottom: 40px">A bakancslistához tartozó összes bakancslista is törlődni fog.</h4>
     
-<div>
-    <table style="margin-bottom: 40px">
-        <tr>
-            <td>
-                Törlendő bakancslista neve:
-            </td>
-            <td style="padding-left: 15px">
-                @Html.DisplayFor(model => model.BucketList.Name)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Bakancslistán található elemek száma:
-            </td>
-            <td style="padding-left: 15px">
-                @Html.DisplayFor(model => model.BucketList.ElementCount)
-            </td>
-        </tr>
-    </table>
+<table style="margin-bottom: 40px">
+    <tr>
+        <td>
+            Törlendő bakancslista neve:
+        </td>
+        <td style="padding-left: 15px">
+            @Html.DisplayFor(model => model.BucketList.Name)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Bakancslistán található elemek száma:
+        </td>
+        <td style="padding-left: 15px">
+            @Html.DisplayFor(model => model.BucketList.ElementCount)
+        </td>
+    </tr>
+</table>
 
-    <form method="post">
-        <input type="hidden" asp-for="BucketList.BucketListID" />
-        <input type="submit" value="Töröl" class="btn btn-danger" />
-        <a class="btn btn-outline-primary" asp-page="../BLElements/Index" asp-route-selectedbucketlistid="@Model.BucketList.BucketListID">Vissza</a>
-    </form>
-</div>
+<form method="post">
+    <input type="hidden" asp-for="BucketList.BucketListID" />
+    <input type="submit" value="Töröl" class="btn btn-danger" />
+    <a class="btn btn-outline-primary" asp-page="../BLElements/Index" asp-route-selectedbucketlistid="@Model.BucketList.BucketListID">Vissza</a>
+</form>
