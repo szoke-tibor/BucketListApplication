@@ -37,6 +37,8 @@ namespace BucketListApplication.Pages.Social
 
 				if (!String.IsNullOrEmpty(searchString))
 					usersQuery = usersQuery.Where(u => u.FullName.Contains(searchString));
+				else
+					usersQuery = usersQuery.Where(u => u.SeededUser == true);
 
 				Users = await usersQuery.AsNoTracking().ToListAsync();
 				return Page();
