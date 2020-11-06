@@ -107,20 +107,48 @@ namespace BucketListApplication.Data
 			//CATEGORIES
 			var categories = new Category[]
 			{
-				new Category { Name = "Hobbi" },
-				new Category { Name = "Ételek és italok" },
-				new Category { Name = "Készségek" },
-				new Category { Name = "Jótettek" },
-				new Category { Name = "Szexuális élmények" },
-				new Category { Name = "Tanulmányok" },
-				new Category { Name = "Utazás" },
-				new Category { Name = "Sport" },
-				new Category { Name = "Család és otthon" },
-				new Category { Name = "Vagyon" },
-				new Category { Name = "Szórakozás és élmények" },
-				new Category { Name = "Vallás" },
-				new Category { Name = "Karrier" },
-				new Category { Name = "Egyéb" }
+				new Category { Name = "Hobbi",
+					PictureFileName = "Hobbies.jpg"
+				},
+				new Category { Name = "Ételek és italok",
+					PictureFileName = "FoodAndDrink.jpg"
+				},
+				new Category { Name = "Készségek",
+					PictureFileName = "Skills.jpg"
+				},
+				new Category { Name = "Jótettek",
+					PictureFileName = "Charity.jpg"
+				},
+				new Category { Name = "Szexuális élmények",
+					PictureFileName = "SexualExperiences.jpg"
+				},
+				new Category { Name = "Tanulmányok",
+					PictureFileName = "Studies.jpg"
+				},
+				new Category { Name = "Utazás",
+					PictureFileName = "Travel.jpg"
+				},
+				new Category { Name = "Sport",
+					PictureFileName = "Sports.jpg"
+				},
+				new Category { Name = "Család és otthon",
+					PictureFileName = "Family.jpg"
+				},
+				new Category { Name = "Vagyon",
+					PictureFileName = "Fortune.jpg"
+				},
+				new Category { Name = "Szórakozás és élmények",
+					PictureFileName = "Entertainment.jpg"
+				},
+				new Category { Name = "Vallás",
+					PictureFileName = "Religion.jpg"
+				},
+				new Category { Name = "Karrier",
+					PictureFileName = "Career.jpg"
+				},
+				new Category { Name = "Egyéb",
+					PictureFileName = "Other.jpg"
+				}
 			};
 
 			context.Categories.AddRange(categories);

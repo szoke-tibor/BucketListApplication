@@ -15,9 +15,9 @@
                 selectedCard = "categorySelectedCard";
             }
             <a asp-page="./Index" asp-route-id="@Model.CategoryData.Categories.ElementAt(i).CategoryID" name="id" class="categoryCard @selectedCard">
-                <img class="card-img-top categoryPicture" src="~/images/Categories/FoodAndDrink.jpg" alt="Card image cap">
+                <img class="card-img-top categoryPicture" src="~/images/Categories/@Model.CategoryData.Categories.ElementAt(i).PictureFileName" alt="Card image cap">
                 <div class="card-body categoryText">
-                    <p class="card-text">@Model.CategoryData.Categories.ElementAt(i).Name</p>
+                    @Model.CategoryData.Categories.ElementAt(i).Name
                 </div>
             </a>
         }
@@ -32,7 +32,7 @@
                 selectedCard = "categorySelectedCard";
             }
             <a asp-page="./Index" asp-route-id="@Model.CategoryData.Categories.ElementAt(i).CategoryID" name="id" class="categoryCard @selectedCard">
-                <img class="card-img-top categoryPicture" src="~/images/Categories/Family.jpg" alt="Card image cap">
+                <img class="card-img-top categoryPicture" src="~/images/Categories/@Model.CategoryData.Categories.ElementAt(i).PictureFileName" alt="Card image cap">
                 <div class="card-body categoryText">
                     @Model.CategoryData.Categories.ElementAt(i).Name
                 </div>
