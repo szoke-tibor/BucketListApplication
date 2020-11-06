@@ -309,7 +309,7 @@ namespace BucketListApplication.Data
 
 				new Element { Name = "Próbáld ki az olasz konyhát"},
 				new Element { Name = "Kóstold meg a Sushit"},
-				new Element { Name = "Kóstolj meg egy 100 éves Whikeyt"},
+				new Element { Name = "Kóstolj meg egy 100 éves Whiskeyt"},
 				new Element { Name = "Vegyél részt egy borkóstolón"},
 				new Element { Name = "Vegyél részt egy pálinkakostolón"},
 				new Element { Name = "Próbáld ki európa jellegzetes alkoholos italait"},
@@ -604,7 +604,7 @@ namespace BucketListApplication.Data
 					CategoryID = categories.Single(c => c.Name == "Ételek és italok").CategoryID
 				},
 				new ElementCategory {
-					ElementID = elements.Single(e => e.Name == "Kóstolj meg egy 100 éves Whikeyt").ElementID,
+					ElementID = elements.Single(e => e.Name == "Kóstolj meg egy 100 éves Whiskeyt").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Ételek és italok").CategoryID
 				},
 				new ElementCategory {

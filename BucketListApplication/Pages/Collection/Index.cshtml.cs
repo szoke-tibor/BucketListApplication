@@ -25,15 +25,17 @@ namespace BucketListApplication.Pages.Collection
 
         public async Task OnGetAsync(int? id)
         {
-            CategoryData = new CategoryIndexData();
-            CategoryData.Categories = await _context.Categories
-                .Include(c => c.ElementCategories)
-                    .ThenInclude(ec => ec.Element)
-                .AsNoTracking()
-                .OrderBy(c => c.Name)
-                .ToListAsync();
+			CategoryData = new CategoryIndexData
+			{
+				Categories = await _context.Categories
+				    .Include(c => c.ElementCategories)
+				        .ThenInclude(ec => ec.Element)
+				    .AsNoTracking()
+				    .OrderBy(c => c.Name)
+				    .ToListAsync()
+			};
 
-            if (id != null)
+			if (id != null)
             {
                 CategoryID = id.Value;
                 Category category = CategoryData.Categories.Where(c => c.CategoryID == id.Value).Single();

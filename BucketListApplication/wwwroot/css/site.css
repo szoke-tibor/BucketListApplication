@@ -132,7 +132,7 @@ input[disabled], select[disabled], textarea[disabled] {
     border-color: black;
 }
 
-    /*Edit + Create page*/
+/*Edit + Create page*/
 h3 {
     color: white;
     margin-bottom: 1.5rem;
@@ -289,6 +289,58 @@ h3 {
     color: white;
     background-color: #36393f;
     text-decoration: none;
+}
+
+/*Collection*/
+.categoryCard {
+    width: 8.7rem;
+    margin: 5px;
+    background-color: #41444A;
+    border-radius: 0.5rem;
+    border: 2px solid #9b9da1;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.categorySelectedCard {
+    background-color: #18191c
+}
+
+.categoryCard:hover {
+    color: white;
+    background-color: #36393f;
+    border-color: #18191c;
+    text-decoration: none;
+}
+
+.categorySelectedCard:hover {
+    background-color: #18191c;
+    border: 2px solid #9b9da1;
+}
+
+.categoryCard:focus {
+    box-shadow: 0 0 0 0.1rem #9b9da1;
+}
+
+.categoryPicture {
+    padding: 5px;
+    border-radius: 0.5rem;
+}
+
+.categoryText {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5px 5px;
+    font-size: 0.7rem;
+}
+
+.selectedCategoriesList {
+    width: 100%;
+    justify-content: center;
 }
 
 /*Completed toggle styles*/
