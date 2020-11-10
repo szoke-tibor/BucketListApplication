@@ -57,7 +57,7 @@ namespace BucketListApplication.Data
 					UserName = "1@gmail.com",
 					Email = "1@gmail.com",
 					EmailConfirmed = true,
-					FullName = "Sovány Áldáska",
+					FullName = "Könyv Előd",
 					SeededUser = true
 				};
 
@@ -74,7 +74,7 @@ namespace BucketListApplication.Data
 					UserName = "2@gmail.com",
 					Email = "2@gmail.com",
 					EmailConfirmed = true,
-					FullName = "Kardos Pompónia",
+					FullName = "Riz Ottó",
 					SeededUser = true
 				};
 
@@ -91,7 +91,7 @@ namespace BucketListApplication.Data
 					UserName = "3@gmail.com",
 					Email = "3@gmail.com",
 					EmailConfirmed = true,
-					FullName = "Lakatos Fortunátó",
+					FullName = "Kukor Ica",
 					SeededUser = true
 				};
 
@@ -157,22 +157,28 @@ namespace BucketListApplication.Data
 			//BUCKETLISTS
 			var bucketlists = new BucketList[]
 			{
+				new BucketList { Name = "Tanulmányok",
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+				},
+				new BucketList { Name = "Család",
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+				},
+				new BucketList { Name = "Karrier",
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+				},
+				new BucketList { Name = "Szórakozás",
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+				},
+				new BucketList { Name = "Utazás",
+					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
+				},
+				new BucketList { Name = "Sport",
+					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
+				},
 				new BucketList { Name = "Elsődleges céljaim",
-					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
-				},
-				new BucketList { Name = "Másodlagos céljaim",
-					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
-				},
-				new BucketList { Name = "Családi lista",
-					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
-				},
-				new BucketList { Name = "Sportbeli céljaim",
-					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
-				},
-				new BucketList { Name = "Tanulmányi céljaim",
 					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
 				},
-				new BucketList { Name = "Utazási lista",
+				new BucketList { Name = "Másodlagos céljaim",
 					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
 				}
 			};
@@ -184,35 +190,131 @@ namespace BucketListApplication.Data
 			var bucketlistelements = new BucketListElement[]
 			{
 				new BucketListElement { Name = "Tanulj meg 2 különböző nyelven folyékonyan beszélni",
-					Description = "Angol, Spanyol", Completed = true, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID
+					Description = "Angol, Spanyol", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányok").BucketListID
+				},
+				new BucketListElement { Name = "Végezd el az általános iskolát",
+					Description = "Bukás nélkül, mintatanterv szerint", Completed = true, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányok").BucketListID
+				},
+				new BucketListElement { Name = "Nyerj felvételt egy erős gimnáziumba",
+					Description = "", Completed = true, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányok").BucketListID
+				},
+				new BucketListElement { Name = "Végezd el a középiskolát",
+					Description = "", Completed = true, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányok").BucketListID
+				},
+				new BucketListElement { Name = "Érettségizz le",
+					Description = "", Completed = true, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányok").BucketListID
 				},
 				new BucketListElement { Name = "Végezd el az egyetemet",
-					Description = "Bukás nélkül, mintatanterv szerint", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányi céljaim").BucketListID
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Tanulmányok").BucketListID
 				},
-				new BucketListElement { Name = "Tanulj meg curlingezni",
-					Description = "Nem olcsó sportág, érdemes előtte egy kisebb összeget félre raknom.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID
+				new BucketListElement { Name = "Találd meg álmaid nőjét",
+					Description = "", Completed = true, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Család").BucketListID
+				},
+				new BucketListElement { Name = "Jegyezd el a párod",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Család").BucketListID
+				},
+				new BucketListElement { Name = "Esküdj meg a pároddal",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Család").BucketListID
+				},
+				new BucketListElement { Name = "Teremts otthont a családodnak",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Család").BucketListID
+				},
+				new BucketListElement { Name = "Vállalj gyermeket",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Család").BucketListID
+				},
+				new BucketListElement { Name = "Vállalj még egy gyermeket",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Család").BucketListID
+				},
+				new BucketListElement { Name = "Szerezz képesítést az informatikai iparágban",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
+				},
+				new BucketListElement { Name = "Találj munkát gyakornoki pozícióban",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
+				},
+				new BucketListElement { Name = "Válj junior fejlesztővé",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
+				},
+				new BucketListElement { Name = "Válj senior fejlesztővé",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
+				},
+				new BucketListElement { Name = "Légy a hónap dolgozója",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
+				},
+				new BucketListElement { Name = "Érj el fizetésemelést",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
+				},
+				new BucketListElement { Name = "Vegyél részt egy továbbképzésen",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
+				},
+				new BucketListElement { Name = "Tanulj meg egy új technológiát",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Karrier").BucketListID
 				},
 				new BucketListElement { Name = "Próbáld ki a bungee jumpingot",
 					Description = "Kötnöm kell egy fogadást előtte, hogy még véletlen se gondoljam meg magam fent.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Sportbeli céljaim").BucketListID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
+				},
+				new BucketListElement { Name = "Próbáld ki az ejtőernyőzést",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
+				},
+				new BucketListElement { Name = "Vegyél részt a kedvenc előadód koncertjén",
+					Description = "", Completed = true, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
+				},
+				new BucketListElement { Name = "Stoppolj el egy idegen országba barátokkal",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
+				},
+				new BucketListElement { Name = "Ülj fel egy repülőre spontán a barátnőddel",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
+				},
+				new BucketListElement { Name = "Vegyél egy sportautót",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
+				},
+				new BucketListElement { Name = "Játsz egy biliárd mérkőzést hiba nélkül",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
+				},
+				new BucketListElement { Name = "Járd körbe Európát",
+					Description = "Legalább 10 országot látogass meg", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Szórakozás").BucketListID
 				},
 				new BucketListElement { Name = "Csinálj egy spanyolországi családi nyaralást",
 					Description = "Látványosságok, melyeket mindenképp meg szeretnénk nézni: ...", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Utazási lista").BucketListID
+					BucketListID = bucketlists.Single( bl => bl.Name == "Utazás").BucketListID
 				},
-				new BucketListElement { Name = "Légy 3 gyermek szülője",
-					Description = "Ha az egyik gyermekem lány lesz, Karolinának fogom elnevezni.", Completed = false, Visibility = Visibility.Public,
-					BucketListID = bucketlists.Single( bl => bl.Name == "Családi lista").BucketListID
+				new BucketListElement { Name = "Kerülj be egy MB1-es csapatba",
+					Description = "", Completed = false, Visibility = Visibility.Public,
+					BucketListID = bucketlists.Single( bl => bl.Name == "Sport").BucketListID
 				},
 				new BucketListElement { Name = "Alapíts családot",
-					Description = "Igyekszem majd a lehető legjobb családapa lenni.", Completed = false, Visibility = Visibility.Public,
+					Description = "", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID
 				},
-				new BucketListElement { Name = "Kalandozz egy moziban a feleségeddel",
-					Description = "Mindenképp a hátsó sorba kell majd helyet foglalnunk.", Completed = false, Visibility = Visibility.Private,
+				new BucketListElement { Name = "Költözz ki franciaországba",
+					Description = "", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID
 				},
 				new BucketListElement { Name = "Tanulj meg 20 különböző főtt ételt elkészíteni",
@@ -231,25 +333,97 @@ namespace BucketListApplication.Data
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").ElementID
 				},
 				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Végezd el az általános iskolát").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Nyerj felvételt egy erős gimnáziumba").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Végezd el a középiskolát").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Érettségizz le").ElementID
+				},
+				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").ElementID
 				},
 				new Progression {
-					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg curlingezni").ElementID
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Találd meg álmaid nőjét").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Jegyezd el a párod").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Esküdj meg a pároddal").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Teremts otthont a családodnak").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vállalj gyermeket").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vállalj még egy gyermeket").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Szerezz képesítést az informatikai iparágban").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Találj munkát gyakornoki pozícióban").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Válj junior fejlesztővé").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Válj senior fejlesztővé").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Légy a hónap dolgozója").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Érj el fizetésemelést").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vegyél részt egy továbbképzésen").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg egy új technológiát").ElementID
 				},
 				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Próbáld ki a bungee jumpingot").ElementID
 				},
 				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Próbáld ki az ejtőernyőzést").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vegyél részt a kedvenc előadód koncertjén").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Stoppolj el egy idegen országba barátokkal").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Ülj fel egy repülőre spontán a barátnőddel").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vegyél egy sportautót").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Játsz egy biliárd mérkőzést hiba nélkül").ElementID
+				},
+				new Progression {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").ElementID
+				},
+				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID
 				},
 				new Progression {
-					ElementID = bucketlistelements.Single( ble => ble.Name == "Légy 3 gyermek szülője").ElementID
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Kerülj be egy MB1-es csapatba").ElementID
 				},
 				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID
 				},
 				new Progression {
-					ElementID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").ElementID
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Költözz ki franciaországba").ElementID
 				},
 				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 20 különböző főtt ételt elkészíteni").ElementID
@@ -263,44 +437,128 @@ namespace BucketListApplication.Data
 			var bletasks = new BLETask[]
 			{
 				new BLETask {
-					Text = "Találd meg a párod",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
+					Text = "Angol",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
-					Text = "Költözz vele össze",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
-					Completed = true
-				},
-				new BLETask {
-					Text = "Jegyezd el",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
-					Completed = true
-				},
-				new BLETask {
-					Text = "Házasodj össze vele",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
-					Completed = true
-				},
-				new BLETask {
-					Text = "Vállaljatok gyermeket",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").Progression.ProgressionID,
+					Text = "Spanyol",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").Progression.ProgressionID,
 					Completed = false
 				},
-
 				new BLETask {
-					Text = "Beszéld meg a pároddal",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").Progression.ProgressionID,
+					Text = "1. félév",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
-					Text = "Keress egy unalmas filmet amire senki sem megy be",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").Progression.ProgressionID,
+					Text = "2. félév",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").Progression.ProgressionID,
 					Completed = true
 				},
 				new BLETask {
-					Text = "Vedd meg a jegyeket",
-					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Kalandozz egy moziban a feleségeddel").Progression.ProgressionID,
+					Text = "3. félév",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "4. félév",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "5. félév",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "6. félév",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "7. félév",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Vegyél jegyet",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Vegyél részt a kedvenc előadód koncertjén").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "Menj el a koncertre",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Vegyél részt a kedvenc előadód koncertjén").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "Beszéld meg a barátaiddal a közös utat",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Stoppolj el egy idegen országba barátokkal").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "Döntsd el az úti célt",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Stoppolj el egy idegen országba barátokkal").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Sikeresen térjetek haza",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Stoppolj el egy idegen országba barátokkal").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Anglia",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Párizs",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Luxemburg",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Amsterdam",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Ljubljana",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "Prága",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Szarajevo",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = true
+				},
+				new BLETask {
+					Text = "Stockholm",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Helsinki",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Athén",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
+					Completed = false
+				},
+				new BLETask {
+					Text = "Róma",
+					ProgressionID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").Progression.ProgressionID,
 					Completed = false
 				}
 			};
@@ -1319,43 +1577,143 @@ namespace BucketListApplication.Data
 				///////// BucketListElements
 
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").ElementID,
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Végezd el az egyetemet").ElementID,
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Végezd el az általános iskolát").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Tanulj meg curlingezni").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Sport" ).CategoryID
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Nyerj felvételt egy erős gimnáziumba").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Próbáld ki a bungee jumpingot").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Sport" ).CategoryID
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Végezd el a középiskolát").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID,
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Érettségizz le").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Végezd el az egyetemet").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Tanulmányok" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Találd meg álmaid nőjét").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Jegyezd el a párod").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Esküdj meg a pároddal").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Teremts otthont a családodnak").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vállalj gyermeket").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vállalj még egy gyermeket").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Szerezz képesítést az informatikai iparágban").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Találj munkát gyakornoki pozícióban").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Válj junior fejlesztővé").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Válj senior fejlesztővé").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Légy a hónap dolgozója").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Érj el fizetésemelést").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vegyél részt egy továbbképzésen").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg egy új technológiát").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Karrier" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Próbáld ki a bungee jumpingot").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Próbáld ki az ejtőernyőzést").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vegyél részt a kedvenc előadód koncertjén").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Stoppolj el egy idegen országba barátokkal").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Ülj fel egy repülőre spontán a barátnőddel").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Vegyél egy sportautót").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Játsz egy biliárd mérkőzést hiba nélkül").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Szórakozás és élmények" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Járd körbe Európát").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Utazás" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID,
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Légy 3 gyermek szülője").ElementID,
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Csinálj egy spanyolországi családi nyaralást").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Utazás" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Kerülj be egy MB1-es csapatba").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Sport" ).CategoryID
+				},
+				new ElementCategory {
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Alapíts családot").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Költözz ki franciaországba").ElementID,
+					CategoryID = categories.Single(c => c.Name == "Utazás" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Kalandozz egy moziban a feleségeddel").ElementID,
-					CategoryID = categories.Single(c => c.Name == "Szexuális élmények" ).CategoryID
-				},
-				new ElementCategory {
-					ElementID = bucketlistelements.Single(e => e.Name == "Tanulj meg 20 különböző főtt ételt elkészíteni").ElementID,
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 20 különböző főtt ételt elkészíteni").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Készségek" ).CategoryID
 				}
 			};
