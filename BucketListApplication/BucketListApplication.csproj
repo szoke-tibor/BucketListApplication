@@ -45,6 +45,8 @@
     <Compile Remove="Migrations\20200928163443_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200928172536_InitialCreate.cs" />
     <Compile Remove="Migrations\20200928172536_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20201110112710_BLENameRequired.cs" />
+    <Compile Remove="Migrations\20201110112710_BLENameRequired.Designer.cs" />
   </ItemGroup>
 
 

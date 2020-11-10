@@ -25,6 +25,8 @@ namespace BucketListApplication.Models
 		{
 			get
 			{
+				if (BLETasks == null || BLETasks.Count() == 0)
+					return 0;
 				int CompletedCounter = 0;
 				foreach (BLETask task in BLETasks)
 					if (task.Completed)
