@@ -1,0 +1,22 @@
+﻿@page
+@model PersonalDataModel
+@{
+    ViewData["Title"] = "Felhasználói fiók törlése";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            <strong>Ha törlöd a felhasználói fiókod minden adat elvész. A művelet nem visszavonható.</strong>
+        <p>
+            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Törlés</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

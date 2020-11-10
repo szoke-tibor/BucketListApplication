@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Profil";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
@@ -10,24 +10,16 @@
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+                <label asp-for="Username">Bejelentkezéshez használt e-mail cím</label>
+                <input asp-for="Username" class="form-control input" disabled />
             </div>
             <div class="form-group">
-                <label asp-for="Input.FullName"></label>
-                <input asp-for="Input.FullName" class="form-control" />
+                <label asp-for="Input.FullName">Teljes név</label>
+                <input asp-for="Input.FullName" class="form-control input" />
+                <span asp-validation-for="Input.FullName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.About"></label>
-                <input asp-for="Input.About" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ProfileImageURL"></label>
-                <input asp-for="Input.ProfileImageURL" class="form-control" />
-            </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="btn myBtn submitBtn">Mentés</button>
         </form>
     </div>
 </div>

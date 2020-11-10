@@ -1,0 +1,29 @@
+﻿@page
+@model DeletePersonalDataModel
+@{
+    ViewData["Title"] = "Felhasználói fiók törlése";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="alert alert-warning" role="alert">
+        <strong>Ha törlöd a felhasználói fiókod minden adat elvész. A művelet nem visszavonható.</strong>
+</div>
+<div>
+    <form id="delete-user" method="post" class="form-group">
+        @if (Model.RequirePassword)
+        {
+            <div class="form-group">
+                <label asp-for="Input.Password">Jelszó</label>
+                <input asp-for="Input.Password" class="form-control input" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+        }
+        <button class="btn btn-danger" type="submit">Fiók törlése</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
