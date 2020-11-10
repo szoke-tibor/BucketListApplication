@@ -41,13 +41,24 @@
                     <td class="progressionCell">
                         @if (item.Progression.BLETasks.Count != 0)
                         {
-                            <div>@Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text></div>
-                            <div class="progress" style="background-color: #36393f">
-                                <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                     aria-valuenow="@item.Progression.CompletedPercentage" style="width: @(Html.Raw(item.Progression.CompletedPercentage + "%"))"></div>
-                            </div>
+                            @if (item.Completed)
+                            {
+                                <div>100 %</div>
+                                <div class="progress" style="background-color: #36393f">
+                                    <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                         aria-valuenow="100" style="width: 100%"></div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>@Html.DisplayFor(modelItem => item.Progression.CompletedPercentage) <text> %</text></div>
+                                <div class="progress" style="background-color: #36393f">
+                                    <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                         aria-valuenow="@item.Progression.CompletedPercentage" style="width: @(Html.Raw(item.Progression.CompletedPercentage + "%"))"></div>
+                                </div>
+                            }
                         }
-                    </td>
+                            </td>
                 </tr>
             }
             <tr class="tableRow">
