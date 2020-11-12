@@ -11,11 +11,11 @@ using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BucketLists
 {
-    public class CreateBucketListModel : PageModel
+    public class CreateModel : PageModel
     {
         private readonly BucketListApplication.Data.BLContext _context;
 
-        public CreateBucketListModel(BucketListApplication.Data.BLContext context)
+        public CreateModel(BucketListApplication.Data.BLContext context)
         {
             _context = context;
         }

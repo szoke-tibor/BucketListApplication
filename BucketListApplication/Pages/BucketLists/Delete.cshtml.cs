@@ -11,11 +11,11 @@ using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BucketLists
 {
-    public class DeleteBucketListModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly BucketListApplication.Data.BLContext _context;
 
-        public DeleteBucketListModel(BucketListApplication.Data.BLContext context)
+        public DeleteModel(BucketListApplication.Data.BLContext context)
         {
             _context = context;
         }
