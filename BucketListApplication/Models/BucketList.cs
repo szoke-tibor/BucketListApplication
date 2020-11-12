@@ -14,7 +14,7 @@ namespace BucketListApplication.Models
 		public string UserId { get; set; }
 		[Required(ErrorMessage = "A név megadása kötelező.")]
 		public string Name { get; set; }
-
+		public Visibility Visibility { get; set; }
 		public BLUser User { get; set; }
         public ICollection<BucketListElement> BLElements { get; set; }
 

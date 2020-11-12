@@ -34,7 +34,7 @@ namespace BucketListApplication.Pages.Social
 			if ( CurrentUserId != null )
 			{
 				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistái";
-				PopulateBucketListDropDownList(_context, Id);
+				PopulateBucketListDropDownList(_context, Id, true);
 				return Page();
 			}
 			else
@@ -47,7 +47,7 @@ namespace BucketListApplication.Pages.Social
 			if (CurrentUserId != null)
 			{
 				Title = _context.Users.FirstOrDefault(u => u.Id == Id).FullName + " Bakancslistái";
-				PopulateBucketListDropDownList(_context, Id);
+				PopulateBucketListDropDownList(_context, Id, true);
 				PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
 				return Page();
 			}

@@ -31,7 +31,7 @@ namespace BucketListApplication.Pages.BLElements
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
-				PopulateBucketListDropDownList(_context, CurrentUserId);
+				PopulateBucketListDropDownList(_context, CurrentUserId, false);
 				if (selectedbucketlistid != null)
 				{
 					SelectedBucketList = _context.BucketLists.Single(bl => bl.BucketListID == selectedbucketlistid);

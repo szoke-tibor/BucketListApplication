@@ -158,28 +158,40 @@ namespace BucketListApplication.Data
 			var bucketlists = new BucketList[]
 			{
 				new BucketList { Name = "Tanulmányok",
-					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id,
+					Visibility = Visibility.Public
 				},
 				new BucketList { Name = "Család",
-					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id,
+					Visibility = Visibility.Public
 				},
 				new BucketList { Name = "Karrier",
-					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id,
+					Visibility = Visibility.Public
 				},
 				new BucketList { Name = "Szórakozás",
-					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id,
+					Visibility = Visibility.Public
 				},
 				new BucketList { Name = "Utazás",
-					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id,
+					Visibility = Visibility.Public
 				},
 				new BucketList { Name = "Sport",
-					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "2@gmail.com").First().Id,
+					Visibility = Visibility.Public
 				},
 				new BucketList { Name = "Elsődleges céljaim",
-					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id,
+					Visibility = Visibility.Public
 				},
 				new BucketList { Name = "Másodlagos céljaim",
-					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id
+					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id,
+					Visibility = Visibility.Public
+				},
+				new BucketList { Name = "Titkos céljaim",
+					UserId = userManager.Users.Where(u => u.Email == "3@gmail.com").First().Id,
+					Visibility = Visibility.Private
 				}
 			};
 

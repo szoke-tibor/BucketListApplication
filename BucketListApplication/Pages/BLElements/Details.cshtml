@@ -13,7 +13,7 @@
                 <td class="firstColumn">
                     <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
                 </td>
-                <td class="secondColumn">
+                <td>
                     <input disabled asp-for="BucketListElement.Name" class="form-control input" required="required" />
                 </td>
             </tr>
@@ -21,7 +21,7 @@
                 <td class="firstColumn">
                     <label asp-for="BucketListElement.BucketListID" class="control-label">Lista:</label>
                 </td>
-                <td class="secondColumn">
+                <td>
                     <input disabled asp-for="BucketListElement.BucketList.Name" class="form-control input"></input>
                 </td>
             </tr>
@@ -29,7 +29,7 @@
                 <td class="firstColumn">
                     <label asp-for="BucketListElement.Visibility" class="control-label">Láthatóság:</label>
                 </td>
-                <td class="secondColumn">
+                <td>
                     <select disabled asp-for="BucketListElement.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control input"></select>
                 </td>
             </tr>
@@ -37,7 +37,7 @@
                 <td class="firstColumn" style="vertical-align:top">
                     <label asp-for="BucketListElement.Description" class="control-label">Leírás:</label>
                 </td>
-                <td class="secondColumn">
+                <td>
                     <textarea disabled asp-for="BucketListElement.Description" class="form-control input" rows="6"></textarea>
                 </td>
             </tr>
@@ -45,7 +45,7 @@
                 <td class="firstColumn">
                     <label asp-for="BucketListElement.Completed" class="control-label">Teljesítve:</label>
                 </td>
-                <td class="secondColumn">
+                <td>
                     <div class="switchToggle">
                         <input disabled type="checkbox" asp-for="BucketListElement.Completed" id="completed">
                         <label for="completed" />

@@ -17,7 +17,7 @@ namespace BucketListApplication.Pages.BLElements
 		public SelectList BucketListSL { get; set; }
 		public IEnumerable<BucketListElement> SelectedBLElements { get; set; }
 
-		public void PopulateBucketListDropDownList(BLContext _context, string UserId, object selectedBucketList = null)
+		public void PopulateBucketListDropDownList(BLContext _context, string UserId, bool PublicOnly)
 		{
 			List<SelectListItem> SelectListItems = new List<SelectListItem>();
 			SelectListItems.Add(new SelectListItem()
@@ -26,12 +26,25 @@ namespace BucketListApplication.Pages.BLElements
 				Value = "null"
 			});
 
-			var bucketListsQuery = from bl in _context.BucketLists
-								   where bl.UserId == UserId
-								   orderby bl.Name
-								   select bl;
+			IEnumerable<BucketList> BucketListsQuery;
 
-			foreach (BucketList bl in bucketListsQuery)
+			if (PublicOnly)
+			{
+				BucketListsQuery = _context.BucketLists
+					.Where(bl => bl.UserId == UserId)
+					.Where(bl => bl.Visibility == Visibility.Public)
+					.OrderBy(bl => bl.Name)
+					.ToList();
+			}
+			else
+			{
+				BucketListsQuery = _context.BucketLists
+					.Where(bl => bl.UserId == UserId)
+					.OrderBy(bl => bl.Name)
+					.ToList();
+			}
+
+			foreach (BucketList bl in BucketListsQuery)
 			{
 				SelectListItems.Add(new SelectListItem()
 				{

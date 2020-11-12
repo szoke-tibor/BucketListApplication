@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace BucketListApplication.Models
 {
@@ -21,7 +22,9 @@ namespace BucketListApplication.Models
 	//Later Hidden can be added
 	public enum Visibility
 	{
-		Private,
-		Public
+		[Display(Name = "Publikus")]
+		Public,
+		[Display(Name = "Privát")]
+		Private
 	}
 }

@@ -47,6 +47,8 @@
     <Compile Remove="Migrations\20200928172536_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20201110112710_BLENameRequired.cs" />
     <Compile Remove="Migrations\20201110112710_BLENameRequired.Designer.cs" />
+    <Compile Remove="Migrations\20201112170727_DefaultVisibilityChange.cs" />
+    <Compile Remove="Migrations\20201112170727_DefaultVisibilityChange.Designer.cs" />
   </ItemGroup>
 
 
