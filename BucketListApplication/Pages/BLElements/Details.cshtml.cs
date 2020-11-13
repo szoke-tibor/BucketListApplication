@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Data;
 using BucketListApplication.Models;
+using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BLElements
 {
@@ -20,7 +21,6 @@ namespace BucketListApplication.Pages.BLElements
         }
 
         public BucketListElement BucketListElement { get; set; }
-        public String YesOrNo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,10 +39,9 @@ namespace BucketListApplication.Pages.BLElements
 			if (BucketListElement == null)
                 return NotFound();
 
-            if (BucketListElement.Completed == true)
-                YesOrNo = "Igen";
-            else
-                YesOrNo = "Nem";
+            //Not the owner tries to view their BucketListElement
+            if (BucketListElement.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return Forbid();
 
             return Page();
         }

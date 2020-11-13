@@ -45,6 +45,10 @@ namespace BucketListApplication.Pages.BLElements
                 if (BucketListElement == null)
                     return NotFound();
 
+                //Not the owner tries to edit their BucketListElement
+                if (BucketListElement.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    return Forbid();
+
                 PopulateAssignedCategoryData(_context, BucketListElement);
                 PopulateBucketListDropDownList(_context);
                 return Page();
@@ -68,6 +72,10 @@ namespace BucketListApplication.Pages.BLElements
 
             if (elementToUpdate == null)
                 return NotFound();
+
+            //Not the owner tries to edit their BucketListElement
+            if (elementToUpdate.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return Forbid();
 
             // Defense against overposting attacks. Returns true if the update was successful.
             if (await TryUpdateModelAsync<BucketListElement>(elementToUpdate, "BucketListElement",
