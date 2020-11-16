@@ -9,12 +9,16 @@
     <form method="post" id="bucketlistselectform">
         <select asp-for="SelectedBucketList.BucketListID" class="form-control BLselect" asp-items="Model.BucketListSL" onchange="SubmitBLEListing()"></select>
     </form>
+    @if (Model.SelectedBucketList != null)
+    {
+        <a class="btn btn-primary smallBtn" asp-page="../BucketLists/Edit" asp-route-id="@Model.SelectedBucketList.BucketListID"><i class="far fa-edit"></i></a>
+        <a class="btn btn-danger smallBtn" asp-page="../BucketLists/Delete" asp-route-id="@Model.SelectedBucketList.BucketListID"><i class="fas fa-trash-alt"></i></a>
+    }
+</div>
+<div class="mt-2">
     <a class="myBtn" id="addListBtn" asp-page="../BucketLists/Create">Új lista</a>
 </div>
-@if (Model.SelectedBucketList != null)
-{
-    <a id="deleteBL" asp-page="../BucketLists/Delete" asp-route-id="@Model.SelectedBucketList.BucketListID">Kiválasztott bakancslista törlése</a>
-}
+
 
 @if (Model.SelectedBLElements != null)
 {
@@ -58,7 +62,7 @@
                                 </div>
                             }
                         }
-                            </td>
+                    </td>
                 </tr>
             }
             <tr class="tableRow">

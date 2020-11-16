@@ -14,7 +14,7 @@
                     <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
                 </td>
                 <td>
-                    <input disabled asp-for="BucketListElement.Name" class="form-control input" required="required" />
+                    <input disabled asp-for="BucketListElement.Name" class="form-control input" required="required"/>
                 </td>
             </tr>
             <tr class="form-group editRow">
@@ -22,7 +22,9 @@
                     <label asp-for="BucketListElement.BucketListID" class="control-label">Lista:</label>
                 </td>
                 <td>
-                    <input disabled asp-for="BucketListElement.BucketList.Name" class="form-control input"></input>
+                    <select disabled class="form-control input">
+                        <option selected="selected">@Model.BucketListElement.BucketList.Name</option>
+                    </select>
                 </td>
             </tr>
             <tr class="form-group editRow">

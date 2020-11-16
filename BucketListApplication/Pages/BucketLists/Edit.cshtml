@@ -1,0 +1,44 @@
+﻿@page
+@model BucketListApplication.Pages.BucketLists.EditModel
+
+@{
+    ViewData["Title"] = "EditBucketList";
+}
+
+<form method="post">
+    <div class="row mt-40">
+        <section class="col-lg-6" style="padding-top:3.5rem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <table>
+                <tr class="form-group editRow">
+                    <td class="firstColumn">
+                        <label asp-for="BucketList.Name" class="control-label">Bakancslista neve:</label>
+                    </td>
+                    <td>
+                        <input asp-for="BucketList.Name" class="form-control input" required="required" />
+                        <span asp-validation-for="BucketList.Name" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr class="form-group editRow">
+                    <td class="firstColumn">
+                        <label asp-for="BucketList.Visibility" class="control-label">Láthatóság:</label>
+                    </td>
+                    <td>
+                        <select asp-for="BucketList.Visibility" asp-items="Html.GetEnumSelectList<Models.Visibility>()" class="form-control input"></select>
+                    </td>
+                </tr>
+                <tr class="form-group editRow">
+                    <td></td>
+                    <td class="pt-2" align="center">
+                        <input type="submit" value="Mentés" class="btn myBtn submitBtn" />
+                        <a asp-page="../BLElements/Index" class="btn backBtn">Vissza</a>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

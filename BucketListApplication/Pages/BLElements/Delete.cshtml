@@ -26,15 +26,18 @@
             @Html.DisplayFor(model => model.BucketListElement.BucketList.Name)
         </td>
     </tr>
+        @if (Model.BucketListElement.Description != "" && Model.BucketListElement.Description != null)
+        {
         <tr>
-        <td>
-            Leírás:
-        </td>
-        <td style="padding-left: 15px">
-            @Html.DisplayFor(model => model.BucketListElement.Description)
-        </td>
-    </tr>
-</table>
+            <td>
+                Leírás:
+            </td>
+            <td style="padding-left: 15px">
+                @Html.DisplayFor(model => model.BucketListElement.Description)
+            </td>
+        </tr>
+    }
+    </table>
 
 <form method="post">
     <input type="hidden" asp-for="BucketListElement.ElementID"/>
