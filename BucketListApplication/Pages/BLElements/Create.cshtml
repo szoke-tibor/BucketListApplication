@@ -9,7 +9,7 @@
     <div class="row mt-40" style="display:flex; justify-content:center;">
         <section class="col-lg-5" style="padding-top:3.5rem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <table>
+            <table style="width: 100%">
                 <tr class="form-group editRow">
                     <td class="firstColumn">
                         <label asp-for="BucketListElement.Name" class="control-label">Cél:</label>
@@ -58,7 +58,7 @@
                     <td></td>
                     <td align="center">
                         <input type="submit" value="Létrehoz" class="btn myBtn submitBtn" />
-                        <a asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID" class="btn backBtn">Vissza</a>
+                        <a asp-page="../BucketLists/Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID" class="btn backBtn">Vissza</a>
                     </td>
                 </tr>
             </table>
@@ -85,18 +85,6 @@
         </section>
     </div>
 </form>
-
-<style>
-    table {
-        width: 100%;
-    }
-
-    select[disabled] {
-        color: #9b9da1;
-        background-color: #36393f !important;
-        border-color: black;
-    }
-</style>
 
 
 @section Scripts {

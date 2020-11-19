@@ -70,7 +70,7 @@ namespace BucketListApplication.Pages.BucketLists
                 bl => bl.Visibility))
             {
                 await _context.SaveChangesAsync();
-                return RedirectToPage("../BLElements/Index", new { selectedbucketlistid = bucketlistToUpdate.BucketListID });
+                return RedirectToPage("../BucketLists/Index", new { selectedbucketlistid = bucketlistToUpdate.BucketListID });
             }
             return Page();
         }

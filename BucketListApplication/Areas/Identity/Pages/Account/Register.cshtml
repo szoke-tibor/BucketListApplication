@@ -6,7 +6,7 @@
 }
 
 <div class="login-container">
-    <div class="col-lg-6 login-form">
+    <div class="col-lg-6 register-form">
         <form method="post">
             <h2>@ViewData["Title"]</h2>
             <hr />
@@ -30,7 +30,7 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="******"/>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btnSubmit">Regisztráció</button>
+            <button type="submit" class="btn btnSubmitRegister">Regisztráció</button>
         </form>
     </div>
 </div>
@@ -38,42 +38,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-<style>
-    .login-container {
-        display: flex;
-        justify-content: center;
-    }
-
-    .login-form {
-        margin: 2.5%;
-        padding-left: 5%;
-        padding-right: 5%;
-        padding-bottom: 2.5%;
-        padding-top: 2.5%;
-        background: #36393f;
-        color: #b9bbbe;
-        box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
-    }
-
-    .login-container form {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-
-    .login-container label {
-        margin-bottom: 5px;
-    }
-
-    .login-form h2 {
-        text-align: center;
-        color: #fff;
-    }
-
-    .btnSubmit {
-        width: 100%;
-        background-color: #677bc4;
-        color: white;
-        margin-top: 20px;
-    }
-</style>

@@ -66,7 +66,7 @@ namespace BucketListApplication.Pages.BucketLists
             {
                 _context.BucketLists.Remove(BucketListToRemove);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("../BLElements/Index");
+                return RedirectToPage("../BucketLists/Index");
             }
             catch (DbUpdateException /* ex */)
             {

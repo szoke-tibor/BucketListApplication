@@ -227,7 +227,37 @@ h3 {
     margin-left: 0.5rem;
 }
 
+/*Details*/
+
+.bordered {
+    display: block;
+    padding: 0.375rem 1rem;
+    border: 1px solid;
+    border-radius: 0.25rem;
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: 7.5px;
+}
+
+.category {
+    border-color: #6cc0e5;
+    width: 100%;
+}
+
+.completed {
+    border-color: green;
+}
+
+.uncompleted {
+    border-color: red;
+}
+
+.task {
+    width: 70%;
+}
+
 /*Index + UserCheck*/
+
 #bucketlistselectform {
     width: 40%;
 }
@@ -331,6 +361,11 @@ h3 {
     color: white;
     background-color: #36393f;
     text-decoration: none;
+}
+
+#SearchString {
+    width: 50%;
+    margin-right: 10px;
 }
 
 /*Collection*/
@@ -498,4 +533,67 @@ input[type="checkbox"]:checked.categoryCheckbox + label:before {
     border-left-color: transparent;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+/* Login */
+
+.login-form {
+    margin: 4.5%;
+    padding: 5%;
+    background: #36393f;
+    color: #b9bbbe;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.btnSubmitLogin {
+    width: 100%;
+    background-color: #677bc4;
+    color: white;
+    margin-bottom: 10px;
+}
+
+#reg {
+    color: #677bc4;
+    margin-left: 4px;
+}
+
+/* Register */
+
+.register-form {
+    margin: 2.5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 2.5%;
+    padding-top: 2.5%;
+    background: #36393f;
+    color: #b9bbbe;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.btnSubmitRegister {
+    width: 100%;
+    background-color: #677bc4;
+    color: white;
+    margin-top: 20px;
+}
+
+/* Login + Register*/
+
+.login-container {
+    display: flex;
+    justify-content: center;
+}
+
+.login-container form {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.login-container label {
+    margin-bottom: 5px;
+}
+
+.login-form h2 {
+    text-align: center;
+    color: #fff;
 }

@@ -51,7 +51,7 @@ namespace BucketListApplication.Pages.BucketLists
 					.Where(bl => bl.Name == BucketList.Name)
 					.Where(bl => bl.UserId == BucketList.UserId)
 					.SingleOrDefault().BucketListID;
-				return RedirectToPage("../BLElements/Index", new { selectedbucketlistid = newBucketListID });
+				return RedirectToPage("../BucketLists/Index", new { selectedbucketlistid = newBucketListID });
 			}
             return Page();
         }

@@ -42,5 +42,5 @@
 <form method="post">
     <input type="hidden" asp-for="BucketListElement.ElementID"/>
     <input type="submit" value="Töröl" class="btn btn-danger"/>
-    <a class="btn backBtn" asp-page="./Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID">Vissza</a>
+    <a class="btn backBtn" asp-page="../BucketLists/Index" asp-route-selectedbucketlistid="@Model.BucketListElement.BucketListID">Vissza</a>
 </form>

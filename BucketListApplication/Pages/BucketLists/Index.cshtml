@@ -38,7 +38,7 @@
                         }
                     </td>
                     <td class="goalCell">
-                        <a class="goal" asp-page="./Details" asp-route-id="@item.ElementID">
+                        <a class="goal" asp-page="../BLElements/Details" asp-route-id="@item.ElementID">
                             @Html.DisplayFor(modelItem => item.Name)
                         </a>
                     </td>
@@ -70,7 +70,7 @@
                 <td class="goalCell">
                     @if (Model.SelectedBucketList != null)
                     {
-                        <a asp-page="./Create" asp-route-bucketlistid="@Model.SelectedBucketList.BucketListID" class="myBtn submitBtn">Új elem</a>
+                        <a asp-page="../BLElements/Create" asp-route-bucketlistid="@Model.SelectedBucketList.BucketListID" class="myBtn submitBtn">Új elem</a>
                     }
                 </td>
                 <td class="progressionCell"></td>
