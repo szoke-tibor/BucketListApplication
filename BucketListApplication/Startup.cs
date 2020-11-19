@@ -25,7 +25,7 @@ namespace BucketListApplication
 		{
 			services.AddDbContext<BLContext>(options =>
 				options.UseSqlServer(
-					Configuration.GetConnectionString("DefaultConnection")));
+					Configuration.GetConnectionString("AzureSQLserver")));
 
 			services.AddDefaultIdentity<BLUser>(options =>
 			{
