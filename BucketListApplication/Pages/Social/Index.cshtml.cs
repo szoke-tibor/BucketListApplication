@@ -5,18 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using BucketListApplication.Data;
 using BucketListApplication.Models;
+using BucketListApplication.Data;
 using System.Security.Claims;
-using System.Runtime.CompilerServices;
 
 namespace BucketListApplication.Pages.Social
 {
     public class IndexModel : PageModel
     {
-        private readonly BucketListApplication.Data.BLContext _context;
+        private readonly BLContext _context;
 
-        public IndexModel(BucketListApplication.Data.BLContext context)
+        public IndexModel(BLContext context)
         {
             _context = context;
         }

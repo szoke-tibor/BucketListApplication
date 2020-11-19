@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BucketListApplication.Models
+﻿namespace BucketListApplication.Models
 {
 	public class ElementCategory
 	{

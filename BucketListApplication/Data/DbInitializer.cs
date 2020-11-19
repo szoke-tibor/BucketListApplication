@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using BucketListApplication.Data;
+﻿using System.Linq;
 using BucketListApplication.Models;
 using Microsoft.AspNetCore.Identity;
-using System.Drawing;
-using System.Security.Claims;
 
 namespace BucketListApplication.Data
 {

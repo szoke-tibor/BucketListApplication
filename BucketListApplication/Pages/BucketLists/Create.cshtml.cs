@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using BucketListApplication.Data;
 using BucketListApplication.Models;
+using BucketListApplication.Data;
 using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BucketLists
 {
     public class CreateModel : PageModel
     {
-        private readonly BucketListApplication.Data.BLContext _context;
+        private readonly BLContext _context;
 
-        public CreateModel(BucketListApplication.Data.BLContext context)
+        public CreateModel(BLContext context)
         {
             _context = context;
         }

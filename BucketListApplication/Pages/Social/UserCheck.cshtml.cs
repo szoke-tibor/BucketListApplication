@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using BucketListApplication.Data;
 using BucketListApplication.Models;
+using BucketListApplication.Data;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BucketListApplication.Pages.BLElements;
 
 namespace BucketListApplication.Pages.Social
 {
     public class UserCheckModel : BLElementListingPageModel
 	{
-        private readonly BucketListApplication.Data.BLContext _context;
+        private readonly BLContext _context;
 
-        public UserCheckModel(BucketListApplication.Data.BLContext context)
+        public UserCheckModel(BLContext context)
         {
             _context = context;
         }

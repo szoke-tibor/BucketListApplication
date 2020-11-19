@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BucketListApplication.Data;
 using BucketListApplication.Models;
+using BucketListApplication.Data;
 using System.Security.Claims;
 
 namespace BucketListApplication.Pages.BLElements
 {
     public class EditModel : BLElementCategoriesPageModel
     {
-        private readonly BucketListApplication.Data.BLContext _context;
+        private readonly BLContext _context;
 
         [BindProperty]
         public BucketListElement BucketListElement { get; set; }
 
-        public EditModel(BucketListApplication.Data.BLContext context)
+        public EditModel(BLContext context)
         {
             _context = context;
         }
