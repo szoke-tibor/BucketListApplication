@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BucketListApplication.Pages.BLElements
 {
@@ -17,9 +18,11 @@ namespace BucketListApplication.Pages.BLElements
 
         public SelectList BucketListSL { get; set; }
 
-        public void PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement)
+        public async Task PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement)
         {
-            var allCategories = context.Categories;
+            var allCategories = await context.Categories
+                .AsNoTracking()
+                .ToListAsync();
             var BLCategories = new HashSet<int>(BLElement.ElementCategories.Select(ec => ec.CategoryID));
             AssignedCategoryDataList = new List<AssignedCategoryData>();
             foreach (var category in allCategories)
@@ -33,7 +36,7 @@ namespace BucketListApplication.Pages.BLElements
             }
         }
 
-        public void UpdateBLElementCategories(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate)
+        public async Task UpdateBLElementCategories(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate)
         {
             if (selectedCategories == null)
             {
@@ -45,8 +48,11 @@ namespace BucketListApplication.Pages.BLElements
             var BLElementCategoriesBeforeEdit = new HashSet<int>(BLElementToUpdate.ElementCategories.Select(ec => ec.Category.CategoryID));
             //Categories selected at editing
             var BLElementCategoriesAfterEdit = new HashSet<string>(selectedCategories);
-            
-            foreach (var category in context.Categories)
+            var allCategories = await context.Categories
+                .AsNoTracking()
+                .ToListAsync();
+
+            foreach (var category in allCategories)
             {
                 if (BLElementCategoriesAfterEdit.Contains(category.CategoryID.ToString()))
                 {
@@ -74,18 +80,19 @@ namespace BucketListApplication.Pages.BLElements
             }
         }
 
-        public void PopulateBucketListDropDownList(BLContext _context, object selectedBucketList = null)
+        public async Task PopulateBucketListDropDownList(BLContext context, object selectedBucketList = null)
         {
             //Logged user's userId
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId != null)
             {
-                var usersBucketListsQuery = from bl in _context.BucketLists
-                                            where bl.UserId == CurrentUserId
-                                            orderby bl.Name
-                                            select bl;
+                var usersBucketListsQuery = await context.BucketLists
+                    .AsNoTracking()
+                    .Where(bl => bl.UserId == CurrentUserId)
+                    .OrderBy(bl => bl.Name)
+                    .ToListAsync();
 
-                BucketListSL = new SelectList(usersBucketListsQuery.AsNoTracking(), nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name), selectedBucketList);
+                BucketListSL = new SelectList(usersBucketListsQuery, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name), selectedBucketList);
             }
             else
                 throw new Exception("Nincs bejelentkezett felhasználó.");

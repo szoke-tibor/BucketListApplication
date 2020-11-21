@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BucketListApplication.Models;
 using BucketListApplication.Data;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BucketListApplication.Pages.BLElements
 {
@@ -18,17 +19,17 @@ namespace BucketListApplication.Pages.BLElements
 		[BindProperty]
 		public BucketList SelectedBucketList { get; set; }
 
-		public IActionResult OnGet(int? selectedbucketlistid)
+		public async Task<IActionResult> OnGetAsync(int? selectedbucketlistid)
         {
 			//Logged user's userId
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
-				PopulateBucketListDropDownList(_context, CurrentUserId, false);
+				await PopulateBucketListDropDownList(_context, CurrentUserId, false);
 				if (selectedbucketlistid != null)
 				{
-					SelectedBucketList = _context.BucketLists.Single(bl => bl.BucketListID == selectedbucketlistid);
-					PopulateSelectedBLElementsList(_context, (int)selectedbucketlistid, false);
+					SelectedBucketList = await _context.BucketLists.FindAsync(selectedbucketlistid);
+					await PopulateSelectedBLElementsList(_context, (int)selectedbucketlistid, false);
 				}
 				return Page();
 			}

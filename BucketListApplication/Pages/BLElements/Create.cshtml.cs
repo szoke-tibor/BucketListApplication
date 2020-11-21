@@ -18,7 +18,7 @@ namespace BucketListApplication.Pages.BLElements
             _context = context;
         }
 
-        public IActionResult OnGet(int bucketlistid)
+        public async Task<IActionResult> OnGetAsync(int bucketlistid)
         {
 			if (!User.Identity.IsAuthenticated)
 				return RedirectToPage("../AuthError");
@@ -26,12 +26,12 @@ namespace BucketListApplication.Pages.BLElements
 			BucketListElement = new BucketListElement
 			{
 				BucketListID = bucketlistid,
-				BucketList = _context.BucketLists.Find(bucketlistid),
+				BucketList = await _context.BucketLists.FindAsync(bucketlistid),
 				ElementCategories = new List<ElementCategory>()
 			};
 
-			PopulateAssignedCategoryData(_context, BucketListElement);
-			PopulateBucketListDropDownList(_context);
+			await PopulateAssignedCategoryData(_context, BucketListElement);
+			await PopulateBucketListDropDownList(_context);
 			return Page();
 		}
 
@@ -70,13 +70,13 @@ namespace BucketListApplication.Pages.BLElements
 				ble => ble.Visibility,
 				ble => ble.Progression))
 			{
-				_context.BLElements.Add(newBLElement);
+				await _context.BLElements.AddAsync(newBLElement);
 				await _context.SaveChangesAsync();
 				return RedirectToPage("../BucketLists/Index", new { selectedbucketlistid = bucketlistid });
 			}
 			//If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
-			PopulateAssignedCategoryData(_context, newBLElement);
-			PopulateBucketListDropDownList(_context, newBLElement.BucketListID);
+			await PopulateAssignedCategoryData(_context, newBLElement);
+			await PopulateBucketListDropDownList(_context, newBLElement.BucketListID);
 			return Page();
 		}
     }

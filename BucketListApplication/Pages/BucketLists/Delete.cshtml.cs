@@ -28,8 +28,8 @@ namespace BucketListApplication.Pages.BucketLists
                 return NotFound();
 
             BucketList = await _context.BucketLists
-                         .Include(bl => bl.BLElements)
                          .AsNoTracking()
+                         .Include(bl => bl.BLElements)
                          .FirstOrDefaultAsync(bl => bl.BucketListID == id);
 
             if (BucketList == null)
@@ -68,8 +68,7 @@ namespace BucketListApplication.Pages.BucketLists
             catch (DbUpdateException /* ex */)
             {
                 //Log the error (uncomment ex variable name and write a log.)
-                return RedirectToAction("Delete",
-                                     new { id, saveChangesError = true });
+                return RedirectToAction("Delete", new { id, saveChangesError = true });
             }
         }
     }

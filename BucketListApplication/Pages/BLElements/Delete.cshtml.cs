@@ -28,9 +28,9 @@ namespace BucketListApplication.Pages.BLElements
                 return NotFound();
 
             BucketListElement = await _context.BLElements
-                                .Include(ble => ble.BucketList)
-                                .AsNoTracking()
-				                .FirstOrDefaultAsync(ble => ble.ElementID == id);
+                .AsNoTracking()
+                .Include(ble => ble.BucketList)
+				.FirstOrDefaultAsync(ble => ble.ElementID == id);
 
             if (BucketListElement == null)
                 return NotFound();
@@ -52,7 +52,6 @@ namespace BucketListApplication.Pages.BLElements
 
             var BLElementToRemove = await _context.BLElements
                                     .Include(ble => ble.BucketList)
-                                    .AsNoTracking()
                                     .FirstOrDefaultAsync(ble => ble.ElementID == id);
 
             if (BLElementToRemove == null)
@@ -71,8 +70,7 @@ namespace BucketListApplication.Pages.BLElements
 			catch (DbUpdateException /* ex */)
 			{
 				//Log the error (uncomment ex variable name and write a log.)
-				return RedirectToAction("Delete",
-									 new { id, saveChangesError = true });
+				return RedirectToAction("Delete", new { id, saveChangesError = true });
 			}
         }
     }

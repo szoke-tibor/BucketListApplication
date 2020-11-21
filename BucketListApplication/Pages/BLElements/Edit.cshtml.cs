@@ -29,12 +29,12 @@ namespace BucketListApplication.Pages.BLElements
                     return NotFound();
 
                 BucketListElement = await _context.BLElements
+                    .AsNoTracking()
                     .Include(ble => ble.BucketList)
                         .Include(ble => ble.Progression)
                     .ThenInclude(p => p.BLETasks)
                         .Include(ble => ble.ElementCategories)
                     .ThenInclude(ec => ec.Category)
-                    .AsNoTracking()
                     .FirstOrDefaultAsync(ble => ble.ElementID == id);
 
                 if (BucketListElement == null)
@@ -44,8 +44,8 @@ namespace BucketListApplication.Pages.BLElements
                 if (BucketListElement.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
                     return Forbid();
 
-                PopulateAssignedCategoryData(_context, BucketListElement);
-                PopulateBucketListDropDownList(_context);
+                await PopulateAssignedCategoryData(_context, BucketListElement);
+                await PopulateBucketListDropDownList(_context);
                 return Page();
             }
             else
@@ -82,14 +82,14 @@ namespace BucketListApplication.Pages.BLElements
                 ble => ble.Progression))
 			{
                 elementToUpdate.Progression.DeleteEmptyTasks();
-                UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
+                await UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
 				await _context.SaveChangesAsync();
                 return RedirectToPage("Details", new { id = elementToUpdate.ElementID });
             }
 
             //If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
-            PopulateAssignedCategoryData(_context, elementToUpdate);
-            PopulateBucketListDropDownList(_context, elementToUpdate.BucketListID);
+            await PopulateAssignedCategoryData(_context, elementToUpdate);
+            await PopulateBucketListDropDownList(_context, elementToUpdate.BucketListID);
             return Page();
 		}
     }

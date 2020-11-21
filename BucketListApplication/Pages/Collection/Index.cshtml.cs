@@ -25,9 +25,9 @@ namespace BucketListApplication.Pages.Collection
 			CategoryData = new CategoryIndexData
 			{
 				Categories = await _context.Categories
-				    .Include(c => c.ElementCategories)
+                    .AsNoTracking()
+                    .Include(c => c.ElementCategories)
 				        .ThenInclude(ec => ec.Element)
-				    .AsNoTracking()
 				    .OrderBy(c => c.Name)
 				    .ToListAsync()
 			};
@@ -35,7 +35,9 @@ namespace BucketListApplication.Pages.Collection
 			if (id != null)
             {
                 CategoryID = id.Value;
-                Category category = CategoryData.Categories.Where(c => c.CategoryID == id.Value).Single();
+                Category category = CategoryData.Categories
+                    .Where(c => c.CategoryID == id.Value)
+                    .Single();
                 CategoryData.Elements = category.ElementCategories
                     .Select(ec => ec.Element)
                     .Where(ec => ec.Discriminator == "Element")

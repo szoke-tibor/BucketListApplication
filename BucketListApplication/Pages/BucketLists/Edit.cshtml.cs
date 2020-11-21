@@ -29,8 +29,7 @@ namespace BucketListApplication.Pages.BucketLists
                 if (id == null)
                     return NotFound();
 
-                BucketList = await _context.BucketLists
-                    .FirstOrDefaultAsync(m => m.BucketListID == id);
+                BucketList = await _context.BucketLists.FindAsync(id);
 
                 if (BucketList == null)
                     return NotFound();
@@ -50,8 +49,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (id == null)
                 return NotFound();
 
-            var bucketlistToUpdate = await _context.BucketLists
-                .FirstOrDefaultAsync(bl => bl.BucketListID == id);
+            var bucketlistToUpdate = await _context.BucketLists.FindAsync(id);
 
             if (bucketlistToUpdate == null)
                 return NotFound();

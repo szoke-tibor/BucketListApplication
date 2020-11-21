@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BucketListApplication.Models;
 using BucketListApplication.Data;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace BucketListApplication.Pages.BucketLists
 {
@@ -33,8 +34,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (!User.Identity.IsAuthenticated)
                 return RedirectToPage("../AuthError");
 
-            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            BucketList.UserId = CurrentUserId;
+            BucketList.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var emptyBucketList = new BucketList();
 
@@ -42,13 +42,14 @@ namespace BucketListApplication.Pages.BucketLists
                 bl => bl.Name,
                 bl => bl.UserId))
             {
-                _context.BucketLists.Add(BucketList);
+                await _context.BucketLists.AddAsync(BucketList);
                 await _context.SaveChangesAsync();
-				int newBucketListID = _context.BucketLists
-					.Where(bl => bl.Name == BucketList.Name)
-					.Where(bl => bl.UserId == BucketList.UserId)
-					.SingleOrDefault().BucketListID;
-				return RedirectToPage("../BucketLists/Index", new { selectedbucketlistid = newBucketListID });
+                var newBucketList = await _context.BucketLists
+                    .AsNoTracking()
+                    .Where(bl => bl.Name == BucketList.Name)
+                    .Where(bl => bl.UserId == BucketList.UserId)
+                    .SingleOrDefaultAsync();
+				return RedirectToPage("../BucketLists/Index", new { selectedbucketlistid = newBucketList.BucketListID });
 			}
             return Page();
         }

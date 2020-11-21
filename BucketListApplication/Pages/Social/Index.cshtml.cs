@@ -25,21 +25,24 @@ namespace BucketListApplication.Pages.Social
 
         public async Task<IActionResult> OnGetAsync(string searchString)
         {
-			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			if (CurrentUserId != null)
+			var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (currentUserId != null)
 			{
 				CurrentFilter = searchString;
 
-				var usersQuery = from u in _context.Users
-								 where u.Id != CurrentUserId
-								 select u;
-
 				if (!String.IsNullOrEmpty(searchString))
-					usersQuery = usersQuery.Where(u => u.FullName.Contains(searchString));
+					Users = await _context.Users
+						.AsNoTracking()
+						.Where(u => u.FullName.Contains(searchString))
+						.Where(u => u.Id != currentUserId)
+						.ToListAsync();
 				else
-					usersQuery = usersQuery.Where(u => u.SeededUser == true);
+					Users = await _context.Users
+						.AsNoTracking()
+						.Where(u => u.SeededUser == true)
+						.Where(u => u.Id != currentUserId)
+						.ToListAsync();
 
-				Users = await usersQuery.AsNoTracking().ToListAsync();
 				return Page();
 			}
 			else
