@@ -62,7 +62,7 @@ namespace BucketListApplication.Pages.BLElements
 				SelectedBLElements = await context.BLElements
 					.AsNoTracking()
 					.Include(ble => ble.Progression)
-					.Include(ble => ble.Progression.BLETasks)
+						.ThenInclude(p => p.BLETasks)
 					.Where(ble => ble.BucketListID == SelectedBucketListID)
 					.Where(ble => ble.Visibility == Visibility.Public)
 					.OrderBy(ble => ble.Name)
@@ -74,7 +74,7 @@ namespace BucketListApplication.Pages.BLElements
 				SelectedBLElements = await context.BLElements
 					.AsNoTracking()
 					.Include(ble => ble.Progression)
-					.Include(ble => ble.Progression.BLETasks)
+						.ThenInclude(p => p.BLETasks)
 					.Where(ble => ble.BucketListID == SelectedBucketListID)
 					.OrderBy(ble => ble.Name)
 					.ToListAsync();
