@@ -13,7 +13,7 @@ namespace BucketListApplication.Models
 
 		public void DeleteEmptyTasks()
 		{
-			for( int i = BLETasks.Count - 1; i > 0 ; i--)
+			for( int i = BLETasks.Count - 1; i > 0; i--)
 				if (BLETasks[i].Text == null)
 					BLETasks.Remove(BLETasks[i]);
 		}

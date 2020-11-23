@@ -30,6 +30,7 @@ namespace BucketListApplication
 					Configuration.GetConnectionString("AzureSQLserver")));
 
 			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IBucketListService, BucketListService>();
 
 			services.AddDefaultIdentity<BLUser>(options =>
 			{

@@ -11,14 +11,16 @@ namespace BucketListApplication.Pages.BLElements
 	{
         private readonly BLContext _context;
 		private readonly IUserService _userService;
+		private readonly IBucketListService _bucketListService;
 
 		[BindProperty]
 		public BucketListElement BucketListElement { get; set; }
 
-		public CreateModel(BLContext context, IUserService userService)
+		public CreateModel(BLContext context, IUserService userService, IBucketListService bucketListService)
         {
             _context = context;
 			_userService = userService;
+			_bucketListService = bucketListService;
 		}
 
         public async Task<IActionResult> OnGetAsync(int? bucketListId)
@@ -39,8 +41,8 @@ namespace BucketListApplication.Pages.BLElements
 			if (_userService.BucketListIsNotBelongingToUser(User, BucketListElement.BucketList))
 				return Forbid();
 
-			await PopulateAssignedCategoryData(_context, BucketListElement);
-			await PopulateBucketListDropDownList(_context);
+			_bucketListService.PopulateAssignedCategoryData(_context, BucketListElement, ref AssignedCategoryDataList);
+			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL);
 			return Page();
 		}
 
@@ -88,8 +90,8 @@ namespace BucketListApplication.Pages.BLElements
 				return RedirectToPage("../BucketLists/Index", new { bucketListId = bucketListId });
 			}
 			//If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
-			await PopulateAssignedCategoryData(_context, newBLElement);
-			await PopulateBucketListDropDownList(_context, newBLElement.BucketListID);
+			_bucketListService.PopulateAssignedCategoryData(_context, newBLElement, ref AssignedCategoryDataList);
+			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, newBLElement.BucketListID);
 			return Page();
 		}
     }
