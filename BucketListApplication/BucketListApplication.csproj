@@ -66,6 +66,8 @@
 
 
   <ItemGroup>
+    <Folder Include="Data\UnitOfWorks\" />
+    <Folder Include="Data\Repositories\" />
     <Folder Include="Interfaces\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

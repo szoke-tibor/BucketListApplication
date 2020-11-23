@@ -25,11 +25,11 @@ namespace BucketListApplication.Pages.Social
 		public async Task<IActionResult> OnGetAsync(string Id)
         {
 			//Logged user's userId
-			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			if ( CurrentUserId != null )
+			var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if ( currentUserId != null )
 			{
-				var currentUser = await _context.Users.FindAsync(Id);
-				Title = currentUser.FullName + " Bakancslistái";
+				var selectedUser = await _context.Users.FindAsync(Id);
+				Title = selectedUser.FullName + " Bakancslistái";
 				await PopulateBucketListDropDownList(_context, Id, true);
 				return Page();
 			}
@@ -39,11 +39,11 @@ namespace BucketListApplication.Pages.Social
 
 		public async Task<IActionResult> OnPostAsync(string Id)
 		{
-			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			if (CurrentUserId != null)
+			var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (currentUserId != null)
 			{
-				var currentUser = await _context.Users.FindAsync(Id);
-				Title = currentUser.FullName + " Bakancslistái";
+				var selectedUser = await _context.Users.FindAsync(Id);
+				Title = selectedUser.FullName + " Bakancslistái";
 				await PopulateBucketListDropDownList(_context, Id, true);
 				await PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
 				return Page();
