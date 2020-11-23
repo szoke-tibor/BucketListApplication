@@ -19,9 +19,9 @@ namespace BucketListApplication.Pages.BLElements
 
         public BucketListElement BucketListElement { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? bucketListElementId)
         {
-            if (id == null)
+            if (bucketListElementId == null)
                 return NotFound();
 
             BucketListElement = await _context.BLElements
@@ -31,7 +31,7 @@ namespace BucketListApplication.Pages.BLElements
                     .ThenInclude(p => p.BLETasks)
                 .Include(ble => ble.ElementCategories)
                     .ThenInclude(ec => ec.Category)
-				.FirstOrDefaultAsync(ble => ble.ElementID == id);
+				.FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
 
 			if (BucketListElement == null)
                 return NotFound();

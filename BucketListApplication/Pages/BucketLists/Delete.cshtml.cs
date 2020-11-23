@@ -22,15 +22,15 @@ namespace BucketListApplication.Pages.BucketLists
 
         public string ErrorMessage { get; set; }
         
-        public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
+        public async Task<IActionResult> OnGetAsync(int? bucketListId, bool? saveChangesError = false)
         {
-            if (id == null)
+            if (bucketListId == null)
                 return NotFound();
 
             BucketList = await _context.BucketLists
                          .AsNoTracking()
                          .Include(bl => bl.BLElements)
-                         .FirstOrDefaultAsync(bl => bl.BucketListID == id);
+                         .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
 
             if (BucketList == null)
                 return NotFound();
@@ -45,12 +45,12 @@ namespace BucketListApplication.Pages.BucketLists
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int? bucketListId)
         {
-            if (id == null)
+            if (bucketListId == null)
                 return NotFound();
 
-            var BucketListToRemove = await _context.BucketLists.FindAsync(id);
+            var BucketListToRemove = await _context.BucketLists.FindAsync(bucketListId);
 
             if (BucketListToRemove == null)
                 return NotFound();
@@ -68,7 +68,7 @@ namespace BucketListApplication.Pages.BucketLists
             catch (DbUpdateException /* ex */)
             {
                 //Log the error (uncomment ex variable name and write a log.)
-                return RedirectToAction("Delete", new { id, saveChangesError = true });
+                return RedirectToAction("Delete", new { bucketListId, saveChangesError = true });
             }
         }
     }

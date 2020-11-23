@@ -22,15 +22,15 @@ namespace BucketListApplication.Pages.BLElements
 
 		public string ErrorMessage { get; set; }
 
-		public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
+		public async Task<IActionResult> OnGetAsync(int? bucketListElementId, bool? saveChangesError = false)
         {
-            if (id == null)
+            if (bucketListElementId == null)
                 return NotFound();
 
             BucketListElement = await _context.BLElements
                 .AsNoTracking()
                 .Include(ble => ble.BucketList)
-				.FirstOrDefaultAsync(ble => ble.ElementID == id);
+				.FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
 
             if (BucketListElement == null)
                 return NotFound();
@@ -45,14 +45,14 @@ namespace BucketListApplication.Pages.BLElements
 			return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int? bucketListElementId)
         {
-            if (id == null)
+            if (bucketListElementId == null)
                 return NotFound();
 
             var BLElementToRemove = await _context.BLElements
                                     .Include(ble => ble.BucketList)
-                                    .FirstOrDefaultAsync(ble => ble.ElementID == id);
+                                    .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
 
             if (BLElementToRemove == null)
 				return NotFound();
@@ -65,12 +65,12 @@ namespace BucketListApplication.Pages.BLElements
 			{
 				_context.BLElements.Remove(BLElementToRemove);
 				await _context.SaveChangesAsync();
-                return RedirectToPage("../BucketLists/Index", new { selectedbucketlistid = BLElementToRemove.BucketListID });
+                return RedirectToPage("../BucketLists/Index", new { bucketListId = BLElementToRemove.BucketListID });
             }
 			catch (DbUpdateException /* ex */)
 			{
 				//Log the error (uncomment ex variable name and write a log.)
-				return RedirectToAction("Delete", new { id, saveChangesError = true });
+				return RedirectToAction("Delete", new { bucketListElementId, saveChangesError = true });
 			}
         }
     }

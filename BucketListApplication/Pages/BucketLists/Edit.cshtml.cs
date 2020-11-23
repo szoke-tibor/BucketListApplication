@@ -20,16 +20,16 @@ namespace BucketListApplication.Pages.BucketLists
         [BindProperty]
         public BucketList BucketList { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? bucketListId)
         {
             //Logged user's userId
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId != null)
             {
-                if (id == null)
+                if (bucketListId == null)
                     return NotFound();
 
-                BucketList = await _context.BucketLists.FindAsync(id);
+                BucketList = await _context.BucketLists.FindAsync(bucketListId);
 
                 if (BucketList == null)
                     return NotFound();
@@ -44,12 +44,12 @@ namespace BucketListApplication.Pages.BucketLists
                 return RedirectToPage("../AuthError");
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int? bucketListId)
         {
-            if (id == null)
+            if (bucketListId == null)
                 return NotFound();
 
-            var bucketlistToUpdate = await _context.BucketLists.FindAsync(id);
+            var bucketlistToUpdate = await _context.BucketLists.FindAsync(bucketListId);
 
             if (bucketlistToUpdate == null)
                 return NotFound();
@@ -64,7 +64,7 @@ namespace BucketListApplication.Pages.BucketLists
                 bl => bl.Visibility))
             {
                 await _context.SaveChangesAsync();
-                return RedirectToPage("../BucketLists/Index", new { selectedbucketlistid = bucketlistToUpdate.BucketListID });
+                return RedirectToPage("../BucketLists/Index", new { bucketListId = bucketlistToUpdate.BucketListID });
             }
             return Page();
         }

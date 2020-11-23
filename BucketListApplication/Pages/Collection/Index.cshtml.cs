@@ -20,7 +20,7 @@ namespace BucketListApplication.Pages.Collection
         public CategoryIndexData CategoryData { get; set; }
         public int CategoryID { get; set; }
 
-        public async Task OnGetAsync(int? id)
+        public async Task OnGetAsync(int? categoryId)
         {
 			CategoryData = new CategoryIndexData
 			{
@@ -32,11 +32,11 @@ namespace BucketListApplication.Pages.Collection
 				    .ToListAsync()
 			};
 
-			if (id != null)
+			if (categoryId != null)
             {
-                CategoryID = id.Value;
+                CategoryID = categoryId.Value;
                 Category category = CategoryData.Categories
-                    .Where(c => c.CategoryID == id.Value)
+                    .Where(c => c.CategoryID == categoryId.Value)
                     .Single();
                 CategoryData.Elements = category.ElementCategories
                     .Select(ec => ec.Element)

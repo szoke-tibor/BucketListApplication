@@ -19,17 +19,17 @@ namespace BucketListApplication.Pages.BLElements
 		[BindProperty]
 		public BucketList SelectedBucketList { get; set; }
 
-		public async Task<IActionResult> OnGetAsync(int? selectedbucketlistid)
+		public async Task<IActionResult> OnGetAsync(int? bucketListId)
         {
 			//Logged user's userId
 			var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if ( CurrentUserId != null )
 			{
 				await PopulateBucketListDropDownList(_context, CurrentUserId, false);
-				if (selectedbucketlistid != null)
+				if (bucketListId != null)
 				{
-					SelectedBucketList = await _context.BucketLists.FindAsync(selectedbucketlistid);
-					await PopulateSelectedBLElementsList(_context, (int)selectedbucketlistid, false);
+					SelectedBucketList = await _context.BucketLists.FindAsync(bucketListId);
+					await PopulateSelectedBLElementsList(_context, (int)bucketListId, false);
 				}
 				return Page();
 			}
@@ -39,7 +39,7 @@ namespace BucketListApplication.Pages.BLElements
 		}
 		public IActionResult OnPost()
 		{
-			return RedirectToPage("Index", new { selectedbucketlistid = SelectedBucketList.BucketListID });
+			return RedirectToPage("Index", new { bucketListId = SelectedBucketList.BucketListID });
 		}
 	}
 }

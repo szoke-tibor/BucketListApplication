@@ -25,7 +25,7 @@
                         @Html.DisplayFor(modelItem => item.FullName)
                     </td>
                     <td style="vertical-align: middle">
-                        <a asp-page="./UserCheck" asp-route-id="@item.Id">Megtekintés</a>
+                        <a asp-page="./UserCheck" asp-route-userId="@item.Id">Megtekintés</a>
                     </td>
                 </tr>
             }

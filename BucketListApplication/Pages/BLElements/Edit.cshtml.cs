@@ -19,13 +19,13 @@ namespace BucketListApplication.Pages.BLElements
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? bucketListElementId)
         {
             //Logged user's userId
             var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (CurrentUserId != null)
             {
-                if (id == null)
+                if (bucketListElementId == null)
                     return NotFound();
 
                 BucketListElement = await _context.BLElements
@@ -35,7 +35,7 @@ namespace BucketListApplication.Pages.BLElements
                         .ThenInclude(p => p.BLETasks)
                     .Include(ble => ble.ElementCategories)
                         .ThenInclude(ec => ec.Category)
-                    .FirstOrDefaultAsync(ble => ble.ElementID == id);
+                    .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
 
                 if (BucketListElement == null)
                     return NotFound();
@@ -52,9 +52,9 @@ namespace BucketListApplication.Pages.BLElements
                 return RedirectToPage("../AuthError");
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)
+        public async Task<IActionResult> OnPostAsync(int? bucketListElementId, string[] selectedCategories)
         {
-            if (id == null)
+            if (bucketListElementId == null)
                 return NotFound();
 
             var elementToUpdate = await _context.BLElements
@@ -63,7 +63,7 @@ namespace BucketListApplication.Pages.BLElements
                     .ThenInclude(p => p.BLETasks)
                 .Include(ble => ble.ElementCategories)
                     .ThenInclude(ec => ec.Category)
-                .FirstOrDefaultAsync(ble => ble.ElementID == id);
+                .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
 
             if (elementToUpdate == null)
                 return NotFound();
@@ -84,7 +84,7 @@ namespace BucketListApplication.Pages.BLElements
                 elementToUpdate.Progression.DeleteEmptyTasks();
                 await UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
 				await _context.SaveChangesAsync();
-                return RedirectToPage("Details", new { id = elementToUpdate.ElementID });
+                return RedirectToPage("Details", new { bucketListElementId = elementToUpdate.ElementID });
             }
 
             //If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
