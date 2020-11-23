@@ -74,7 +74,7 @@ namespace BucketListApplication.Pages.BLElements
                     {
                         ElementCategory categoryToRemove =
                             BLElementToUpdate.ElementCategories.SingleOrDefault(ec => ec.CategoryID == category.CategoryID);
-                        context.Remove(categoryToRemove);
+                        BLElementToUpdate.ElementCategories.Remove(categoryToRemove);
                     }
                 }
             }
