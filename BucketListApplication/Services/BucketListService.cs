@@ -31,15 +31,48 @@ namespace BucketListApplication.Services
             }
         }
 
-        public void PopulateBucketListDropDownList(BLContext context, string userId, ref SelectList BucketListSL, object selectedBucketList = null)
+        public void PopulateBucketListDropDownList(BLContext context, string userId, ref SelectList BucketListSL, bool publicOnly, bool addDefaultValue, object selectedBucketList = null)
         {
-            var usersBucketListsQuery = context.BucketLists
-                .AsNoTracking()
-                .Where(bl => bl.UserId == userId)
-                .OrderBy(bl => bl.Name)
-                .ToList();
+            List<SelectListItem> SelectListItems = new List<SelectListItem>();
+            if (addDefaultValue)
+			{
+                SelectListItems.Add(new SelectListItem()
+                {
+                    Text = "--Válassz egy listát--",
+                    Value = "null"
+                });
+            }
 
-            BucketListSL = new SelectList(usersBucketListsQuery, nameof(Models.BucketList.BucketListID), nameof(Models.BucketList.Name), selectedBucketList);
+            IEnumerable<BucketList> BucketListsQuery;
+
+            if (publicOnly)
+            {
+                BucketListsQuery = context.BucketLists
+                    .AsNoTracking()
+                    .Where(bl => bl.UserId == userId)
+                    .Where(bl => bl.Visibility == Visibility.Public)
+                    .OrderBy(bl => bl.Name)
+                    .ToList();
+            }
+            else
+            {
+                BucketListsQuery = context.BucketLists
+                    .AsNoTracking()
+                    .Where(bl => bl.UserId == userId)
+                    .OrderBy(bl => bl.Name)
+                    .ToList();
+            }
+
+            foreach (BucketList bl in BucketListsQuery)
+            {
+                SelectListItems.Add(new SelectListItem()
+                {
+                    Text = bl.Name,
+                    Value = bl.BucketListID.ToString()
+                });
+            }
+
+            BucketListSL = new SelectList(SelectListItems, "Value", "Text", selectedBucketList);
         }
 
         public async Task UpdateBLElementCategories(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate)
@@ -83,6 +116,32 @@ namespace BucketListApplication.Services
                         BLElementToUpdate.ElementCategories.Remove(categoryToRemove);
                     }
                 }
+            }
+        }
+
+        public void PopulateSelectedBLElementsList(BLContext context, int SelectedBucketListID, bool PublicOnly, ref IEnumerable<BucketListElement> SelectedBLElements)
+        {
+            if (PublicOnly)
+            {
+                SelectedBLElements = context.BLElements
+                    .AsNoTracking()
+                    .Include(ble => ble.Progression)
+                        .ThenInclude(p => p.BLETasks)
+                    .Where(ble => ble.BucketListID == SelectedBucketListID)
+                    .Where(ble => ble.Visibility == Visibility.Public)
+                    .OrderBy(ble => ble.Name)
+                    .ToList();
+            }
+
+            else
+            {
+                SelectedBLElements = context.BLElements
+                    .AsNoTracking()
+                    .Include(ble => ble.Progression)
+                        .ThenInclude(p => p.BLETasks)
+                    .Where(ble => ble.BucketListID == SelectedBucketListID)
+                    .OrderBy(ble => ble.Name)
+                    .ToList();
             }
         }
     }

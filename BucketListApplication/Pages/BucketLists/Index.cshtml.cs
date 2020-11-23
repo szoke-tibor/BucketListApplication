@@ -12,12 +12,14 @@ namespace BucketListApplication.Pages.BLElements
 	{
         private readonly BLContext _context;
 		private readonly IUserService _userService;
+		private readonly IBucketListService _bucketListService;
 
-		public IndexModel(BLContext context, IUserService userService)
+		public IndexModel(BLContext context, IUserService userService, IBucketListService bucketListService)
         {
             _context = context;
 			_userService = userService;
-        }
+			_bucketListService = bucketListService;
+		}
 
 		[BindProperty]
 		public BucketList SelectedBucketList { get; set; }
@@ -27,7 +29,7 @@ namespace BucketListApplication.Pages.BLElements
 			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
-			await PopulateBucketListDropDownList(_context, _userService.GetUserId(User), false);
+			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, false, true);
 
 			if (bucketListId != null)
 			{
@@ -39,7 +41,7 @@ namespace BucketListApplication.Pages.BLElements
 				if (_userService.BucketListIsNotBelongingToUser(User, SelectedBucketList))
 					return Forbid();
 
-				await PopulateSelectedBLElementsList(_context, (int)bucketListId, false);
+				_bucketListService.PopulateSelectedBLElementsList(_context, (int)bucketListId, false, ref SelectedBLElements);
 			}
 			return Page();
 

@@ -42,7 +42,7 @@ namespace BucketListApplication.Pages.BLElements
 				return Forbid();
 
 			_bucketListService.PopulateAssignedCategoryData(_context, BucketListElement, ref AssignedCategoryDataList);
-			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL);
+			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, false, false);
 			return Page();
 		}
 
@@ -91,7 +91,7 @@ namespace BucketListApplication.Pages.BLElements
 			}
 			//If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
 			_bucketListService.PopulateAssignedCategoryData(_context, newBLElement, ref AssignedCategoryDataList);
-			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, newBLElement.BucketListID);
+			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, false, false, newBLElement.BucketListID);
 			return Page();
 		}
     }

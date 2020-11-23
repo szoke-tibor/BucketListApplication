@@ -13,12 +13,14 @@ namespace BucketListApplication.Pages.Social
 	{
         private readonly BLContext _context;
 		private readonly IUserService _userService;
+		private readonly IBucketListService _bucketListService;
 
-		public UserCheckModel(BLContext context, IUserService userService)
+		public UserCheckModel(BLContext context, IUserService userService, IBucketListService bucketListService)
         {
             _context = context;
 			_userService = userService;
-        }
+			_bucketListService = bucketListService;
+		}
 
 		[BindProperty]
 		public BucketList SelectedBucketList { get; set; }
@@ -32,7 +34,7 @@ namespace BucketListApplication.Pages.Social
 
 			var selectedUser = await _context.Users.FindAsync(userId);
 			Title = selectedUser.FullName + " Bakancslistái";
-			await PopulateBucketListDropDownList(_context, userId, true);
+			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, true, true);
 
 			return Page();
 		}
@@ -44,8 +46,8 @@ namespace BucketListApplication.Pages.Social
 
 			var selectedUser = await _context.Users.FindAsync(userId);
 			Title = selectedUser.FullName + " Bakancslistái";
-			await PopulateBucketListDropDownList(_context, userId, true);
-			await PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
+			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, true, true);
+			_bucketListService.PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true, ref SelectedBLElements);
 			return Page();
 		}
 	}
