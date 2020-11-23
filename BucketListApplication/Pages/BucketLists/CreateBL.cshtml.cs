@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BucketListApplication.Models;
+using BucketListApplication.Interfaces;
 using BucketListApplication.Data;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ namespace BucketListApplication.Pages.BucketLists
     public class CreateModel : PageModel
     {
         private readonly BLContext _context;
+        private readonly IUserService _userService;
 
-        public CreateModel(BLContext context)
+        public CreateModel(BLContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -23,7 +26,7 @@ namespace BucketListApplication.Pages.BucketLists
 
         public IActionResult OnGet()
         {
-            if (!User.Identity.IsAuthenticated)
+            if (_userService.UserIsNotAuthenticated(User))
                 return RedirectToPage("../AuthError");
 
             return Page();
@@ -31,10 +34,10 @@ namespace BucketListApplication.Pages.BucketLists
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!User.Identity.IsAuthenticated)
+            if (_userService.UserIsNotAuthenticated(User))
                 return RedirectToPage("../AuthError");
 
-            BucketList.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            BucketList.UserId = _userService.GetUserId(User);
 
             var emptyBucketList = new BucketList();
 

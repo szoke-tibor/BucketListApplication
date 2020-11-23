@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BucketListApplication.Models;
 using BucketListApplication.Data;
+using BucketListApplication.Interfaces;
 using System.Security.Claims;
 using BucketListApplication.Pages.BLElements;
 
@@ -11,10 +12,12 @@ namespace BucketListApplication.Pages.Social
     public class UserCheckModel : BLElementListingPageModel
 	{
         private readonly BLContext _context;
+		private readonly IUserService _userService;
 
-        public UserCheckModel(BLContext context)
+		public UserCheckModel(BLContext context, IUserService userService)
         {
             _context = context;
+			_userService = userService;
         }
 
 		[BindProperty]
@@ -24,32 +27,26 @@ namespace BucketListApplication.Pages.Social
 
 		public async Task<IActionResult> OnGetAsync(string userId)
         {
-			//Logged user's userId
-			var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			if ( currentUserId != null )
-			{
-				var selectedUser = await _context.Users.FindAsync(userId);
-				Title = selectedUser.FullName + " Bakancslistái";
-				await PopulateBucketListDropDownList(_context, userId, true);
-				return Page();
-			}
-			else
+			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
+
+			var selectedUser = await _context.Users.FindAsync(userId);
+			Title = selectedUser.FullName + " Bakancslistái";
+			await PopulateBucketListDropDownList(_context, userId, true);
+
+			return Page();
 		}
 
 		public async Task<IActionResult> OnPostAsync(string userId)
 		{
-			var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			if (currentUserId != null)
-			{
-				var selectedUser = await _context.Users.FindAsync(userId);
-				Title = selectedUser.FullName + " Bakancslistái";
-				await PopulateBucketListDropDownList(_context, userId, true);
-				await PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
-				return Page();
-			}
-			else
+			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
+
+			var selectedUser = await _context.Users.FindAsync(userId);
+			Title = selectedUser.FullName + " Bakancslistái";
+			await PopulateBucketListDropDownList(_context, userId, true);
+			await PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
+			return Page();
 		}
 	}
 }

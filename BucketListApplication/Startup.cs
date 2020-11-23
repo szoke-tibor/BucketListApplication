@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BucketListApplication.Models;
 using Microsoft.AspNetCore.Http;
+using BucketListApplication.Interfaces;
+using BucketListApplication.Services;
 
 namespace BucketListApplication
 {
@@ -26,6 +28,8 @@ namespace BucketListApplication
 			services.AddDbContext<BLContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("AzureSQLserver")));
+
+			services.AddTransient<IUserService, UserService>();
 
 			services.AddDefaultIdentity<BLUser>(options =>
 			{

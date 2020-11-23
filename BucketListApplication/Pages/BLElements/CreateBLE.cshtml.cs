@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BucketListApplication.Models;
+using BucketListApplication.Interfaces;
 using BucketListApplication.Data;
 
 namespace BucketListApplication.Pages.BLElements
@@ -9,45 +10,57 @@ namespace BucketListApplication.Pages.BLElements
     public class CreateModel : BLElementCategoriesPageModel
 	{
         private readonly BLContext _context;
+		private readonly IUserService _userService;
 
 		[BindProperty]
 		public BucketListElement BucketListElement { get; set; }
 
-		public CreateModel(BLContext context)
+		public CreateModel(BLContext context, IUserService userService)
         {
             _context = context;
-        }
+			_userService = userService;
+		}
 
-        public async Task<IActionResult> OnGetAsync(int bucketListId)
+        public async Task<IActionResult> OnGetAsync(int? bucketListId)
         {
-			if (!User.Identity.IsAuthenticated)
+			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
+
+			if (bucketListId == null)
+				return NotFound();
 
 			BucketListElement = new BucketListElement
 			{
-				BucketListID = bucketListId,
+				BucketListID = bucketListId.Value,
 				BucketList = await _context.BucketLists.FindAsync(bucketListId),
 				ElementCategories = new List<ElementCategory>()
 			};
+
+			if (_userService.BucketListIsNotBelongingToUser(User, BucketListElement.BucketList))
+				return Forbid();
 
 			await PopulateAssignedCategoryData(_context, BucketListElement);
 			await PopulateBucketListDropDownList(_context);
 			return Page();
 		}
 
-        public async Task<IActionResult> OnPostAsync(int bucketListId, string[] selectedCategories)
+        public async Task<IActionResult> OnPostAsync(int? bucketListId, string[] selectedCategories)
         {
-			if (!User.Identity.IsAuthenticated)
+			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
 			var newBLElement = new BucketListElement
 			{
-				BucketListID = bucketListId,
+				BucketListID = bucketListId.Value,
+				BucketList = await _context.BucketLists.FindAsync(bucketListId),
 				Progression = new Progression
 				{
 					BLETasks = new List<BLETask>()
 				}
 			};
+
+			if (_userService.BucketListIsNotBelongingToUser(User, newBLElement.BucketList))
+				return Forbid();
 
 			if (selectedCategories != null)
 			{

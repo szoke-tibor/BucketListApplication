@@ -3,61 +3,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Models;
 using BucketListApplication.Data;
-using System.Security.Claims;
+using BucketListApplication.Interfaces;
 
 namespace BucketListApplication.Pages.BLElements
 {
     public class EditModel : BLElementCategoriesPageModel
     {
         private readonly BLContext _context;
+        private readonly IUserService _userService;
 
         [BindProperty]
         public BucketListElement BucketListElement { get; set; }
 
-        public EditModel(BLContext context)
+        public EditModel(BLContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public async Task<IActionResult> OnGetAsync(int? bucketListElementId)
         {
-            //Logged user's userId
-            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (CurrentUserId != null)
-            {
-                if (bucketListElementId == null)
-                    return NotFound();
-
-                BucketListElement = await _context.BLElements
-                    .AsNoTracking()
-                    .Include(ble => ble.BucketList)
-                    .Include(ble => ble.Progression)
-                        .ThenInclude(p => p.BLETasks)
-                    .Include(ble => ble.ElementCategories)
-                        .ThenInclude(ec => ec.Category)
-                    .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
-
-                if (BucketListElement == null)
-                    return NotFound();
-
-                //Not the owner tries to edit their BucketListElement
-                if (BucketListElement.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-                    return Forbid();
-
-                await PopulateAssignedCategoryData(_context, BucketListElement);
-                await PopulateBucketListDropDownList(_context);
-                return Page();
-            }
-            else
+            if (_userService.UserIsNotAuthenticated(User))
                 return RedirectToPage("../AuthError");
-        }
 
-        public async Task<IActionResult> OnPostAsync(int? bucketListElementId, string[] selectedCategories)
-        {
             if (bucketListElementId == null)
                 return NotFound();
 
-            var elementToUpdate = await _context.BLElements
+            BucketListElement = await _context.BLElements
+                .AsNoTracking()
                 .Include(ble => ble.BucketList)
                 .Include(ble => ble.Progression)
                     .ThenInclude(p => p.BLETasks)
@@ -65,15 +38,41 @@ namespace BucketListApplication.Pages.BLElements
                     .ThenInclude(ec => ec.Category)
                 .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
 
-            if (elementToUpdate == null)
+            if (BucketListElement == null)
                 return NotFound();
 
-            //Not the owner tries to edit their BucketListElement
-            if (elementToUpdate.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (_userService.BucketListElementIsNotBelongingToUser(User, BucketListElement))
+                return Forbid();
+
+            await PopulateAssignedCategoryData(_context, BucketListElement);
+            await PopulateBucketListDropDownList(_context);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? bucketListElementId, string[] selectedCategories)
+        {
+            if (_userService.UserIsNotAuthenticated(User))
+                return RedirectToPage("../AuthError");
+
+            if (bucketListElementId == null)
+                return NotFound();
+
+            var blElementToUpdate = await _context.BLElements
+                .Include(ble => ble.BucketList)
+                .Include(ble => ble.Progression)
+                    .ThenInclude(p => p.BLETasks)
+                .Include(ble => ble.ElementCategories)
+                    .ThenInclude(ec => ec.Category)
+                .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+
+            if (blElementToUpdate == null)
+                return NotFound();
+
+            if (_userService.BucketListElementIsNotBelongingToUser(User, blElementToUpdate))
                 return Forbid();
 
             // Defense against overposting attacks. Returns true if the update was successful.
-            if (await TryUpdateModelAsync<BucketListElement>(elementToUpdate, "BucketListElement",
+            if (await TryUpdateModelAsync<BucketListElement>(blElementToUpdate, "BucketListElement",
                 ble => ble.Name,
                 ble => ble.BucketListID,
                 ble => ble.Description,
@@ -81,15 +80,15 @@ namespace BucketListApplication.Pages.BLElements
                 ble => ble.Visibility,
                 ble => ble.Progression))
 			{
-                elementToUpdate.Progression.DeleteEmptyTasks();
-                await UpdateBLElementCategories(_context, selectedCategories, elementToUpdate);
+                blElementToUpdate.Progression.DeleteEmptyTasks();
+                await UpdateBLElementCategories(_context, selectedCategories, blElementToUpdate);
 				await _context.SaveChangesAsync();
-                return RedirectToPage("DetailsBLE", new { bucketListElementId = elementToUpdate.ElementID });
+                return RedirectToPage("DetailsBLE", new { bucketListElementId = blElementToUpdate.ElementID });
             }
 
             //If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
-            await PopulateAssignedCategoryData(_context, elementToUpdate);
-            await PopulateBucketListDropDownList(_context, elementToUpdate.BucketListID);
+            await PopulateAssignedCategoryData(_context, blElementToUpdate);
+            await PopulateBucketListDropDownList(_context, blElementToUpdate.BucketListID);
             return Page();
 		}
     }

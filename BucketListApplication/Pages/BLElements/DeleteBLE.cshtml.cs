@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Models;
+using BucketListApplication.Interfaces;
 using BucketListApplication.Data;
 using System.Security.Claims;
 
@@ -11,10 +12,12 @@ namespace BucketListApplication.Pages.BLElements
     public class DeleteModel : PageModel
     {
         private readonly BLContext _context;
+        private readonly IUserService _userService;
 
-        public DeleteModel(BLContext context)
+        public DeleteModel(BLContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -24,6 +27,9 @@ namespace BucketListApplication.Pages.BLElements
 
 		public async Task<IActionResult> OnGetAsync(int? bucketListElementId, bool? saveChangesError = false)
         {
+            if (_userService.UserIsNotAuthenticated(User))
+                return RedirectToPage("../AuthError");
+
             if (bucketListElementId == null)
                 return NotFound();
 
@@ -35,8 +41,7 @@ namespace BucketListApplication.Pages.BLElements
             if (BucketListElement == null)
                 return NotFound();
 
-            //Not the owner tries to delete their BucketListElement
-            if (BucketListElement.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (_userService.BucketListElementIsNotBelongingToUser(User, BucketListElement))
                 return Forbid();
 
             if (saveChangesError.GetValueOrDefault())
@@ -47,6 +52,9 @@ namespace BucketListApplication.Pages.BLElements
 
         public async Task<IActionResult> OnPostAsync(int? bucketListElementId)
         {
+            if (_userService.UserIsNotAuthenticated(User))
+                return RedirectToPage("../AuthError");
+
             if (bucketListElementId == null)
                 return NotFound();
 
@@ -57,8 +65,7 @@ namespace BucketListApplication.Pages.BLElements
             if (BLElementToRemove == null)
 				return NotFound();
 
-            //Not the owner tries to delete their BucketListElement
-            if (BLElementToRemove.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (_userService.BucketListElementIsNotBelongingToUser(User, BLElementToRemove))
                 return Forbid();
 
             try
