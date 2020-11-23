@@ -63,12 +63,12 @@ namespace BucketListApplication.Pages.BucketLists
             {
                 _context.BucketLists.Remove(BucketListToRemove);
                 await _context.SaveChangesAsync();
-                return RedirectToPage("../BucketLists/Index");
+                return RedirectToPage("./Index");
             }
             catch (DbUpdateException /* ex */)
             {
                 //Log the error (uncomment ex variable name and write a log.)
-                return RedirectToAction("Delete", new { bucketListId, saveChangesError = true });
+                return RedirectToAction("DeleteBL", new { bucketListId, saveChangesError = true });
             }
         }
     }

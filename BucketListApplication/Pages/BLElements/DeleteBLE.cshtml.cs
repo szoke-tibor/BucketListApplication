@@ -70,7 +70,7 @@ namespace BucketListApplication.Pages.BLElements
 			catch (DbUpdateException /* ex */)
 			{
 				//Log the error (uncomment ex variable name and write a log.)
-				return RedirectToAction("Delete", new { bucketListElementId, saveChangesError = true });
+				return RedirectToAction("DeleteBLE", new { bucketListElementId, saveChangesError = true });
 			}
         }
     }

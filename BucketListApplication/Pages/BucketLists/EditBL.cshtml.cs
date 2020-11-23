@@ -64,7 +64,7 @@ namespace BucketListApplication.Pages.BucketLists
                 bl => bl.Visibility))
             {
                 await _context.SaveChangesAsync();
-                return RedirectToPage("../BucketLists/Index", new { bucketListId = bucketlistToUpdate.BucketListID });
+                return RedirectToPage("./Index", new { bucketListId = bucketlistToUpdate.BucketListID });
             }
             return Page();
         }

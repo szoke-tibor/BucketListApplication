@@ -11,12 +11,12 @@
     </form>
     @if (Model.SelectedBucketList != null)
     {
-        <a class="btn btn-primary smallBtn" asp-page="../BucketLists/Edit" asp-route-bucketListId="@Model.SelectedBucketList.BucketListID"><i class="far fa-edit"></i></a>
-        <a class="btn btn-danger smallBtn" asp-page="../BucketLists/Delete" asp-route-bucketListId="@Model.SelectedBucketList.BucketListID"><i class="fas fa-trash-alt"></i></a>
+        <a class="btn btn-primary smallBtn" asp-page="./EditBL" asp-route-bucketListId="@Model.SelectedBucketList.BucketListID"><i class="far fa-edit"></i></a>
+        <a class="btn btn-danger smallBtn" asp-page="./DeleteBL" asp-route-bucketListId="@Model.SelectedBucketList.BucketListID"><i class="fas fa-trash-alt"></i></a>
     }
 </div>
 <div class="mt-2">
-    <a class="myBtn" id="addListBtn" asp-page="../BucketLists/Create">Új lista</a>
+    <a class="myBtn" id="addListBtn" asp-page="./CreateBL">Új lista</a>
 </div>
 
 
@@ -38,7 +38,7 @@
                         }
                     </td>
                     <td class="goalCell">
-                        <a class="goal" asp-page="../BLElements/Details" asp-route-bucketListElementId="@item.ElementID">
+                        <a class="goal" asp-page="../BLElements/DetailsBLE" asp-route-bucketListElementId="@item.ElementID">
                             @Html.DisplayFor(modelItem => item.Name)
                         </a>
                     </td>
@@ -70,7 +70,7 @@
                 <td class="goalCell">
                     @if (Model.SelectedBucketList != null)
                     {
-                        <a asp-page="../BLElements/Create" asp-route-bucketListId="@Model.SelectedBucketList.BucketListID" class="myBtn submitBtn">Új elem</a>
+                        <a asp-page="../BLElements/CreateBLE" asp-route-bucketListId="@Model.SelectedBucketList.BucketListID" class="myBtn submitBtn">Új elem</a>
                     }
                 </td>
                 <td class="progressionCell"></td>

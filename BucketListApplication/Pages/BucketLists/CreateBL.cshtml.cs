@@ -49,7 +49,7 @@ namespace BucketListApplication.Pages.BucketLists
                     .Where(bl => bl.Name == BucketList.Name)
                     .Where(bl => bl.UserId == BucketList.UserId)
                     .SingleOrDefaultAsync();
-				return RedirectToPage("../BucketLists/Index", new { bucketListId = newBucketList.BucketListID });
+				return RedirectToPage("./Index", new { bucketListId = newBucketList.BucketListID });
 			}
             return Page();
         }
