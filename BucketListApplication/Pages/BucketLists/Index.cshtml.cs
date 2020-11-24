@@ -39,7 +39,7 @@ namespace BucketListApplication.Pages.BLElements
 
 			if (bucketListId != null)
 			{
-				SelectedBucketList = await _context.BucketLists.FindAsync(bucketListId);
+				SelectedBucketList = await _bucketListService.FindBLByID(_context, bucketListId);
 
 				if (SelectedBucketList == null)
 					return NotFound();
