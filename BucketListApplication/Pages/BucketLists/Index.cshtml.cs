@@ -5,14 +5,20 @@ using BucketListApplication.Interfaces;
 using BucketListApplication.Data;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BucketListApplication.Pages.BLElements
 {
-    public class IndexModel : BLElementListingPageModel
+    public class IndexModel : PageModel
 	{
         private readonly BLContext _context;
 		private readonly IUserService _userService;
 		private readonly IBucketListService _bucketListService;
+
+		public IEnumerable<BucketListElement> SelectedBLElements;
+		public SelectList BucketListSL;
 
 		public IndexModel(BLContext context, IUserService userService, IBucketListService bucketListService)
         {

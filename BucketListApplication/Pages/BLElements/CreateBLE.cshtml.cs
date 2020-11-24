@@ -4,14 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using BucketListApplication.Models;
 using BucketListApplication.Interfaces;
 using BucketListApplication.Data;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using BucketListApplication.Models.BLViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BucketListApplication.Pages.BLElements
 {
-    public class CreateModel : BLElementCategoriesPageModel
+    public class CreateModel : PageModel
 	{
         private readonly BLContext _context;
 		private readonly IUserService _userService;
 		private readonly IBucketListService _bucketListService;
+
+		public List<AssignedCategoryData> AssignedCategoryDataList;
+		public SelectList BucketListSL;
 
 		[BindProperty]
 		public BucketListElement BucketListElement { get; set; }
