@@ -15,12 +15,9 @@ namespace BucketListApplication.Services
     {
         public void PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement, ref List<AssignedCategoryData> assignedCategoryDataList)
         {
-            var allCategories = context.Categories
-                .AsNoTracking()
-                .ToList();
             var BLCategories = new HashSet<int>(BLElement.ElementCategories.Select(ec => ec.CategoryID));
             assignedCategoryDataList = new List<AssignedCategoryData>();
-            foreach (var category in allCategories)
+            foreach (var category in context.Categories)
             {
                 assignedCategoryDataList.Add(new AssignedCategoryData
                 {
@@ -144,5 +141,33 @@ namespace BucketListApplication.Services
                     .ToList();
             }
         }
+
+        /*CreateBLE*/
+        public async Task<BucketListElement> Initialize(BLContext context, int? bucketListId)
+		{
+            return new BucketListElement
+            {
+                BucketListID = bucketListId.Value,
+                BucketList = await context.BucketLists.FindAsync(bucketListId),
+                ElementCategories = new List<ElementCategory>(),
+                Progression = new Progression()
+            };
+        }
+
+        public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement)
+		{
+            if (selectedCategories != null)
+            {
+                foreach (var category in selectedCategories)
+                {
+                    var categoryToAdd = new ElementCategory
+                    {
+                        CategoryID = int.Parse(category)
+                    };
+                    newBLElement.ElementCategories.Add(categoryToAdd);
+                }
+            }
+        }
+
     }
 }

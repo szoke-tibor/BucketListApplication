@@ -15,5 +15,8 @@ namespace BucketListApplication.Interfaces
         public void PopulateBucketListDropDownList(BLContext context, string userId, ref SelectList BucketListSL, bool PublicOnly, bool addDefaultValue, object selectedBucketList = null);
         public Task UpdateBLElementCategories(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate);
         public void PopulateSelectedBLElementsList(BLContext context, int SelectedBucketListID, bool PublicOnly, ref IEnumerable<BucketListElement> SelectedBLElements);
+
+        public Task<BucketListElement> Initialize(BLContext context, int? bucketListId);
+        public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement);
     }
 }

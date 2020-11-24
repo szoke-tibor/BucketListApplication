@@ -34,15 +34,10 @@ namespace BucketListApplication.Pages.BLElements
 			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
-			if (bucketListId == null)
-				return NotFound();
+			BucketListElement = await _bucketListService.Initialize(_context, bucketListId);
 
-			BucketListElement = new BucketListElement
-			{
-				BucketListID = bucketListId.Value,
-				BucketList = await _context.BucketLists.FindAsync(bucketListId),
-				ElementCategories = new List<ElementCategory>()
-			};
+			if (BucketListElement == null)
+				return NotFound();
 
 			if (_userService.BucketListIsNotBelongingToUser(User, BucketListElement.BucketList))
 				return Forbid();
@@ -57,39 +52,21 @@ namespace BucketListApplication.Pages.BLElements
 			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
-			var newBLElement = new BucketListElement
-			{
-				BucketListID = bucketListId.Value,
-				BucketList = await _context.BucketLists.FindAsync(bucketListId),
-				Progression = new Progression
-				{
-					BLETasks = new List<BLETask>()
-				}
-			};
+			if (bucketListId == null)
+				return NotFound();
+
+			var newBLElement = await _bucketListService.Initialize(_context, bucketListId);
+			_bucketListService.AddCategoriesToBLE(selectedCategories, newBLElement);
 
 			if (_userService.BucketListIsNotBelongingToUser(User, newBLElement.BucketList))
 				return Forbid();
-
-			if (selectedCategories != null)
-			{
-				newBLElement.ElementCategories = new List<ElementCategory>();
-				foreach (var category in selectedCategories)
-				{
-					var categoryToAdd = new ElementCategory
-					{
-						CategoryID = int.Parse(category)
-					};
-					newBLElement.ElementCategories.Add(categoryToAdd);
-				}
-			}
 
 			// Defense against overposting attacks. Returns true if the update was successful.
 			if (await TryUpdateModelAsync<BucketListElement>(newBLElement, "BucketListElement",
 				ble => ble.Name,
 				ble => ble.Description,
 				ble => ble.Completed,
-				ble => ble.Visibility,
-				ble => ble.Progression))
+				ble => ble.Visibility))
 			{
 				await _context.BLElements.AddAsync(newBLElement);
 				await _context.SaveChangesAsync();
