@@ -38,21 +38,13 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            BucketListElement = await _context.BLElements
-                .AsNoTracking()
-                .Include(ble => ble.BucketList)
-                .Include(ble => ble.Progression)
-                    .ThenInclude(p => p.BLETasks)
-                .Include(ble => ble.ElementCategories)
-                    .ThenInclude(ec => ec.Category)
-                .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+            BucketListElement = await _bucketListService.GetBLEByIDWithDetails(_context, bucketListElementId);
 
             if (BucketListElement == null)
                 return NotFound();
 
             if (_userService.BucketListElementIsNotBelongingToUser(User, BucketListElement))
                 return Forbid();
-
 
             _bucketListService.PopulateAssignedCategoryData(_context, BucketListElement, ref AssignedCategoryDataList);
             _bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, false, false);
@@ -67,13 +59,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            var blElementToUpdate = await _context.BLElements
-                .Include(ble => ble.BucketList)
-                .Include(ble => ble.Progression)
-                    .ThenInclude(p => p.BLETasks)
-                .Include(ble => ble.ElementCategories)
-                    .ThenInclude(ec => ec.Category)
-                .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+            var blElementToUpdate = await _bucketListService.GetBLEByIDWithDetails(_context, bucketListElementId);
 
             if (blElementToUpdate == null)
                 return NotFound();
@@ -90,7 +76,7 @@ namespace BucketListApplication.Pages.BLElements
                 ble => ble.Visibility,
                 ble => ble.Progression))
 			{
-                blElementToUpdate.Progression.DeleteEmptyTasks();
+                _bucketListService.DeleteEmptyTasks(blElementToUpdate.Progression.BLETasks);
                 await _bucketListService.UpdateBLElementCategories(_context, selectedCategories, blElementToUpdate);
 				await _context.SaveChangesAsync();
                 return RedirectToPage("DetailsBLE", new { bucketListElementId = blElementToUpdate.ElementID });

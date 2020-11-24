@@ -11,13 +11,6 @@ namespace BucketListApplication.Models
 		public IList<BLETask> BLETasks { get; set; }
 		public BucketListElement BLElement { get; set; }
 
-		public void DeleteEmptyTasks()
-		{
-			for( int i = BLETasks.Count - 1; i >= 0; i--)
-				if (BLETasks[i].Text == null)
-					BLETasks.Remove(BLETasks[i]);
-		}
-
 		[NotMapped]
 		public double CompletedPercentage
 		{

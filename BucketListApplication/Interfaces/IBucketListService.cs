@@ -20,5 +20,6 @@ namespace BucketListApplication.Interfaces
         public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement);
         public Task<BucketListElement> GetBLEByID(BLContext context, int? bucketListElementId);
         public Task<BucketListElement> GetBLEByIDWithDetails(BLContext context, int? bucketListElementId);
+        public void DeleteEmptyTasks(IList<BLETask> BLETasks);
     }
 }
