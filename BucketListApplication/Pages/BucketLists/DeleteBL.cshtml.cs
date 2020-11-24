@@ -57,7 +57,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            var bucketListToRemove = await _bucketListService.GetBLByIDToDelete(_context, bucketListId);
+            var bucketListToRemove = await _bucketListService.FindBLByID(_context, bucketListId);
 
             if (bucketListToRemove == null)
                 return NotFound();

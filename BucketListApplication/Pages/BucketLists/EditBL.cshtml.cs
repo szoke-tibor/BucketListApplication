@@ -12,11 +12,13 @@ namespace BucketListApplication.Pages.BucketLists
     {
         private readonly BLContext _context;
         private readonly IUserService _userService;
+        private readonly IBucketListService _bucketListService;
 
-        public EditModel(BLContext context, IUserService userService)
+        public EditModel(BLContext context, IUserService userService, IBucketListService bucketListService)
         {
             _context = context;
             _userService = userService;
+            _bucketListService = bucketListService;
         }
 
         [BindProperty]
@@ -30,7 +32,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            BucketList = await _context.BucketLists.FindAsync(bucketListId);
+            BucketList = await _bucketListService.FindBLByID(_context, bucketListId);
 
             if (BucketList == null)
                 return NotFound();
@@ -49,7 +51,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            var bucketlistToUpdate = await _context.BucketLists.FindAsync(bucketListId);
+            var bucketlistToUpdate = await _bucketListService.FindBLByID(_context, bucketListId);
 
             if (bucketlistToUpdate == null)
                 return NotFound();

@@ -22,6 +22,6 @@ namespace BucketListApplication.Interfaces
         public Task<BucketListElement> GetBLEByIDWithDetails(BLContext context, int? bucketListElementId);
         public void DeleteEmptyTasks(IList<BLETask> BLETasks);
         public Task<BucketList> GetBLByIDWithBLEs(BLContext context, int? bucketListId);
-        public Task<BucketList> GetBLByIDToDelete(BLContext context, int? bucketListId);
+        public Task<BucketList> FindBLByID(BLContext context, int? bucketListId);
     }
 }

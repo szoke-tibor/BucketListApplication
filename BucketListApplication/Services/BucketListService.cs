@@ -207,7 +207,7 @@ namespace BucketListApplication.Services
                          .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
         }
 
-        public async Task<BucketList> GetBLByIDToDelete(BLContext context, int? bucketListId)
+        public async Task<BucketList> FindBLByID(BLContext context, int? bucketListId)
         {
             return await context.BucketLists.FindAsync(bucketListId);
         }
