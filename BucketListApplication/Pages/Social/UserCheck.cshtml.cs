@@ -39,7 +39,7 @@ namespace BucketListApplication.Pages.Social
 
 			var selectedUser = await _context.Users.FindAsync(userId);
 			Title = selectedUser.FullName + " Bakancslistái";
-			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, true, true);
+			_bucketListService.PopulateBucketListDropDownList(_context, selectedUser.Id, ref BucketListSL, true, true);
 
 			return Page();
 		}
@@ -51,7 +51,7 @@ namespace BucketListApplication.Pages.Social
 
 			var selectedUser = await _context.Users.FindAsync(userId);
 			Title = selectedUser.FullName + " Bakancslistái";
-			_bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), ref BucketListSL, true, true);
+			_bucketListService.PopulateBucketListDropDownList(_context, selectedUser.Id, ref BucketListSL, true, true);
 			_bucketListService.PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true, ref SelectedBLElements);
 			return Page();
 		}
