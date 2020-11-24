@@ -169,5 +169,14 @@ namespace BucketListApplication.Services
             }
         }
 
+        /*DeleteBLE*/
+        public async Task<BucketListElement> GetBLEByID(BLContext context, int? bucketListElementId)
+		{
+            return await context.BLElements
+                .AsNoTracking()
+                .Include(ble => ble.BucketList)
+                .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+        }
+
     }
 }
