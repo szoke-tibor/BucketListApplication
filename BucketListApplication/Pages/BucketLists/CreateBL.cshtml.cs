@@ -47,12 +47,7 @@ namespace BucketListApplication.Pages.BucketLists
             {
                 await _context.BucketLists.AddAsync(BucketList);
                 await _context.SaveChangesAsync();
-                var newBucketList = await _context.BucketLists
-                    .AsNoTracking()
-                    .Where(bl => bl.Name == BucketList.Name)
-                    .Where(bl => bl.UserId == BucketList.UserId)
-                    .SingleOrDefaultAsync();
-				return RedirectToPage("./Index", new { bucketListId = newBucketList.BucketListID });
+				return RedirectToPage("./Index", new { bucketListId = BucketList.BucketListID });
 			}
             return Page();
         }
