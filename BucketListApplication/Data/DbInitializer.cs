@@ -6,6 +6,14 @@ namespace BucketListApplication.Data
 {
 	public static class DbInitializer
 	{
+		static Category[] categories;
+		static BucketList[] bucketlists;
+		static BucketListElement[] bucketlistelements;
+		static Progression[] progressions;
+		static BLETask[] bletasks;
+		static Element[] elements;
+		static ElementCategory[] elementcategories;
+
 		public static void Initialize(BLContext context, UserManager<BLUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			if (context.Elements.Any())
@@ -96,8 +104,18 @@ namespace BucketListApplication.Data
 
 		static void InitializeData(BLContext context, UserManager<BLUser> userManager)
 		{
-			//CATEGORIES
-			var categories = new Category[]
+			InitializeCategories(context);
+			InitializeBucketLists(context, userManager);
+			InitializeBucketListElements(context);
+			InitializeProgressions(context);
+			InitializeTasks(context);
+			InitializeElements(context);
+			InitializeElementCategories(context);
+		}
+
+		static void InitializeCategories(BLContext context)
+		{
+			categories = new Category[]
 			{
 				new Category { Name = "Hobbi",
 					PictureFileName = "Hobbies.jpg"
@@ -145,9 +163,11 @@ namespace BucketListApplication.Data
 
 			context.Categories.AddRange(categories);
 			context.SaveChanges();
+		}
 
-			//BUCKETLISTS
-			var bucketlists = new BucketList[]
+		static void InitializeBucketLists(BLContext context, UserManager<BLUser> userManager)
+		{
+			bucketlists = new BucketList[]
 			{
 				new BucketList { Name = "Tanulmányok",
 					UserId = userManager.Users.Where(u => u.Email == "1@gmail.com").First().Id,
@@ -189,9 +209,11 @@ namespace BucketListApplication.Data
 
 			context.BucketLists.AddRange(bucketlists);
 			context.SaveChanges();
+		}
 
-			//BUCKETLISTELEMENTS
-			var bucketlistelements = new BucketListElement[]
+		static void InitializeBucketListElements(BLContext context)
+		{
+			bucketlistelements = new BucketListElement[]
 			{
 				new BucketListElement { Name = "Tanulj meg 2 különböző nyelven folyékonyan beszélni",
 					Description = "Angol, Spanyol", Completed = false, Visibility = Visibility.Public,
@@ -329,9 +351,11 @@ namespace BucketListApplication.Data
 
 			context.BLElements.AddRange(bucketlistelements);
 			context.SaveChanges();
+		}
 
-			//PROGRESSIONS
-			var progressions = new Progression[]
+		static void InitializeProgressions(BLContext context)
+		{
+			progressions = new Progression[]
 			{
 				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 2 különböző nyelven folyékonyan beszélni").ElementID
@@ -436,9 +460,11 @@ namespace BucketListApplication.Data
 
 			context.Progressions.AddRange(progressions);
 			context.SaveChanges();
+		}
 
-			//BLETASKS
-			var bletasks = new BLETask[]
+		static void InitializeTasks(BLContext context)
+		{
+			bletasks = new BLETask[]
 			{
 				new BLETask {
 					Text = "Angol",
@@ -569,9 +595,11 @@ namespace BucketListApplication.Data
 
 			context.BLETasks.AddRange(bletasks);
 			context.SaveChanges();
+		}
 
-			//ELEMENTS
-			var elements = new Element[]
+		static void InitializeElements(BLContext context)
+		{
+			elements = new Element[]
 			{
 				// Hobbi
 
@@ -801,8 +829,11 @@ namespace BucketListApplication.Data
 
 			context.Elements.AddRange(elements);
 			context.SaveChanges();
+		}
 
-			var elementcategories = new ElementCategory[]
+		static void InitializeElementCategories(BLContext context)
+		{
+			elementcategories = new ElementCategory[]
 			{
 				// Hobbi
 
