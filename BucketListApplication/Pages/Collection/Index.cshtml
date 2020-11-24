@@ -10,14 +10,14 @@
         @for (int i = 0; i < 7; i++)
         {
             string selectedCard = "";
-            if (@Model.CategoryData.Categories.ElementAt(i).CategoryID == Model.CategoryID)
+            if (@Model.Categories.ElementAt(i) == Model.SelectedCategory)
             {
                 selectedCard = "categorySelectedCard";
             }
-            <a asp-page="./Index" asp-route-categoryId="@Model.CategoryData.Categories.ElementAt(i).CategoryID" name="id" class="categoryCard @selectedCard">
-                <img class="card-img-top categoryPicture" src="~/images/Categories/@Model.CategoryData.Categories.ElementAt(i).PictureFileName" alt="Card image cap">
+            <a asp-page="./Index" asp-route-categoryId="@Model.Categories.ElementAt(i).CategoryID" name="id" class="categoryCard @selectedCard">
+                <img class="card-img-top categoryPicture" src="~/images/Categories/@Model.Categories.ElementAt(i).PictureFileName" alt="Card image cap">
                 <div class="card-body categoryText">
-                    @Model.CategoryData.Categories.ElementAt(i).Name
+                    @Model.Categories.ElementAt(i).Name
                 </div>
             </a>
         }
@@ -27,39 +27,39 @@
         @for (int i = 7; i < 14; i++)
         {
             string selectedCard = "";
-            if (@Model.CategoryData.Categories.ElementAt(i).CategoryID == Model.CategoryID)
+            if (@Model.Categories.ElementAt(i) == Model.SelectedCategory)
             {
                 selectedCard = "categorySelectedCard";
             }
-            <a asp-page="./Index" asp-route-categoryId="@Model.CategoryData.Categories.ElementAt(i).CategoryID" name="id" class="categoryCard @selectedCard">
-                <img class="card-img-top categoryPicture" src="~/images/Categories/@Model.CategoryData.Categories.ElementAt(i).PictureFileName" alt="Card image cap">
+            <a asp-page="./Index" asp-route-categoryId="@Model.Categories.ElementAt(i).CategoryID" name="id" class="categoryCard @selectedCard">
+                <img class="card-img-top categoryPicture" src="~/images/Categories/@Model.Categories.ElementAt(i).PictureFileName" alt="Card image cap">
                 <div class="card-body categoryText">
-                    @Model.CategoryData.Categories.ElementAt(i).Name
+                    @Model.Categories.ElementAt(i).Name
                 </div>
             </a>
         }
     </div>
 
 
-    @if (Model.CategoryData.Elements != null)
+    @if (Model.SelectedCategoryElements != null)
     {
         <div class="row selectedCategoriesList">
             <h3 class="mt-40">
-                @Model.CategoryData.Categories.Single(c => c.CategoryID == Model.CategoryID).Name
+                @Model.SelectedCategory.Name
             </h3>
         </div>
         <div class="row selectedCategoriesList">
             <table class="table" style="width: 75%">
-                @for (int i = 0; i < Model.CategoryData.Elements.Count(); i += 2)
+                @for (int i = 0; i < Model.SelectedCategoryElements.Count(); i += 2)
                 {
                     <tr>
                         <td align="left" style="padding: 0.38rem">
-                            @Model.CategoryData.Elements.ElementAt(i).Name
+                            @Model.SelectedCategoryElements.ElementAt(i).Name
                         </td>
-                        @if( i + 1 < Model.CategoryData.Elements.Count())
+                        @if( i + 1 < Model.SelectedCategoryElements.Count())
                         {
                             <td align="right" style="padding: 0.38rem">
-                                @Model.CategoryData.Elements.ElementAt(i + 1).Name
+                                @Model.SelectedCategoryElements.ElementAt(i + 1).Name
                             </td>
                         }
                     </tr>

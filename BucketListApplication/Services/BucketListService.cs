@@ -202,14 +202,37 @@ namespace BucketListApplication.Services
         public async Task<BucketList> GetBLByIDWithBLEs(BLContext context, int? bucketListId)
         {
             return await context.BucketLists
-                         .AsNoTracking()
-                         .Include(bl => bl.BLElements)
-                         .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
+                .AsNoTracking()
+                .Include(bl => bl.BLElements)
+                .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
         }
 
         public async Task<BucketList> FindBLByID(BLContext context, int? bucketListId)
         {
             return await context.BucketLists.FindAsync(bucketListId);
+        }
+
+        /*Collection page*/
+        public async Task<IEnumerable<Category>> GetCategoriesWithElements(BLContext context)
+		{
+            return await context.Categories
+                .AsNoTracking()
+                .Include(c => c.ElementCategories)
+                    .ThenInclude(ec => ec.Element)
+                .OrderBy(c => c.Name)
+                .ToListAsync();
+        }
+
+        public Category GetCategoryById(IEnumerable<Category> Categories, int? categoryId)
+        {
+            return Categories.FirstOrDefault(c => c.CategoryID == categoryId);
+        }
+        public IEnumerable<Element> GetSelectedCategoryElements(Category SelectedCategory)
+        {
+            return SelectedCategory.ElementCategories
+                    .Select(ec => ec.Element)
+                    .Where(e => e.Discriminator == "Element")
+                    .OrderBy(e => e.Name);
         }
     }
 }

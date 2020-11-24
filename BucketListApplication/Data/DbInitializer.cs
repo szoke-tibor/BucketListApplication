@@ -105,12 +105,12 @@ namespace BucketListApplication.Data
 		private static void InitializeData(BLContext context, UserManager<BLUser> userManager)
 		{
 			InitializeCategories(context);
-			//InitializeBucketLists(context, userManager);
-			//InitializeBucketListElements(context);
-			//InitializeProgressions(context);
-			//InitializeTasks(context);
-			//InitializeElements(context);
-			//InitializeElementCategories(context);
+			InitializeBucketLists(context, userManager);
+			InitializeBucketListElements(context);
+			InitializeProgressions(context);
+			InitializeTasks(context);
+			InitializeElements(context);
+			InitializeElementCategories(context);
 		}
 
 		private static void InitializeCategories(BLContext context)

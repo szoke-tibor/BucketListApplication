@@ -5,43 +5,34 @@ using Microsoft.EntityFrameworkCore;
 using BucketListApplication.Models;
 using BucketListApplication.Data;
 using BucketListApplication.Models.BLViewModels;
+using System.Collections.Generic;
+using BucketListApplication.Interfaces;
 
 namespace BucketListApplication.Pages.Collection
 {
     public class IndexModel : PageModel
     {
         private readonly BLContext _context;
+        private readonly IBucketListService _bucketListService;
 
-        public IndexModel(BLContext context)
+        public IndexModel(BLContext context, IBucketListService bucketListService)
         {
             _context = context;
+            _bucketListService = bucketListService;
         }
 
-        public CategoryIndexData CategoryData { get; set; }
-        public int CategoryID { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+        public Category SelectedCategory { get; set; }
+        public IEnumerable<Element> SelectedCategoryElements { get; set; }
 
         public async Task OnGetAsync(int? categoryId)
         {
-			CategoryData = new CategoryIndexData
-			{
-				Categories = await _context.Categories
-                    .AsNoTracking()
-                    .Include(c => c.ElementCategories)
-				        .ThenInclude(ec => ec.Element)
-				    .OrderBy(c => c.Name)
-				    .ToListAsync()
-			};
+            Categories = await _bucketListService.GetCategoriesWithElements(_context);
 
-			if (categoryId != null)
+            if (categoryId != null)
             {
-                CategoryID = categoryId.Value;
-                Category category = CategoryData.Categories
-                    .Where(c => c.CategoryID == categoryId.Value)
-                    .Single();
-                CategoryData.Elements = category.ElementCategories
-                    .Select(ec => ec.Element)
-                    .Where(ec => ec.Discriminator == "Element")
-                    .OrderBy(e => e.Name);
+                SelectedCategory = _bucketListService.GetCategoryById(Categories, categoryId);
+                SelectedCategoryElements = _bucketListService.GetSelectedCategoryElements(SelectedCategory);
             }
         }
     }
