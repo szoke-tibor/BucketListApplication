@@ -27,7 +27,7 @@ namespace BucketListApplication.Data
 			InitializeData(context, userManager);
 		}
 
-		public static void InitializeRoles(RoleManager<IdentityRole> roleManager)
+		private static void InitializeRoles(RoleManager<IdentityRole> roleManager)
 		{
 			if (!roleManager.RoleExistsAsync("Admin").Result)
 			{
@@ -48,7 +48,7 @@ namespace BucketListApplication.Data
 			}
 		}
 
-		static void InitializeUsers(UserManager<BLUser> userManager)
+		private static void InitializeUsers(UserManager<BLUser> userManager)
 		{
 			if (userManager.FindByNameAsync("1@gmail.com").Result == null)
 			{
@@ -102,18 +102,18 @@ namespace BucketListApplication.Data
 			}
 		}
 
-		static void InitializeData(BLContext context, UserManager<BLUser> userManager)
+		private static void InitializeData(BLContext context, UserManager<BLUser> userManager)
 		{
 			InitializeCategories(context);
-			InitializeBucketLists(context, userManager);
-			InitializeBucketListElements(context);
-			InitializeProgressions(context);
-			InitializeTasks(context);
-			InitializeElements(context);
-			InitializeElementCategories(context);
+			//InitializeBucketLists(context, userManager);
+			//InitializeBucketListElements(context);
+			//InitializeProgressions(context);
+			//InitializeTasks(context);
+			//InitializeElements(context);
+			//InitializeElementCategories(context);
 		}
 
-		static void InitializeCategories(BLContext context)
+		private static void InitializeCategories(BLContext context)
 		{
 			categories = new Category[]
 			{
@@ -165,7 +165,7 @@ namespace BucketListApplication.Data
 			context.SaveChanges();
 		}
 
-		static void InitializeBucketLists(BLContext context, UserManager<BLUser> userManager)
+		private static void InitializeBucketLists(BLContext context, UserManager<BLUser> userManager)
 		{
 			bucketlists = new BucketList[]
 			{
@@ -211,7 +211,7 @@ namespace BucketListApplication.Data
 			context.SaveChanges();
 		}
 
-		static void InitializeBucketListElements(BLContext context)
+		private static void InitializeBucketListElements(BLContext context)
 		{
 			bucketlistelements = new BucketListElement[]
 			{
@@ -353,7 +353,7 @@ namespace BucketListApplication.Data
 			context.SaveChanges();
 		}
 
-		static void InitializeProgressions(BLContext context)
+		private static void InitializeProgressions(BLContext context)
 		{
 			progressions = new Progression[]
 			{
@@ -462,7 +462,7 @@ namespace BucketListApplication.Data
 			context.SaveChanges();
 		}
 
-		static void InitializeTasks(BLContext context)
+		private static void InitializeTasks(BLContext context)
 		{
 			bletasks = new BLETask[]
 			{
@@ -597,7 +597,7 @@ namespace BucketListApplication.Data
 			context.SaveChanges();
 		}
 
-		static void InitializeElements(BLContext context)
+		private static void InitializeElements(BLContext context)
 		{
 			elements = new Element[]
 			{
@@ -831,7 +831,7 @@ namespace BucketListApplication.Data
 			context.SaveChanges();
 		}
 
-		static void InitializeElementCategories(BLContext context)
+		private static void InitializeElementCategories(BLContext context)
 		{
 			elementcategories = new ElementCategory[]
 			{
