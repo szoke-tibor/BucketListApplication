@@ -45,5 +45,10 @@ namespace BucketListApplication.Services
 					.Where(u => u.Id != GetUserId(User))
 					.ToListAsync();
 		}
+
+		public async Task<BLUser> FindUserByID(BLContext context, string userId)
+		{
+			return await context.Users.FindAsync(userId);
+		}
 	}
 }

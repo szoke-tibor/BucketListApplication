@@ -26,5 +26,6 @@ namespace BucketListApplication.Interfaces
         public Task<IEnumerable<Category>> GetCategoriesWithElements(BLContext context);
         public Category GetCategoryById(IEnumerable<Category> Categories, int? categoryId);
         public IEnumerable<Element> GetSelectedCategoryElements(Category SelectedCategory);
+        public string SetUserCheckPageTitle(BLUser SelectedUser);
     }
 }

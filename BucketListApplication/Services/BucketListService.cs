@@ -234,5 +234,11 @@ namespace BucketListApplication.Services
                     .Where(e => e.Discriminator == "Element")
                     .OrderBy(e => e.Name);
         }
+
+        /*UserCheck*/
+        public string SetUserCheckPageTitle(BLUser SelectedUser)
+        {
+            return SelectedUser.FullName + " Bakancslistái";
+        }
     }
 }

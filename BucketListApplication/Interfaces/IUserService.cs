@@ -13,5 +13,6 @@ namespace BucketListApplication.Interfaces
 		public bool UserIsNotAuthenticated(ClaimsPrincipal user);
 		public string GetUserId(ClaimsPrincipal user);
 		public Task<IEnumerable<BLUser>> SearchUsers(BLContext context, string searchString, ClaimsPrincipal User);
+		public Task<BLUser> FindUserByID(BLContext context, string userId);
 	}
 }

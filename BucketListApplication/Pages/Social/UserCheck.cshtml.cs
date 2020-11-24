@@ -37,8 +37,8 @@ namespace BucketListApplication.Pages.Social
 			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
-			var selectedUser = await _context.Users.FindAsync(userId);
-			Title = selectedUser.FullName + " Bakancslistái";
+			var selectedUser = await _userService.FindUserByID(_context, userId);
+			Title = _bucketListService.SetUserCheckPageTitle(selectedUser);
 			_bucketListService.PopulateBucketListDropDownList(_context, selectedUser.Id, ref BucketListSL, true, true);
 
 			return Page();
@@ -50,7 +50,7 @@ namespace BucketListApplication.Pages.Social
 				return RedirectToPage("../AuthError");
 
 			var selectedUser = await _context.Users.FindAsync(userId);
-			Title = selectedUser.FullName + " Bakancslistái";
+			Title = _bucketListService.SetUserCheckPageTitle(selectedUser);
 			_bucketListService.PopulateBucketListDropDownList(_context, selectedUser.Id, ref BucketListSL, true, true);
 			_bucketListService.PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true, ref SelectedBLElements);
 			return Page();
