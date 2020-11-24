@@ -197,5 +197,19 @@ namespace BucketListApplication.Services
                 if (BLETasks[i].Text == null)
                     BLETasks.Remove(BLETasks[i]);
         }
+
+        /*DeleteBL*/
+        public async Task<BucketList> GetBLByIDWithBLEs(BLContext context, int? bucketListId)
+        {
+            return await context.BucketLists
+                         .AsNoTracking()
+                         .Include(bl => bl.BLElements)
+                         .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
+        }
+
+        public async Task<BucketList> GetBLByIDToDelete(BLContext context, int? bucketListId)
+        {
+            return await context.BucketLists.FindAsync(bucketListId);
+        }
     }
 }

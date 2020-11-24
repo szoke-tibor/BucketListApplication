@@ -13,11 +13,13 @@ namespace BucketListApplication.Pages.BucketLists
     {
         private readonly BLContext _context;
         private readonly IUserService _userService;
+        private readonly IBucketListService _bucketListService;
 
-        public DeleteModel(BLContext context, IUserService userService)
+        public DeleteModel(BLContext context, IUserService userService, IBucketListService bucketListService)
         {
             _context = context;
             _userService = userService;
+            _bucketListService = bucketListService;
         }
 
         [BindProperty]
@@ -33,10 +35,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            BucketList = await _context.BucketLists
-                         .AsNoTracking()
-                         .Include(bl => bl.BLElements)
-                         .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
+            BucketList = await _bucketListService.GetBLByIDWithBLEs(_context, bucketListId);
 
             if (BucketList == null)
                 return NotFound();
@@ -58,7 +57,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            var bucketListToRemove = await _context.BucketLists.FindAsync(bucketListId);
+            var bucketListToRemove = await _bucketListService.GetBLByIDToDelete(_context, bucketListId);
 
             if (bucketListToRemove == null)
                 return NotFound();
