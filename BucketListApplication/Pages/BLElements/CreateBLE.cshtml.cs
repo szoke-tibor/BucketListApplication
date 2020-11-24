@@ -34,7 +34,7 @@ namespace BucketListApplication.Pages.BLElements
 			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
-			BucketListElement = await _bucketListService.Initialize(_context, bucketListId);
+			BucketListElement = await _bucketListService.InitializeBLE(_context, bucketListId);
 
 			if (BucketListElement == null)
 				return NotFound();
@@ -55,7 +55,7 @@ namespace BucketListApplication.Pages.BLElements
 			if (bucketListId == null)
 				return NotFound();
 
-			var newBLElement = await _bucketListService.Initialize(_context, bucketListId);
+			var newBLElement = await _bucketListService.InitializeBLE(_context, bucketListId);
 			_bucketListService.AddCategoriesToBLE(selectedCategories, newBLElement);
 
 			if (_userService.BucketListIsNotBelongingToUser(User, newBLElement.BucketList))

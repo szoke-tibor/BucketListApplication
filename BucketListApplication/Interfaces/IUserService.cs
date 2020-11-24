@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BucketListApplication.Data;
 using BucketListApplication.Models;
 
 namespace BucketListApplication.Interfaces
@@ -13,5 +12,6 @@ namespace BucketListApplication.Interfaces
 		public bool BucketListElementIsNotBelongingToUser(ClaimsPrincipal user, BucketListElement ble);
 		public bool UserIsNotAuthenticated(ClaimsPrincipal user);
 		public string GetUserId(ClaimsPrincipal user);
+		public Task<IEnumerable<BLUser>> SearchUsers(BLContext context, string searchString, ClaimsPrincipal User);
 	}
 }

@@ -143,7 +143,7 @@ namespace BucketListApplication.Services
         }
 
         /*CreateBLE*/
-        public async Task<BucketListElement> Initialize(BLContext context, int? bucketListId)
+        public async Task<BucketListElement> InitializeBLE(BLContext context, int? bucketListId)
 		{
             return new BucketListElement
             {

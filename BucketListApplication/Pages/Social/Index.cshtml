@@ -10,15 +10,15 @@
         <form asp-page="./Index" method="get">
             <label for="SearchString" class="control-label">Keress név alapján:</label>
             <div class="form-group" style="display: flex; align-items: center;">
-                <input class="form-control input" type="text" name="SearchString" id="SearchString" value="@Model.CurrentFilter" />
+                <input class="form-control input" type="text" name="searchString" id="searchString" value="@Model.SearchString" />
                 <input type="submit" value="Keresés" class="btn myBtn submitBtn" />
             </div>
         </form>
     </div>
     <table class="table">
-        @if (Model.Users != null)
+        @if (Model.ListedUsers != null)
         {
-            @foreach (var item in Model.Users)
+            @foreach (var item in Model.ListedUsers)
             {
                 <tr>
                     <td style="font-size: 1.5rem">

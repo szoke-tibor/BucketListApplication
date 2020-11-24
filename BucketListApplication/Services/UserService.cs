@@ -3,29 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BucketListApplication.Data;
 using BucketListApplication.Interfaces;
 using BucketListApplication.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BucketListApplication.Services
 {
 	public class UserService : IUserService
 	{
-		public bool BucketListElementIsNotBelongingToUser(ClaimsPrincipal user, BucketListElement ble)
+		public bool BucketListElementIsNotBelongingToUser(ClaimsPrincipal User, BucketListElement ble)
 		{
-			return (ble.BucketList.UserId != user.FindFirstValue(ClaimTypes.NameIdentifier));
+			return (ble.BucketList.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier));
 		}
 
-		public bool BucketListIsNotBelongingToUser(ClaimsPrincipal user, BucketList bl)
+		public bool BucketListIsNotBelongingToUser(ClaimsPrincipal User, BucketList bl)
 		{
-			return (bl.UserId != user.FindFirstValue(ClaimTypes.NameIdentifier));
+			return (bl.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier));
 		}
-		public bool UserIsNotAuthenticated(ClaimsPrincipal user)
+		public bool UserIsNotAuthenticated(ClaimsPrincipal User)
 		{
-			return !user.Identity.IsAuthenticated;
+			return !User.Identity.IsAuthenticated;
 		}
-		public string GetUserId(ClaimsPrincipal user)
+		public string GetUserId(ClaimsPrincipal User)
 		{
-			return user.FindFirstValue(ClaimTypes.NameIdentifier);
+			return User.FindFirstValue(ClaimTypes.NameIdentifier);
+		}
+
+		public async Task<IEnumerable<BLUser>> SearchUsers(BLContext context, string searchString, ClaimsPrincipal User)
+		{
+			if (!String.IsNullOrEmpty(searchString))
+				return  await context.Users
+					.AsNoTracking()
+					.Where(u => u.FullName.Contains(searchString))
+					.Where(u => u.Id != GetUserId(User))
+					.ToListAsync();
+			else
+				return await context.Users
+					.AsNoTracking()
+					.Where(u => u.SeededUser == true)
+					.Where(u => u.Id != GetUserId(User))
+					.ToListAsync();
 		}
 	}
 }

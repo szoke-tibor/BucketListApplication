@@ -23,28 +23,17 @@ namespace BucketListApplication.Pages.Social
 			_userService = userService;
 		}
 
-		public string CurrentFilter { get; set; }
-		public IList<BLUser> Users { get; set; }
+		public string SearchString { get; set; }
+		public IEnumerable<BLUser> ListedUsers { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string searchString)
         {
 			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
-			CurrentFilter = searchString;
+			SearchString = searchString;
 
-			if (!String.IsNullOrEmpty(searchString))
-				Users = await _context.Users
-					.AsNoTracking()
-					.Where(u => u.FullName.Contains(searchString))
-					.Where(u => u.Id != _userService.GetUserId(User))
-					.ToListAsync();
-			else
-				Users = await _context.Users
-					.AsNoTracking()
-					.Where(u => u.SeededUser == true)
-					.Where(u => u.Id != _userService.GetUserId(User))
-					.ToListAsync();
+			ListedUsers = await _userService.SearchUsers(_context, searchString, User);
 
 			return Page();
 		}
