@@ -178,5 +178,17 @@ namespace BucketListApplication.Services
                 .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
         }
 
+        /*DetailsBLE*/
+        public async Task<BucketListElement> GetBLEByIDWithDetails(BLContext context, int? bucketListElementId)
+        {
+            return await context.BLElements
+                .AsNoTracking()
+                .Include(ble => ble.BucketList)
+                .Include(ble => ble.Progression)
+                    .ThenInclude(p => p.BLETasks)
+                .Include(ble => ble.ElementCategories)
+                    .ThenInclude(ec => ec.Category)
+				.FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+        }
     }
 }

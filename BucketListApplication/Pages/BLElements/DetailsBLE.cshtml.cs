@@ -13,11 +13,13 @@ namespace BucketListApplication.Pages.BLElements
     {
         private readonly BLContext _context;
         private readonly IUserService _userService;
+        private readonly IBucketListService _bucketListService;
 
-        public DetailsModel(BLContext context, IUserService userService)
+        public DetailsModel(BLContext context, IUserService userService, IBucketListService bucketListService)
         {
             _context = context;
             _userService = userService;
+            _bucketListService = bucketListService;
         }
 
         public BucketListElement BucketListElement { get; set; }
@@ -30,14 +32,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            BucketListElement = await _context.BLElements
-                .AsNoTracking()
-                .Include(ble => ble.BucketList)
-                .Include(ble => ble.Progression)
-                    .ThenInclude(p => p.BLETasks)
-                .Include(ble => ble.ElementCategories)
-                    .ThenInclude(ec => ec.Category)
-				.FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+            BucketListElement = await _bucketListService.GetBLEByIDWithDetails(_context, bucketListElementId);
 
 			if (BucketListElement == null)
                 return NotFound();
