@@ -174,7 +174,7 @@ namespace BucketListApplication.Services
         }
 
         /*DeleteBLE*/
-        public async Task<BucketListElement> GetBLEByID(BLContext context, int? bucketListElementId)
+        public async Task<BucketListElement> GetBLEByID_WithBLAsync(BLContext context, int? bucketListElementId)
 		{
             return await context.BLElements
                 .AsNoTracking()
@@ -183,7 +183,7 @@ namespace BucketListApplication.Services
         }
 
         /*DetailsBLE + EditBLE*/
-        public async Task<BucketListElement> GetBLEByIDWithDetails(BLContext context, int? bucketListElementId)
+        public async Task<BucketListElement> GetBLEByID_WithBLETasksAndCategoryAsync(BLContext context, int? bucketListElementId)
         {
             return await context.BLElements
                 .Include(ble => ble.BucketList)
@@ -203,7 +203,7 @@ namespace BucketListApplication.Services
         }
 
         /*DeleteBL*/
-        public async Task<BucketList> GetBLByIDWithBLEs(BLContext context, int? bucketListId)
+        public async Task<BucketList> GetBLByID_WithBLEsAsync(BLContext context, int? bucketListId)
         {
             return await context.BucketLists
                 .AsNoTracking()
@@ -211,13 +211,13 @@ namespace BucketListApplication.Services
                 .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
         }
 
-        public async Task<BucketList> FindBLByID(BLContext context, int? bucketListId)
+        public async Task<BucketList> GetBLByID_Async(BLContext context, int? bucketListId)
         {
             return await context.BucketLists.FindAsync(bucketListId);
         }
 
         /*Collection page*/
-        public async Task<IEnumerable<Category>> GetCategoriesWithElements(BLContext context)
+        public async Task<IEnumerable<Category>> GetCategories_WithElementsAsync(BLContext context)
 		{
             return await context.Categories
                 .AsNoTracking()
@@ -227,13 +227,14 @@ namespace BucketListApplication.Services
                 .ToListAsync();
         }
 
-        public Category GetCategoryById(IEnumerable<Category> Categories, int? categoryId)
+        public Category GetCategoryByID(IEnumerable<Category> Categories, int? categoryId)
         {
             return Categories.FirstOrDefault(c => c.CategoryID == categoryId);
         }
-        public IEnumerable<Element> GetSelectedCategoryElements(Category SelectedCategory)
+
+        public IEnumerable<Element> GetElementsOfCategory(Category category)
         {
-            return SelectedCategory.ElementCategories
+            return category.ElementCategories
                     .Select(ec => ec.Element)
                     .Where(e => e.Discriminator == "Element")
                     .OrderBy(e => e.Name);

@@ -18,14 +18,14 @@ namespace BucketListApplication.Interfaces
 
         public Task<BucketListElement> InitializeBLE(BLContext context, int? bucketListId);
         public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement);
-        public Task<BucketListElement> GetBLEByID(BLContext context, int? bucketListElementId);
-        public Task<BucketListElement> GetBLEByIDWithDetails(BLContext context, int? bucketListElementId);
+        public Task<BucketListElement> GetBLEByID_WithBLAsync(BLContext context, int? bucketListElementId);
+        public Task<BucketListElement> GetBLEByID_WithBLETasksAndCategoryAsync(BLContext context, int? bucketListElementId);
         public void DeleteEmptyTasks(IList<BLETask> BLETasks);
-        public Task<BucketList> GetBLByIDWithBLEs(BLContext context, int? bucketListId);
-        public Task<BucketList> FindBLByID(BLContext context, int? bucketListId);
-        public Task<IEnumerable<Category>> GetCategoriesWithElements(BLContext context);
-        public Category GetCategoryById(IEnumerable<Category> Categories, int? categoryId);
-        public IEnumerable<Element> GetSelectedCategoryElements(Category SelectedCategory);
+        public Task<BucketList> GetBLByID_WithBLEsAsync(BLContext context, int? bucketListId);
+        public Task<BucketList> GetBLByID_Async(BLContext context, int? bucketListId);
+        public Task<IEnumerable<Category>> GetCategories_WithElementsAsync(BLContext context);
+        public Category GetCategoryByID(IEnumerable<Category> Categories, int? categoryId);
+        public IEnumerable<Element> GetElementsOfCategory(Category SelectedCategory);
         public string SetUserCheckPageTitle(BLUser SelectedUser);
     }
 }

@@ -38,7 +38,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            BucketListElement = await _bucketListService.GetBLEByIDWithDetails(_context, bucketListElementId);
+            BucketListElement = await _bucketListService.GetBLEByID_WithBLETasksAndCategoryAsync(_context, bucketListElementId);
 
             if (BucketListElement == null)
                 return NotFound();
@@ -59,7 +59,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            var blElementToUpdate = await _bucketListService.GetBLEByIDWithDetails(_context, bucketListElementId);
+            var blElementToUpdate = await _bucketListService.GetBLEByID_WithBLETasksAndCategoryAsync(_context, bucketListElementId);
 
             if (blElementToUpdate == null)
                 return NotFound();

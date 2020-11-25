@@ -35,7 +35,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            BucketListElement = await _bucketListService.GetBLEByID(_context, bucketListElementId);
+            BucketListElement = await _bucketListService.GetBLEByID_WithBLAsync(_context, bucketListElementId);
 
             if (BucketListElement == null)
                 return NotFound();
@@ -57,7 +57,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            var BLElementToRemove = await _bucketListService.GetBLEByID(_context, bucketListElementId);
+            var BLElementToRemove = await _bucketListService.GetBLEByID_WithBLAsync(_context, bucketListElementId);
 
             if (BLElementToRemove == null)
 				return NotFound();

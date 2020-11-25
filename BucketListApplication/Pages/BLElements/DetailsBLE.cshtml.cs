@@ -32,7 +32,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            BucketListElement = await _bucketListService.GetBLEByIDWithDetails(_context, bucketListElementId);
+            BucketListElement = await _bucketListService.GetBLEByID_WithBLETasksAndCategoryAsync(_context, bucketListElementId);
 
 			if (BucketListElement == null)
                 return NotFound();

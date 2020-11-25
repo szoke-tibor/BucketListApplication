@@ -27,12 +27,12 @@ namespace BucketListApplication.Pages.Collection
 
         public async Task OnGetAsync(int? categoryId)
         {
-            Categories = await _bucketListService.GetCategoriesWithElements(_context);
+            Categories = await _bucketListService.GetCategories_WithElementsAsync(_context);
 
             if (categoryId != null)
             {
-                SelectedCategory = _bucketListService.GetCategoryById(Categories, categoryId);
-                SelectedCategoryElements = _bucketListService.GetSelectedCategoryElements(SelectedCategory);
+                SelectedCategory = _bucketListService.GetCategoryByID(Categories, categoryId);
+                SelectedCategoryElements = _bucketListService.GetElementsOfCategory(SelectedCategory);
             }
         }
     }

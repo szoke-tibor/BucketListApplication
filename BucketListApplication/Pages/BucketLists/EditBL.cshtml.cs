@@ -32,7 +32,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            BucketList = await _bucketListService.FindBLByID(_context, bucketListId);
+            BucketList = await _bucketListService.GetBLByID_Async(_context, bucketListId);
 
             if (BucketList == null)
                 return NotFound();
@@ -51,7 +51,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            var bucketlistToUpdate = await _bucketListService.FindBLByID(_context, bucketListId);
+            var bucketlistToUpdate = await _bucketListService.GetBLByID_Async(_context, bucketListId);
 
             if (bucketlistToUpdate == null)
                 return NotFound();
