@@ -11,10 +11,10 @@ namespace BucketListApplication.Interfaces
 {
 	public interface IBucketListService
 	{
-        public void PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement, ref List<AssignedCategoryData> assignedCategoryDataList);
-        public void PopulateBucketListDropDownList(BLContext context, string userId, ref SelectList BucketListSL, bool PublicOnly, bool addDefaultValue, object selectedBucketList = null);
+        public Task<List<AssignedCategoryData>> PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement);
+        public Task<SelectList> PopulateBucketListDropDownList(BLContext context, string userId, bool publicOnly, bool addDefaultValue, object selectedBucketList = null);
         public Task UpdateBLElementCategories(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate);
-        public void PopulateSelectedBLElementsList(BLContext context, int SelectedBucketListID, bool PublicOnly, ref IEnumerable<BucketListElement> SelectedBLElements);
+        public Task<IEnumerable<BucketListElement>> PopulateSelectedBLElementsList(BLContext context, int SelectedBucketListID, bool PublicOnly);
 
         public Task<BucketListElement> InitializeBLE(BLContext context, int? bucketListId);
         public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement);
