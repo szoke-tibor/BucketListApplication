@@ -7,12 +7,8 @@ namespace BucketListApplication.Data
 {
 	public class BLContext : IdentityDbContext<BLUser>
 	{
-		//For getting logged user
-		public readonly IHttpContextAccessor _httpContextAccessor;
-
-		public BLContext(DbContextOptions<BLContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+		public BLContext(DbContextOptions<BLContext> options) : base(options)
 		{
-			_httpContextAccessor = httpContextAccessor;
 		}
 
 		public DbSet<BucketList> BucketLists { get; set; }
