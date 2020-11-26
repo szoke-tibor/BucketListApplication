@@ -7,6 +7,7 @@ using BucketListApplication.Data;
 using BucketListApplication.Models.BLViewModels;
 using System.Collections.Generic;
 using BucketListApplication.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BucketListApplication.Pages.Collection
 {
@@ -25,15 +26,19 @@ namespace BucketListApplication.Pages.Collection
         public Category SelectedCategory { get; set; }
         public IEnumerable<Element> SelectedCategoryElements { get; set; }
 
-        public async Task OnGetAsync(int? categoryId)
+        public async Task<IActionResult> OnGetAsync(int? categoryId)
         {
             Categories = await _bucketListService.GetCategories_WithElementsAsync(_context);
 
             if (categoryId != null)
             {
                 SelectedCategory = _bucketListService.GetCategoryByID(Categories, categoryId);
+                if (SelectedCategory == null)
+                    return NotFound();
                 SelectedCategoryElements = _bucketListService.GetElementsOfCategory(SelectedCategory);
             }
+
+            return Page();
         }
     }
 }
