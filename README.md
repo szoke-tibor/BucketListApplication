@@ -7,5 +7,6 @@
 * **Elsajátított tudás:**
   * ASP.Net Core alapok
   * Razor Pages
-  * Önálló munka
+  * xUnit
+  * AzureDevOps
   * Önképzés
