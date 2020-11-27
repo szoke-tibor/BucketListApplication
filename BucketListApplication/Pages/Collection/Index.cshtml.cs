@@ -28,14 +28,14 @@ namespace BucketListApplication.Pages.Collection
 
         public async Task<IActionResult> OnGetAsync(int? categoryId)
         {
-            Categories = await _bucketListService.GetCategories_WithElementsAsync(_context);
+            Categories = await _bucketListService.GetCategoriesOrderedByNameWithElementsAsync(_context);
 
             if (categoryId != null)
             {
                 SelectedCategory = _bucketListService.GetCategoryByID(Categories, categoryId);
                 if (SelectedCategory == null)
                     return NotFound();
-                SelectedCategoryElements = _bucketListService.GetElementsOfCategory(SelectedCategory);
+                SelectedCategoryElements = _bucketListService.GetElementsOfCategoryOrderedByName(SelectedCategory);
             }
 
             return Page();

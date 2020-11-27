@@ -38,7 +38,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            BucketListElement = await _bucketListService.GetBLEByID_WithBLETasksAndCategoryAsync(_context, bucketListElementId);
+            BucketListElement = await _bucketListService.GetBLEByIDWithBLETasksAndCategoryAsync(_context, bucketListElementId);
 
             if (BucketListElement == null)
                 return NotFound();
@@ -46,8 +46,8 @@ namespace BucketListApplication.Pages.BLElements
             if (_userService.BucketListElementIsNotBelongingToUser(User, BucketListElement))
                 return Forbid();
 
-            AssignedCategoryDataList = await _bucketListService.PopulateAssignedCategoryData(_context, BucketListElement);
-            BucketListSL = await _bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), false, false);
+            AssignedCategoryDataList = await _bucketListService.PopulateAssignedCategoryDataAsync(_context, BucketListElement);
+            BucketListSL = await _bucketListService.PopulateBucketListDropDownListOrderedByNameAsync(_context, _userService.GetUserId(User), false, false);
             return Page();
         }
 
@@ -59,7 +59,7 @@ namespace BucketListApplication.Pages.BLElements
             if (bucketListElementId == null)
                 return NotFound();
 
-            var blElementToUpdate = await _bucketListService.GetBLEByID_WithBLETasksAndCategoryAsync(_context, bucketListElementId);
+            var blElementToUpdate = await _bucketListService.GetBLEByIDWithBLETasksAndCategoryAsync(_context, bucketListElementId);
 
             if (blElementToUpdate == null)
                 return NotFound();
@@ -77,14 +77,14 @@ namespace BucketListApplication.Pages.BLElements
                 ble => ble.Progression))
 			{
                 _bucketListService.DeleteEmptyTasks(blElementToUpdate.Progression.BLETasks);
-                await _bucketListService.UpdateBLElementCategories(_context, selectedCategories, blElementToUpdate);
+                await _bucketListService.UpdateBLElementCategoriesAsync(_context, selectedCategories, blElementToUpdate);
 				await _context.SaveChangesAsync();
                 return RedirectToPage("DetailsBLE", new { bucketListElementId = blElementToUpdate.ElementID });
             }
 
             //If TryUpdateModelAsync fails restore AssignedCategoryDataList and DropDownLists
-            AssignedCategoryDataList = await _bucketListService.PopulateAssignedCategoryData(_context, blElementToUpdate);
-            BucketListSL = await _bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), false, false, blElementToUpdate.BucketListID);
+            AssignedCategoryDataList = await _bucketListService.PopulateAssignedCategoryDataAsync(_context, blElementToUpdate);
+            BucketListSL = await _bucketListService.PopulateBucketListDropDownListOrderedByNameAsync(_context, _userService.GetUserId(User), false, false, blElementToUpdate.BucketListID);
             return Page();
 		}
     }

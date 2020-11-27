@@ -35,11 +35,11 @@ namespace BucketListApplication.Pages.BLElements
 			if (_userService.UserIsNotAuthenticated(User))
 				return RedirectToPage("../AuthError");
 
-			BucketListSL = await _bucketListService.PopulateBucketListDropDownList(_context, _userService.GetUserId(User), false, true);
+			BucketListSL = await _bucketListService.PopulateBucketListDropDownListOrderedByNameAsync(_context, _userService.GetUserId(User), false, true);
 
 			if (bucketListId != null)
 			{
-				SelectedBucketList = await _bucketListService.GetBLByID_Async(_context, bucketListId);
+				SelectedBucketList = await _bucketListService.GetBLByIDAsync(_context, bucketListId);
 
 				if (SelectedBucketList == null)
 					return NotFound();
@@ -47,7 +47,7 @@ namespace BucketListApplication.Pages.BLElements
 				if (_userService.BucketListIsNotBelongingToUser(User, SelectedBucketList))
 					return Forbid();
 
-				SelectedBLElements = await _bucketListService.PopulateSelectedBLElementsList(_context, (int)bucketListId, false);
+				SelectedBLElements = await _bucketListService.PopulateSelectedBLElementsListWithProgressionOrderedByNameAsync(_context, (int)bucketListId, false);
 			}
 			return Page();
 

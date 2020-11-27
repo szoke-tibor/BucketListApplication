@@ -13,7 +13,7 @@ namespace BucketListApplication.Services
 {
 	public class BucketListService : IBucketListService
     {
-        public async Task<List<AssignedCategoryData>> PopulateAssignedCategoryData(BLContext context, BucketListElement BLElement)
+        public async Task<List<AssignedCategoryData>> PopulateAssignedCategoryDataAsync(BLContext context, BucketListElement BLElement)
         {
             var allCategories = await context.Categories
                 .AsNoTracking()
@@ -32,7 +32,7 @@ namespace BucketListApplication.Services
             return assignedCategoryDataList;
         }
 
-        public async Task<SelectList> PopulateBucketListDropDownList(BLContext context, string userId, bool publicOnly, bool addDefaultValue, object selectedBucketList = null)
+        public async Task<SelectList> PopulateBucketListDropDownListOrderedByNameAsync(BLContext context, string userId, bool publicOnly, bool addDefaultValue, object selectedBucketList = null)
         {
             List<SelectListItem> SelectListItems = new List<SelectListItem>();
             if (addDefaultValue)
@@ -76,7 +76,7 @@ namespace BucketListApplication.Services
             return new SelectList(SelectListItems, "Value", "Text", selectedBucketList);
         }
 
-        public async Task UpdateBLElementCategories(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate)
+        public async Task UpdateBLElementCategoriesAsync(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate)
         {
             if (selectedCategories == null)
             {
@@ -120,12 +120,11 @@ namespace BucketListApplication.Services
             }
         }
 
-        public async Task<IEnumerable<BucketListElement>> PopulateSelectedBLElementsList(BLContext context, int SelectedBucketListID, bool PublicOnly)
+        public async Task<IEnumerable<BucketListElement>> PopulateSelectedBLElementsListWithProgressionOrderedByNameAsync(BLContext context, int SelectedBucketListID, bool PublicOnly)
         {
             if (PublicOnly)
             {
                 return await context.BLElements
-                    .AsNoTracking()
                     .Include(ble => ble.Progression)
                         .ThenInclude(p => p.BLETasks)
                     .Where(ble => ble.BucketListID == SelectedBucketListID)
@@ -137,7 +136,6 @@ namespace BucketListApplication.Services
             else
             {
                 return await context.BLElements
-                    .AsNoTracking()
                     .Include(ble => ble.Progression)
                         .ThenInclude(p => p.BLETasks)
                     .Where(ble => ble.BucketListID == SelectedBucketListID)
@@ -147,7 +145,7 @@ namespace BucketListApplication.Services
         }
 
         /*CreateBLE*/
-        public async Task<BucketListElement> InitializeBLE(BLContext context, int? bucketListId)
+        public async Task<BucketListElement> InitializeBLEWithBLAsync(BLContext context, int? bucketListId)
 		{
             return new BucketListElement
             {
@@ -174,7 +172,7 @@ namespace BucketListApplication.Services
         }
 
         /*DeleteBLE*/
-        public async Task<BucketListElement> GetBLEByID_WithBLAsync(BLContext context, int? bucketListElementId)
+        public async Task<BucketListElement> GetBLEByIDWithBLAsync(BLContext context, int? bucketListElementId)
 		{
             return await context.BLElements
                 .AsNoTracking()
@@ -183,7 +181,7 @@ namespace BucketListApplication.Services
         }
 
         /*DetailsBLE + EditBLE*/
-        public async Task<BucketListElement> GetBLEByID_WithBLETasksAndCategoryAsync(BLContext context, int? bucketListElementId)
+        public async Task<BucketListElement> GetBLEByIDWithBLETasksAndCategoryAsync(BLContext context, int? bucketListElementId)
         {
             return await context.BLElements
                 .Include(ble => ble.BucketList)
@@ -203,7 +201,7 @@ namespace BucketListApplication.Services
         }
 
         /*DeleteBL*/
-        public async Task<BucketList> GetBLByID_WithBLEsAsync(BLContext context, int? bucketListId)
+        public async Task<BucketList> GetBLByIDWithBLEsAsync(BLContext context, int? bucketListId)
         {
             return await context.BucketLists
                 .AsNoTracking()
@@ -211,16 +209,15 @@ namespace BucketListApplication.Services
                 .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
         }
 
-        public async Task<BucketList> GetBLByID_Async(BLContext context, int? bucketListId)
+        public async Task<BucketList> GetBLByIDAsync(BLContext context, int? bucketListId)
         {
             return await context.BucketLists.FindAsync(bucketListId);
         }
 
         /*Collection page*/
-        public async Task<IEnumerable<Category>> GetCategories_WithElementsAsync(BLContext context)
+        public async Task<IEnumerable<Category>> GetCategoriesOrderedByNameWithElementsAsync(BLContext context)
 		{
             return await context.Categories
-                .AsNoTracking()
                 .Include(c => c.ElementCategories)
                     .ThenInclude(ec => ec.Element)
                 .OrderBy(c => c.Name)
@@ -232,7 +229,7 @@ namespace BucketListApplication.Services
             return Categories.FirstOrDefault(c => c.CategoryID == categoryId);
         }
 
-        public IEnumerable<Element> GetElementsOfCategory(Category category)
+        public IEnumerable<Element> GetElementsOfCategoryOrderedByName(Category category)
         {
             return category.ElementCategories
                     .Select(ec => ec.Element)

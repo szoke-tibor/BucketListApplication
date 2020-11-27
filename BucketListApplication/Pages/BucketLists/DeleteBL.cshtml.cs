@@ -35,7 +35,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            BucketList = await _bucketListService.GetBLByID_WithBLEsAsync(_context, bucketListId);
+            BucketList = await _bucketListService.GetBLByIDWithBLEsAsync(_context, bucketListId);
 
             if (BucketList == null)
                 return NotFound();
@@ -57,7 +57,7 @@ namespace BucketListApplication.Pages.BucketLists
             if (bucketListId == null)
                 return NotFound();
 
-            var bucketListToRemove = await _bucketListService.GetBLByID_Async(_context, bucketListId);
+            var bucketListToRemove = await _bucketListService.GetBLByIDAsync(_context, bucketListId);
 
             if (bucketListToRemove == null)
                 return NotFound();

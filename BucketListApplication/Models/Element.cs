@@ -11,6 +11,6 @@ namespace BucketListApplication.Models
 
         public ICollection<ElementCategory> ElementCategories { get; set; }
 
-		public string Discriminator { get; private set; }
+		public string Discriminator { get; set; }
 	}
 }

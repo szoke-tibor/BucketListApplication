@@ -39,7 +39,7 @@ namespace BucketListApplication.Pages.Social
 
 			var selectedUser = await _userService.FindUserByID(_context, userId);
 			Title = _bucketListService.SetUserCheckPageTitle(selectedUser);
-			BucketListSL = await _bucketListService.PopulateBucketListDropDownList(_context, selectedUser.Id, true, true);
+			BucketListSL = await _bucketListService.PopulateBucketListDropDownListOrderedByNameAsync(_context, selectedUser.Id, true, true);
 
 			return Page();
 		}
@@ -51,8 +51,8 @@ namespace BucketListApplication.Pages.Social
 
 			var selectedUser = await _context.Users.FindAsync(userId);
 			Title = _bucketListService.SetUserCheckPageTitle(selectedUser);
-			BucketListSL = await _bucketListService.PopulateBucketListDropDownList(_context, selectedUser.Id, true, true);
-			SelectedBLElements = await _bucketListService.PopulateSelectedBLElementsList(_context, SelectedBucketList.BucketListID, true);
+			BucketListSL = await _bucketListService.PopulateBucketListDropDownListOrderedByNameAsync(_context, selectedUser.Id, true, true);
+			SelectedBLElements = await _bucketListService.PopulateSelectedBLElementsListWithProgressionOrderedByNameAsync(_context, SelectedBucketList.BucketListID, true);
 			return Page();
 		}
 	}
