@@ -339,7 +339,7 @@ namespace BucketListApplication.Data
 					Description = "", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID
 				},
-				new BucketListElement { Name = "Költözz ki franciaországba",
+				new BucketListElement { Name = "Költözz ki Franciaországba",
 					Description = "", Completed = false, Visibility = Visibility.Public,
 					BucketListID = bucketlists.Single( bl => bl.Name == "Elsődleges céljaim").BucketListID
 				},
@@ -451,7 +451,7 @@ namespace BucketListApplication.Data
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Alapíts családot").ElementID
 				},
 				new Progression {
-					ElementID = bucketlistelements.Single( ble => ble.Name == "Költözz ki franciaországba").ElementID
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Költözz ki Franciaországba").ElementID
 				},
 				new Progression {
 					ElementID = bucketlistelements.Single( ble => ble.Name == "Tanulj meg 20 különböző főtt ételt elkészíteni").ElementID
@@ -1744,7 +1744,7 @@ namespace BucketListApplication.Data
 					CategoryID = categories.Single(c => c.Name == "Család és otthon" ).CategoryID
 				},
 				new ElementCategory {
-					ElementID = bucketlistelements.Single( ble => ble.Name == "Költözz ki franciaországba").ElementID,
+					ElementID = bucketlistelements.Single( ble => ble.Name == "Költözz ki Franciaországba").ElementID,
 					CategoryID = categories.Single(c => c.Name == "Utazás" ).CategoryID
 				},
 				new ElementCategory {
