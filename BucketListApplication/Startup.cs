@@ -27,7 +27,7 @@ namespace BucketListApplication
 		{
 			services.AddDbContext<BLContext>(options =>
 				options.UseSqlServer(
-					Configuration.GetConnectionString("AzureSQLserver")));
+					Configuration.GetConnectionString("BucketSQLserver")));
 
 			services.AddTransient<IUserService, UserService>();
 			services.AddTransient<IBucketListService, BucketListService>();
