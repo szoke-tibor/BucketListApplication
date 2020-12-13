@@ -45,12 +45,6 @@ namespace BucketListApplication
 				.AddEntityFrameworkStores<BLContext>();
 
 			services.AddRazorPages();
-
-		    services.AddDbContext<BLContext>(options =>
-		            options.UseSqlServer(Configuration.GetConnectionString("BLContext")));
-			//For getting the logged user
-			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 		}
 
