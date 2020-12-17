@@ -7,9 +7,7 @@ namespace BucketListApplication.Data
 {
 	public class BLContext : IdentityDbContext<BLUser>
 	{
-		public BLContext(DbContextOptions<BLContext> options) : base(options)
-		{
-		}
+		public BLContext(DbContextOptions<BLContext> options) : base(options) {}
 
 		public DbSet<BucketList> BucketLists { get; set; }
 		public DbSet<Category> Categories { get; set; }
@@ -19,28 +17,27 @@ namespace BucketListApplication.Data
 		public DbSet<Progression> Progressions { get; set; }
 		public DbSet<BLETask> BLETasks { get; set; }
 
-
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
 			modelBuilder.Entity<BucketList>().ToTable("BucketList");
+			modelBuilder.Entity<BLETask>().ToTable("BLETask");
 			modelBuilder.Entity<Category>().ToTable("Category");
 			modelBuilder.Entity<ElementCategory>().ToTable("ElementCategory");
-
-			modelBuilder.Entity<Progression>().ToTable("Progression")
-				.HasOne(p => p.BLElement)
-				.WithOne(ble => ble.Progression)
-				.HasForeignKey<Progression>(p => p.ElementID);
-
-			modelBuilder.Entity<BLETask>().ToTable("BLETask");
-
-			//Table per Hierarchy -> BucketListElement is included
-			modelBuilder.Entity<Element>().ToTable("Element");
 
 			//Pure Join Table
 			modelBuilder.Entity<ElementCategory>()
 				.HasKey(ec => new { ec.ElementID, ec.CategoryID });
+
+			//Table per Hierarchy -> BucketListElement is included
+			modelBuilder.Entity<Element>().ToTable("Element");
+
+			//One-to-one relationship
+			modelBuilder.Entity<Progression>().ToTable("Progression")
+				.HasOne(p => p.BLElement)
+				.WithOne(ble => ble.Progression)
+				.HasForeignKey<Progression>(p => p.ElementID);
 		}
 	}
 }

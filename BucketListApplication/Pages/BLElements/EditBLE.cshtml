@@ -55,10 +55,8 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" value="Mentés" class="btn myBtn submitBtn" />
-            <a asp-page="./DetailsBLE" asp-route-bucketListElementId="@Model.BucketListElement.ElementID" class="btn backBtn">Vissza</a>
         </section>
-        
+
         <section class="col-lg-3 dirColumn-centered">
             <h4>Kategóriák</h4>
             <div class="form-group myFormGroup">
@@ -103,6 +101,11 @@
         </section>
     </div>
 </form>
+
+<div>
+    <input type="submit" value="Mentés" class="btn myBtn submitBtn" />
+    <a asp-page="./DetailsBLE" asp-route-bucketListElementId="@Model.BucketListElement.ElementID" class="btn backBtn">Vissza</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

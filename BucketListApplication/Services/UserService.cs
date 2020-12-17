@@ -33,7 +33,7 @@ namespace BucketListApplication.Services
 		public async Task<IEnumerable<BLUser>> SearchUsers(BLContext context, string searchString, ClaimsPrincipal User)
 		{
 			if (!String.IsNullOrEmpty(searchString))
-				return  await context.Users
+				return await context.Users
 					.AsNoTracking()
 					.Where(u => u.FullName.Contains(searchString))
 					.Where(u => u.Id != GetUserId(User))

@@ -15,7 +15,6 @@ namespace BucketListApplication.Interfaces
         public Task<SelectList> PopulateBucketListDropDownListOrderedByNameAsync(BLContext context, string userId, bool publicOnly, bool addDefaultValue, object selectedBucketList = null);
         public Task UpdateBLElementCategoriesAsync(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate);
         public Task<IEnumerable<BucketListElement>> PopulateSelectedBLElementsListWithProgressionOrderedByNameAsync(BLContext context, int SelectedBucketListID, bool PublicOnly);
-
         public Task<BucketListElement> InitializeBLEWithBLAsync(BLContext context, int? bucketListId);
         public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement);
         public Task<BucketListElement> GetBLEByIDWithBLAsync(BLContext context, int? bucketListElementId);

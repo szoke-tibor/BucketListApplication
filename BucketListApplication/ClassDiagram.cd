@@ -4,7 +4,7 @@
     <Position X="5.25" Y="10.5" Width="1.5" />
     <AssociationLine Name="Progression" Type="BucketListApplication.Models.Progression">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.004" Y="0.042" />
+        <Position X="0.051" Y="0.063" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -17,14 +17,30 @@
   </Class>
   <Class Name="BucketListApplication.Models.BLUser">
     <Position X="6.75" Y="7.5" Width="1.5" />
+    <AssociationLine Name="Lists" Type="BucketListApplication.Models.BucketList" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="9" />
+        <Point X="5.75" Y="9" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.096" Y="0.067" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIEgABAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Areas\Identity\Data\BLUser.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Lists" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="BucketListApplication.Models.BucketList">
     <Position X="4.25" Y="7.75" Width="1.5" />
-    <AssociationLine Name="User" Type="BucketListApplication.Models.BLUser">
+    <AssociationLine Name="User" Type="BucketListApplication.Models.BLUser" FixedFromPoint="true">
+      <Path>
+        <Point X="5.75" Y="8.5" />
+        <Point X="6.75" Y="8.5" />
+      </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.057" Y="0.06" />
       </MemberNameLabel>
@@ -121,7 +137,7 @@
         <Point X="2.5" Y="3.625" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="-0.004" Y="0.086" Height="0.182" Width="1.327" />
+        <Position X="0.064" Y="0.093" Height="0.182" Width="1.327" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>

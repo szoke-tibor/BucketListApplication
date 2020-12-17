@@ -12,235 +12,235 @@ using System.Threading.Tasks;
 namespace BucketListApplication.Services
 {
 	public class BucketListService : IBucketListService
-    {
-        public async Task<List<AssignedCategoryData>> PopulateAssignedCategoryDataAsync(BLContext context, BucketListElement BLElement)
-        {
-            var allCategories = await context.Categories
-                .AsNoTracking()
-                .ToListAsync();
-            var BLCategories = new HashSet<int>(BLElement.ElementCategories.Select(ec => ec.CategoryID));
-            List<AssignedCategoryData> assignedCategoryDataList = new List<AssignedCategoryData>();
-            foreach (var category in allCategories)
-            {
-                assignedCategoryDataList.Add(new AssignedCategoryData
-                {
-                    CategoryID = category.CategoryID,
-                    Name = category.Name,
-                    Assigned = BLCategories.Contains(category.CategoryID)
-                });
-            }
-            return assignedCategoryDataList;
-        }
-
-        public async Task<SelectList> PopulateBucketListDropDownListOrderedByNameAsync(BLContext context, string userId, bool publicOnly, bool addDefaultValue, object selectedBucketList = null)
-        {
-            List<SelectListItem> SelectListItems = new List<SelectListItem>();
-            if (addDefaultValue)
+	{
+		public async Task<List<AssignedCategoryData>> PopulateAssignedCategoryDataAsync(BLContext context, BucketListElement BLElement)
+		{
+			var allCategories = await context.Categories
+				.AsNoTracking()
+				.ToListAsync();
+			var BLCategories = new HashSet<int>(BLElement.ElementCategories.Select(ec => ec.CategoryID));
+			List<AssignedCategoryData> assignedCategoryDataList = new List<AssignedCategoryData>();
+			foreach (var category in allCategories)
 			{
-                SelectListItems.Add(new SelectListItem()
-                {
-                    Text = "--Válassz egy listát--",
-                    Value = "null"
-                });
-            }
+				assignedCategoryDataList.Add(new AssignedCategoryData
+				{
+					CategoryID = category.CategoryID,
+					Name = category.Name,
+					Assigned = BLCategories.Contains(category.CategoryID)
+				});
+			}
+			return assignedCategoryDataList;
+		}
 
-            IEnumerable<BucketList> BucketListsQuery;
-
-            if (publicOnly)
-            {
-                BucketListsQuery = await context.BucketLists
-                    .AsNoTracking()
-                    .Where(bl => bl.UserId == userId)
-                    .Where(bl => bl.Visibility == Visibility.Public)
-                    .OrderBy(bl => bl.Name)
-                    .ToListAsync();
-            }
-            else
-            {
-                BucketListsQuery = await context.BucketLists
-                    .AsNoTracking()
-                    .Where(bl => bl.UserId == userId)
-                    .OrderBy(bl => bl.Name)
-                    .ToListAsync();
-            }
-
-            foreach (BucketList bl in BucketListsQuery)
-            {
-                SelectListItems.Add(new SelectListItem()
-                {
-                    Text = bl.Name,
-                    Value = bl.BucketListID.ToString()
-                });
-            }
-
-            return new SelectList(SelectListItems, "Value", "Text", selectedBucketList);
-        }
-
-        public async Task UpdateBLElementCategoriesAsync(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate)
-        {
-            if (selectedCategories == null)
-            {
-                BLElementToUpdate.ElementCategories = new List<ElementCategory>();
-                return;
-            }
-
-            //Categories before editing
-            var BLElementCategoriesBeforeEdit = new HashSet<int>(BLElementToUpdate.ElementCategories.Select(ec => ec.Category.CategoryID));
-            //Categories selected at editing
-            var BLElementCategoriesAfterEdit = new HashSet<string>(selectedCategories);
-            var allCategories = await context.Categories
-                .AsNoTracking()
-                .ToListAsync();
-
-            foreach (var category in allCategories)
-            {
-                if (BLElementCategoriesAfterEdit.Contains(category.CategoryID.ToString()))
-                {
-                    //Selected categories contain, but old categories don't -> Add
-                    if (!BLElementCategoriesBeforeEdit.Contains(category.CategoryID))
-                    {
-                        ElementCategory categoryToAdd = new ElementCategory
-                        {
-                            ElementID = BLElementToUpdate.ElementID,
-                            CategoryID = category.CategoryID
-                        };
-                        BLElementToUpdate.ElementCategories.Add(categoryToAdd);
-                    }
-                }
-                else
-                {
-                    //Selected categories don't contain, but old categories do -> Remove
-                    if (BLElementCategoriesBeforeEdit.Contains(category.CategoryID))
-                    {
-                        ElementCategory categoryToRemove =
-                            BLElementToUpdate.ElementCategories.SingleOrDefault(ec => ec.CategoryID == category.CategoryID);
-                        BLElementToUpdate.ElementCategories.Remove(categoryToRemove);
-                    }
-                }
-            }
-        }
-
-        public async Task<IEnumerable<BucketListElement>> PopulateSelectedBLElementsListWithProgressionOrderedByNameAsync(BLContext context, int SelectedBucketListID, bool PublicOnly)
-        {
-            if (PublicOnly)
-            {
-                return await context.BLElements
-                    .Include(ble => ble.Progression)
-                        .ThenInclude(p => p.BLETasks)
-                    .Where(ble => ble.BucketListID == SelectedBucketListID)
-                    .Where(ble => ble.Visibility == Visibility.Public)
-                    .OrderBy(ble => ble.Name)
-                    .ToListAsync();
-            }
-
-            else
-            {
-                return await context.BLElements
-                    .Include(ble => ble.Progression)
-                        .ThenInclude(p => p.BLETasks)
-                    .Where(ble => ble.BucketListID == SelectedBucketListID)
-                    .OrderBy(ble => ble.Name)
-                    .ToListAsync();
-            }
-        }
-
-        /*CreateBLE*/
-        public async Task<BucketListElement> InitializeBLEWithBLAsync(BLContext context, int? bucketListId)
+		public async Task<SelectList> PopulateBucketListDropDownListOrderedByNameAsync(BLContext context, string userId, bool publicOnly, bool addDefaultValue, object selectedBucketList = null)
 		{
-            return new BucketListElement
-            {
-                BucketListID = bucketListId.Value,
-                BucketList = await context.BucketLists.FindAsync(bucketListId),
-                ElementCategories = new List<ElementCategory>(),
-                Progression = new Progression()
-            };
-        }
+			List<SelectListItem> SelectListItems = new List<SelectListItem>();
+			if (addDefaultValue)
+			{
+				SelectListItems.Add(new SelectListItem()
+				{
+					Text = "--Válassz egy listát--",
+					Value = "null"
+				});
+			}
 
-        public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement)
+			IEnumerable<BucketList> BucketListsQuery;
+
+			if (publicOnly)
+			{
+				BucketListsQuery = await context.BucketLists
+					.AsNoTracking()
+					.Where(bl => bl.UserId == userId)
+					.Where(bl => bl.Visibility == Visibility.Public)
+					.OrderBy(bl => bl.Name)
+					.ToListAsync();
+			}
+			else
+			{
+				BucketListsQuery = await context.BucketLists
+					.AsNoTracking()
+					.Where(bl => bl.UserId == userId)
+					.OrderBy(bl => bl.Name)
+					.ToListAsync();
+			}
+
+			foreach (BucketList bl in BucketListsQuery)
+			{
+				SelectListItems.Add(new SelectListItem()
+				{
+					Text = bl.Name,
+					Value = bl.BucketListID.ToString()
+				});
+			}
+
+			return new SelectList(SelectListItems, "Value", "Text", selectedBucketList);
+		}
+
+		public async Task UpdateBLElementCategoriesAsync(BLContext context, string[] selectedCategories, BucketListElement BLElementToUpdate)
 		{
-            if (selectedCategories != null)
-            {
-                foreach (var category in selectedCategories)
-                {
-                    var categoryToAdd = new ElementCategory
-                    {
-                        CategoryID = int.Parse(category)
-                    };
-                    newBLElement.ElementCategories.Add(categoryToAdd);
-                }
-            }
-        }
+			if (selectedCategories == null)
+			{
+				BLElementToUpdate.ElementCategories = new List<ElementCategory>();
+				return;
+			}
 
-        /*DeleteBLE*/
-        public async Task<BucketListElement> GetBLEByIDWithBLAsync(BLContext context, int? bucketListElementId)
+			//Categories before editing
+			var BLElementCategoriesBeforeEdit = new HashSet<int>(BLElementToUpdate.ElementCategories.Select(ec => ec.Category.CategoryID));
+			//Categories selected at editing
+			var BLElementCategoriesAfterEdit = new HashSet<string>(selectedCategories);
+			var allCategories = await context.Categories
+				.AsNoTracking()
+				.ToListAsync();
+
+			foreach (var category in allCategories)
+			{
+				if (BLElementCategoriesAfterEdit.Contains(category.CategoryID.ToString()))
+				{
+					//Selected categories contain, but old categories don't -> Add
+					if (!BLElementCategoriesBeforeEdit.Contains(category.CategoryID))
+					{
+						ElementCategory categoryToAdd = new ElementCategory
+						{
+							ElementID = BLElementToUpdate.ElementID,
+							CategoryID = category.CategoryID
+						};
+						BLElementToUpdate.ElementCategories.Add(categoryToAdd);
+					}
+				}
+				else
+				{
+					//Selected categories don't contain, but old categories do -> Remove
+					if (BLElementCategoriesBeforeEdit.Contains(category.CategoryID))
+					{
+						ElementCategory categoryToRemove =
+							BLElementToUpdate.ElementCategories.SingleOrDefault(ec => ec.CategoryID == category.CategoryID);
+						BLElementToUpdate.ElementCategories.Remove(categoryToRemove);
+					}
+				}
+			}
+		}
+
+		public async Task<IEnumerable<BucketListElement>> PopulateSelectedBLElementsListWithProgressionOrderedByNameAsync(BLContext context, int SelectedBucketListID, bool PublicOnly)
 		{
-            return await context.BLElements
-                .AsNoTracking()
-                .Include(ble => ble.BucketList)
-                .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
-        }
+			if (PublicOnly)
+			{
+				return await context.BLElements
+					.Include(ble => ble.Progression)
+						.ThenInclude(p => p.BLETasks)
+					.Where(ble => ble.BucketListID == SelectedBucketListID)
+					.Where(ble => ble.Visibility == Visibility.Public)
+					.OrderBy(ble => ble.Name)
+					.ToListAsync();
+			}
 
-        /*DetailsBLE + EditBLE*/
-        public async Task<BucketListElement> GetBLEByIDWithBLETasksAndCategoryAsync(BLContext context, int? bucketListElementId)
-        {
-            return await context.BLElements
-                .Include(ble => ble.BucketList)
-                .Include(ble => ble.Progression)
-                    .ThenInclude(p => p.BLETasks)
-                .Include(ble => ble.ElementCategories)
-                    .ThenInclude(ec => ec.Category)
-                .FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
-        }
+			else
+			{
+				return await context.BLElements
+					.Include(ble => ble.Progression)
+						.ThenInclude(p => p.BLETasks)
+					.Where(ble => ble.BucketListID == SelectedBucketListID)
+					.OrderBy(ble => ble.Name)
+					.ToListAsync();
+			}
+		}
 
-        /*EditBLE*/
-        public void DeleteEmptyTasks(IList<BLETask> BLETasks)
-        {
-            for (int i = BLETasks.Count - 1; i >= 0; i--)
-                if (BLETasks[i].Text == null)
-                    BLETasks.Remove(BLETasks[i]);
-        }
-
-        /*DeleteBL*/
-        public async Task<BucketList> GetBLByIDWithBLEsAsync(BLContext context, int? bucketListId)
-        {
-            return await context.BucketLists
-                .AsNoTracking()
-                .Include(bl => bl.BLElements)
-                .FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
-        }
-
-        public async Task<BucketList> GetBLByIDAsync(BLContext context, int? bucketListId)
-        {
-            return await context.BucketLists.FindAsync(bucketListId);
-        }
-
-        /*Collection page*/
-        public async Task<IEnumerable<Category>> GetCategoriesOrderedByNameWithElementsAsync(BLContext context)
+		/*CreateBLE*/
+		public async Task<BucketListElement> InitializeBLEWithBLAsync(BLContext context, int? bucketListId)
 		{
-            return await context.Categories
-                .Include(c => c.ElementCategories)
-                    .ThenInclude(ec => ec.Element)
-                .OrderBy(c => c.Name)
-                .ToListAsync();
-        }
+			return new BucketListElement
+			{
+				BucketListID = bucketListId.Value,
+				BucketList = await context.BucketLists.FindAsync(bucketListId),
+				ElementCategories = new List<ElementCategory>(),
+				Progression = new Progression()
+			};
+		}
 
-        public Category GetCategoryByID(IEnumerable<Category> Categories, int? categoryId)
-        {
-            return Categories.FirstOrDefault(c => c.CategoryID == categoryId);
-        }
+		public void AddCategoriesToBLE(string[] selectedCategories, BucketListElement newBLElement)
+		{
+			if (selectedCategories != null)
+			{
+				foreach (var category in selectedCategories)
+				{
+					var categoryToAdd = new ElementCategory
+					{
+						CategoryID = int.Parse(category)
+					};
+					newBLElement.ElementCategories.Add(categoryToAdd);
+				}
+			}
+		}
 
-        public IEnumerable<Element> GetElementsOfCategoryOrderedByName(Category category)
-        {
-            return category.ElementCategories
-                    .Select(ec => ec.Element)
-                    .Where(e => e.Discriminator == "Element")
-                    .OrderBy(e => e.Name);
-        }
+		/*DeleteBLE*/
+		public async Task<BucketListElement> GetBLEByIDWithBLAsync(BLContext context, int? bucketListElementId)
+		{
+			return await context.BLElements
+				.AsNoTracking()
+				.Include(ble => ble.BucketList)
+				.FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+		}
 
-        /*UserCheck*/
-        public string SetUserCheckPageTitle(BLUser SelectedUser)
-        {
-            return SelectedUser.FullName + " Bakancslistái";
-        }
-    }
+		/*DetailsBLE + EditBLE*/
+		public async Task<BucketListElement> GetBLEByIDWithBLETasksAndCategoryAsync(BLContext context, int? bucketListElementId)
+		{
+			return await context.BLElements
+				.Include(ble => ble.BucketList)
+				.Include(ble => ble.Progression)
+					.ThenInclude(p => p.BLETasks)
+				.Include(ble => ble.ElementCategories)
+					.ThenInclude(ec => ec.Category)
+				.FirstOrDefaultAsync(ble => ble.ElementID == bucketListElementId);
+		}
+
+		/*EditBLE*/
+		public void DeleteEmptyTasks(IList<BLETask> BLETasks)
+		{
+			for (int i = BLETasks.Count - 1; i >= 0; i--)
+				if (BLETasks[i].Text == null)
+					BLETasks.Remove(BLETasks[i]);
+		}
+
+		/*DeleteBL*/
+		public async Task<BucketList> GetBLByIDWithBLEsAsync(BLContext context, int? bucketListId)
+		{
+			return await context.BucketLists
+				.AsNoTracking()
+				.Include(bl => bl.BLElements)
+				.FirstOrDefaultAsync(bl => bl.BucketListID == bucketListId);
+		}
+
+		public async Task<BucketList> GetBLByIDAsync(BLContext context, int? bucketListId)
+		{
+			return await context.BucketLists.FindAsync(bucketListId);
+		}
+
+		/*Collection page*/
+		public async Task<IEnumerable<Category>> GetCategoriesOrderedByNameWithElementsAsync(BLContext context)
+		{
+			return await context.Categories
+				.Include(c => c.ElementCategories)
+					.ThenInclude(ec => ec.Element)
+				.OrderBy(c => c.Name)
+				.ToListAsync();
+		}
+
+		public Category GetCategoryByID(IEnumerable<Category> Categories, int? categoryId)
+		{
+			return Categories.FirstOrDefault(c => c.CategoryID == categoryId);
+		}
+
+		public IEnumerable<Element> GetElementsOfCategoryOrderedByName(Category category)
+		{
+			return category.ElementCategories
+					.Select(ec => ec.Element)
+					.Where(e => e.Discriminator == "Element")
+					.OrderBy(e => e.Name);
+		}
+
+		/*UserCheck*/
+		public string SetUserCheckPageTitle(BLUser SelectedUser)
+		{
+			return SelectedUser.FullName + " Bakancslistái";
+		}
+	}
 }
